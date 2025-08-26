@@ -1,0 +1,42 @@
+{
+  "version": 2,
+  "dgSpecHash": "mlMJRPUMndA=",
+  "success": false,
+  "projectFilePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Humanizer.Core. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj",
+      "libraryId": "Humanizer.Core",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package EPPlus. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj",
+      "libraryId": "EPPlus",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1102",
+      "level": "Error",
+      "message": "Unable to find package Newtonsoft.Json with version (>= 13.0.3)\r\n  - Found 1 version(s) in Microsoft Visual Studio Offline Packages [ Nearest version: 13.0.1 ]",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj",
+      "libraryId": "Newtonsoft.Json",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}

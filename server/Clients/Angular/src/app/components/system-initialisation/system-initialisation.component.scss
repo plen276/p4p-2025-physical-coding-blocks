@@ -1,0 +1,25 @@
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card {
+    max-width: 400px;
+    margin: 6rem auto;
+}
+
+mat-form-field {
+    display: block;
+}
+
+.app-icon {
+    background-color: #fff;
+    background-image: url("/assets/AppIcon.png");
+    height: 32px;
+    width: 32px;
+}
+
+.spinner {
+    display: inline;
+}
+
+.mat-mdc-progress-spinner{
+    display: inline-block;
+}

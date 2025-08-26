@@ -1,0 +1,229 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj": {}
+  },
+  "projects": {
+    "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\NaoBlocks.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\NaoBlocks.Common.csproj",
+        "projectName": "NaoBlocks.Common",
+        "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\NaoBlocks.Common.csproj",
+        "packagesPath": "C:\\Users\\pkasc\\.nuget\\packages\\",
+        "outputPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\pkasc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Parser\\NaoBlocks.Parser.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Parser\\NaoBlocks.Parser.csproj",
+        "projectName": "NaoBlocks.Parser",
+        "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Parser\\NaoBlocks.Parser.csproj",
+        "packagesPath": "C:\\Users\\pkasc\\.nuget\\packages\\",
+        "outputPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Parser\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\pkasc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\NaoBlocks.Common.csproj": {
+                "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\NaoBlocks.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj",
+        "projectName": "LogParser",
+        "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\NaoBlocks.Utility.LogParser.csproj",
+        "packagesPath": "C:\\Users\\pkasc\\.nuget\\packages\\",
+        "outputPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Utilities\\NaoBlocks.Utility.LogParser\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\pkasc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\NaoBlocks.Common.csproj": {
+                "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\NaoBlocks.Common.csproj"
+              },
+              "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Parser\\NaoBlocks.Parser.csproj": {
+                "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Parser\\NaoBlocks.Parser.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "EPPlus": {
+              "target": "Package",
+              "version": "[7.1.2, )"
+            },
+            "Humanizer.Core": {
+              "target": "Package",
+              "version": "[2.14.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

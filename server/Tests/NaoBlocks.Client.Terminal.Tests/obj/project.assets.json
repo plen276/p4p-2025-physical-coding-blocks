@@ -1,0 +1,223 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "NaoBlocks/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "NaoBlocks.Client.Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NaoBlocks.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NaoBlocks.dll": {}
+        }
+      },
+      "NaoBlocks.Client.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "NaoBlocks.Common": "1.0.0",
+          "System.Reactive": "6.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NaoBlocks.Client.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NaoBlocks.Client.Common.dll": {}
+        }
+      },
+      "NaoBlocks.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "bin/placeholder/NaoBlocks.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NaoBlocks.Common.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "NaoBlocks/1.0.0": {
+      "type": "project",
+      "path": "../../Clients/NaoBlocks.Client.Terminal/NaoBlocks.Client.Terminal.csproj",
+      "msbuildProject": "../../Clients/NaoBlocks.Client.Terminal/NaoBlocks.Client.Terminal.csproj"
+    },
+    "NaoBlocks.Client.Common/1.0.0": {
+      "type": "project",
+      "path": "../../Clients/NaoBlocks.Client.Common/NaoBlocks.Client.Common.csproj",
+      "msbuildProject": "../../Clients/NaoBlocks.Client.Common/NaoBlocks.Client.Common.csproj"
+    },
+    "NaoBlocks.Common/1.0.0": {
+      "type": "project",
+      "path": "../../Common/NaoBlocks.Common/NaoBlocks.Common.csproj",
+      "msbuildProject": "../../Common/NaoBlocks.Common/NaoBlocks.Common.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "Microsoft.NET.Test.Sdk >= 17.9.0",
+      "NaoBlocks >= 1.0.0",
+      "coverlet.collector >= 6.0.2",
+      "xunit >= 2.8.0",
+      "xunit.runner.visualstudio >= 2.8.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\pkasc\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Tests\\NaoBlocks.Client.Terminal.Tests\\NaoBlocks.Client.Terminal.Tests.csproj",
+      "projectName": "NaoBlocks.Client.Terminal.Tests",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Tests\\NaoBlocks.Client.Terminal.Tests\\NaoBlocks.Client.Terminal.Tests.csproj",
+      "packagesPath": "C:\\Users\\pkasc\\.nuget\\packages\\",
+      "outputPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Tests\\NaoBlocks.Client.Terminal.Tests\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\pkasc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Clients\\NaoBlocks.Client.Terminal\\NaoBlocks.Client.Terminal.csproj": {
+              "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Clients\\NaoBlocks.Client.Terminal\\NaoBlocks.Client.Terminal.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "dependencies": {
+          "Microsoft.NET.Test.Sdk": {
+            "target": "Package",
+            "version": "[17.9.0, )"
+          },
+          "coverlet.collector": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[6.0.2, )"
+          },
+          "xunit": {
+            "target": "Package",
+            "version": "[2.8.0, )"
+          },
+          "xunit.runner.visualstudio": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[2.8.0, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package xunit.runner.visualstudio. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "xunit.runner.visualstudio",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package xunit. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "xunit",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package System.Reactive. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "System.Reactive",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1103",
+      "level": "Error",
+      "message": "Unable to find a stable package Microsoft.NET.Test.Sdk with version (>= 17.9.0)\r\n  - Found 1 version(s) in Microsoft Visual Studio Offline Packages [ Nearest version: 17.10.0-preview-24080-01 ]",
+      "libraryId": "Microsoft.NET.Test.Sdk",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1102",
+      "level": "Error",
+      "message": "Unable to find package coverlet.collector with version (>= 6.0.2)\r\n  - Found 1 version(s) in Microsoft Visual Studio Offline Packages [ Nearest version: 6.0.0 ]",
+      "libraryId": "coverlet.collector",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1102",
+      "level": "Error",
+      "message": "Unable to find package Newtonsoft.Json with version (>= 13.0.3)\r\n  - Found 1 version(s) in Microsoft Visual Studio Offline Packages [ Nearest version: 13.0.1 ]",
+      "libraryId": "Newtonsoft.Json",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}
