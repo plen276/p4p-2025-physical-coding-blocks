@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "stdio.h"
 
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
@@ -6,12 +6,14 @@
 #include "api.h"
 #include "button.h"
 #include "defines.h"
+#include "led.h"
 #include "reader.h"
 #include "wifi.h"
 
 int main()
 {
     stdio_init_all();
+    init_led();
     // reader_init();
     // wifi_connect();
     // init_button();
@@ -25,13 +27,11 @@ int main()
     
     while (true) {
         
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-        sleep_ms(250);
+        led_on();
         
         cyw43_arch_enable_sta_mode();
 
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-        sleep_ms(250);
+        led_off();
 
         if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD,
             CYW43_AUTH_WPA_TKIP_PSK, 30000)) {
@@ -59,23 +59,21 @@ int main()
 
         char request[request_len + 1]; // 1 for null terminator
 
-        printf("Trying to send request\n");
-        snprintf(request, sizeof(request), HTTP_REQUEST,
-                "POST", PASSTHROUGH_TARGET, PASSTHROUGH_SERVER, PASSTHROUGH_PORT, body_len, body);
+        // printf("Trying to send request\n");
 
-        bool success = tls_run_client(NULL, 0, PASSTHROUGH_SERVER, request, API_TIMEOUT_SECS);
+        // snprintf(request, sizeof(request), HTTP_REQUEST,
+        //         "POST", PASSTHROUGH_TARGET, PASSTHROUGH_SERVER, PASSTHROUGH_PORT, body_len, body);
 
-        printf("Request sent\n");
-        if (success)
-            printf("[api_request] Request successful\n");
-        else
-            printf("[api_request] Request failed\n");
+        // bool success = tls_run_client(NULL, 0, PASSTHROUGH_SERVER, request, API_TIMEOUT_SECS);
+
+        // printf("Request sent\n");
+        // if (success)
+        //     printf("[api_request] Request successful\n");
+        // else
+        //     printf("[api_request] Request failed\n");
 
         // Flash onboard LED to indicate a send
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-        sleep_ms(250);
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-        sleep_ms(250);
+        led_blink();
 
         // if (!button_pressed)
         //     continue;

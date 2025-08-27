@@ -35,11 +35,11 @@
 #define WIFI_SSID "robotics"
 #define WIFI_PASSWORD "letmein1"
 
-#define TLS_CLIENT_PORT 5000
+#define TLS_CLIENT_PORT 5001
 #define API_TIMEOUT_SECS 15
 
 #define PASSTHROUGH_SERVER "192.168.0.100"
-#define PASSTHROUGH_PORT 5000
+#define PASSTHROUGH_PORT 5001
 #define PASSTHROUGH_TARGET "/api/v1/passthrough/cyberpi"
 
 #define HTTP_REQUEST "%s %s HTTP/1.1\r\n"                                \

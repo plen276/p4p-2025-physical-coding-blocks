@@ -47,6 +47,7 @@ add_executable(p4p_physical_coding_blocks
     src/tls.c
     src/wifi.c
     lib/cjson/cJSON.c
+    src/led.c
 )
 
 # Set include directories
