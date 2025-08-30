@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <cJSON.h>
+#include <cjson/cJSON.h>
 
 #include "defines.h"
 
@@ -41,26 +41,6 @@ char *api_create_passthrough_body(char *commands)
 }
 
 bool api_request(char *server, uint16_t port, char *target, char *method, char *body)
-{
-    // Format the request
-    uint body_len = strlen(body);
-    uint request_len = HTTP_REQUEST_LEN + strlen(method) + strlen(target) + strlen(server) + snprintf(NULL, 0, "%d", port) + snprintf(NULL, 0, "%d", body_len) + body_len;
-
-    char request[request_len + 1]; // 1 for null terminator
-    snprintf(request, sizeof(request), HTTP_REQUEST,
-             method, target, server, port, body_len, body);
-
-    bool success = tls_run_client(NULL, 0, server, request, API_TIMEOUT_SECS);
-
-    if (success)
-        printf("[api_request] Request successful\n");
-    else
-        printf("[api_request] Request failed\n");
-
-    return success;
-}
-
-bool api_request_text(char *server, uint16_t port, char *target, char *method, const char *body)
 {
     // Format the request
     uint body_len = strlen(body);
