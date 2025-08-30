@@ -106,28 +106,23 @@ def send_passthrough_request(commands):
     
     return success
 
-def main():
-    """Main function to demonstrate API usage"""
-    print("=== PicoW API Client ===")
+# def main():
+#     """Main function to demonstrate API usage"""
+#     print("=== PicoW API Client ===")
     
-    # Connect to WiFi
-    if not connect_wifi():
-        return
+#     # Connect to WiFi
+#     if not connect_wifi():
+#         return
     
-    # Example: Send some commands to the server console
-    commands = ["F", "L", "R", "B"]  # Forward, Left, Right, Back
+#     # Example: Send some commands to the server console
+#     commands = ["F", "L", "R", "B"]  # Forward, Left, Right, Back
     
-    print(f"\nSending commands: {commands}")
-    send_passthrough_request(commands)
+#     print(f"\nSending commands: {commands}")
+#     send_passthrough_request(commands)
     
-    # Wait a bit and send another request
-    sleep(2)
+#     # Wait a bit and send another request
+#     sleep(2)
     
-    commands2 = ["U", "D"]  # Up, Down
-    print(f"\nSending more commands: {commands2}")
-    send_passthrough_request(commands2)
-
-if __name__ == "__main__":
-    main()
-
-
+#     commands2 = ["U", "D"]  # Up, Down
+#     print(f"\nSending more commands: {commands2}")
+#     send_passthrough_request(commands2)

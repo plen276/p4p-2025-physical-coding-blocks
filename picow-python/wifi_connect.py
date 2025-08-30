@@ -1,40 +1,66 @@
+import machine
 import network
 from utime import sleep
 import urequests
 
-WIFI_SSID = 'robotics'
-WIFI_PASSWORD = 'letmein1'
-
-SERVER_BASE_ADDRESSES = ['192.168.0.101']
-URL_PREFIX = 'http://'
-VERSION_URL_SUFFIX = ':5000/api/v1/version'
-PASSTHROUGH_URL_SUFFIX = ':5001/api/v1/passthrough/cyberpi' 
+from config import (
+    WIFI_SSID, 
+    WIFI_PASSWORD, 
+    SERVER_BASE_ADDRESSES, 
+    URL_PREFIX, 
+    VERSION_URL_SUFFIX, 
+    PASSTHROUGH_URL_SUFFIX
+) 
 
 def connect():
-    #Connect to WLAN
+    """
+    Connect to WiFi network using predefined credentials.
+    
+    Checks if already connected before attempting connection.
+    Uses machine.idle() for power-efficient waiting.
+    Displays connection info including MAC and IP addresses.
+    """
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
-    wlan.connect(WIFI_SSID, WIFI_PASSWORD)
+    if not wlan.isconnected():
+        print("Connecting to network... " + WIFI_SSID)
+        wlan.connect(WIFI_SSID, WIFI_PASSWORD)
+        while not wlan.isconnected():
+            print("Waiting for connection...")
+            machine.idle()
+        print("Connection successful")
+    else:
+        print("Already connected to network")
     
-    print('Connecting to network...' + WIFI_SSID)
-	
-    while wlan.isconnected() == False:
-        print('Waiting for connection...')
-        sleep(1)
-        
-    print('Connection successful')
     print(wlan.ifconfig())
+    print('MAC address:', wlan.config('mac'))
+    print('IP address:', wlan.ipconfig('addr4'))
+
+    # wlan.connect(WIFI_SSID, WIFI_PASSWORD)
     
-def send_message():
-    # Use the same server for both requests (192.168.0.101)
+    # print('Connecting to network...' + WIFI_SSID)
+	
+    # while wlan.isconnected() == False:
+    #     print('Waiting for connection...')
+    #     sleep(1)
+        
+    # print('Connection successful')
+    # print(wlan.ifconfig())
+    # print('MAC address:', wlan.config('mac'))
+    # print('IP address:', wlan.ipconfig('addr4'))
+    
+def test_get_endpoint():
+    """
+    Test server connectivity using GET request to version endpoint.
+    
+    Sends HTTP GET request to the server's version API endpoint
+    to verify basic connectivity and server availability.
+    
+    Returns:
+        bool: True if request successful, False otherwise
+    """
     get_url = URL_PREFIX + SERVER_BASE_ADDRESSES[0] + VERSION_URL_SUFFIX
-    post_url = URL_PREFIX + SERVER_BASE_ADDRESSES[0] + PASSTHROUGH_URL_SUFFIX
-    data = {"message": "Hello from Raspberry Pi!"}
     
-    print('=== Sending Hello Message ===')
-    print('Hello from Raspberry Pi!')
-    
-    # First, test the version endpoint with GET
     print('\n--- Testing Version Endpoint ---')
     print('Sending GET request to', get_url)
     
@@ -44,111 +70,111 @@ def send_message():
         print('Response text:', response.text)
         response.close()
         print('✅ Version request successful!')
+        return True
     except Exception as e:
         print('❌ Error sending version request:', e)
+        return False
+
+
+def test_post_endpoint():
+    """
+    Test server data submission using multiple POST request methods.
     
-    # Then, test the passthrough endpoint with POST
+    Attempts various POST request formats to the passthrough endpoint:
+    - JSON with headers
+    - JSON as string data
+    - Basic JSON
+    - Simple string data
+    - Numeric data
+    - Empty data
+    
+    Tries methods sequentially until one succeeds or all fail.
+    
+    Returns:
+        bool: True if any POST method successful, False if all fail
+    """
+    post_url = URL_PREFIX + SERVER_BASE_ADDRESSES[0] + PASSTHROUGH_URL_SUFFIX
+    data = {"message": "Hello from Raspberry Pi!"}
+    
     print('\n--- Testing Passthrough Endpoint ---')
     print('Sending POST request to', post_url)
     print('Data:', data)
-    
-    # Try different approaches to send the POST request
     print('\nTrying different POST request methods...')
     
-    # Method 1: Try with headers
-    try:
-        print('Method 1: POST with explicit headers...')
-        headers = {'Content-Type': 'application/json'}
-        response = urequests.post(post_url, json=data, headers=headers)
-        print('✅ Method 1 successful!')
-        print('Response status:', response.status_code)
-        print('Response text:', response.text)
-        response.close()
-        print('🎉 Your "Hello from Raspberry Pi!" message was sent to the server console!')
-        return  # Exit if successful
-        
-    except Exception as e:
-        print('❌ Method 1 failed:', e)
+    # Method 1: POST with explicit headers
+    if _try_post_method(1, post_url, "POST with explicit headers", 
+                       lambda: urequests.post(post_url, json=data, 
+                                            headers={'Content-Type': 'application/json'})):
+        return True
     
-    # Method 2: Try with data instead of json
-    try:
-        print('Method 2: POST with data parameter...')
-        import json
-        json_data = json.dumps(data)
-        response = urequests.post(post_url, data=json_data)
-        print('✅ Method 2 successful!')
-        print('Response status:', response.status_code)
-        print('Response text:', response.text)
-        response.close()
-        print('🎉 Your "Hello from Raspberry Pi!" message was sent to the server console!')
-        return  # Exit if successful
-        
-    except Exception as e:
-        print('❌ Method 2 failed:', e)
+    # Method 2: POST with data parameter
+    if _try_post_method(2, post_url, "POST with data parameter", 
+                       lambda: _post_with_json_data(post_url, data)):
+        return True
     
-    # Method 3: Try basic POST
-    try:
-        print('Method 3: Basic POST request...')
-        response = urequests.post(post_url, json=data)
-        print('✅ Method 3 successful!')
-        print('Response status:', response.status_code)
-        print('Response text:', response.text)
-        response.close()
-        print('🎉 Your "Hello from Raspberry Pi!" message was sent to the server console!')
-        
-    except Exception as e:
-        print('❌ Method 3 failed:', e)
+    # Method 3: Basic POST
+    if _try_post_method(3, post_url, "Basic POST request", 
+                       lambda: urequests.post(post_url, json=data)):
+        return True
     
-    # Method 4: Try with simple string data
-    try:
-        print('Method 4: POST with simple string...')
-        simple_data = "Hello from Raspberry Pi!"
-        response = urequests.post(post_url, data=simple_data)
-        print('✅ Method 4 successful!')
-        print('Response status:', response.status_code)
-        print('Response text:', response.text)
-        response.close()
-        print('🎉 Your simple message was sent to the server console!')
-        
-    except Exception as e:
-        print('❌ Method 4 failed:', e)
+    # Method 4: POST with simple string
+    if _try_post_method(4, post_url, "POST with simple string", 
+                       lambda: urequests.post(post_url, data="Hello from Raspberry Pi!")):
+        return True
     
-    # Method 5: Try with just a number
-    try:
-        print('Method 5: POST with simple number...')
-        number_data = "42"
-        response = urequests.post(post_url, data=number_data)
-        print('✅ Method 5 successful!')
-        print('Response status:', response.status_code)
-        print('Response text:', response.text)
-        response.close()
-        print('🎉 Your number was sent to the server console!')
-        
-    except Exception as e:
-        print('❌ Method 5 failed:', e)
+    # Method 5: POST with simple number
+    if _try_post_method(5, post_url, "POST with simple number", 
+                       lambda: urequests.post(post_url, data="42")):
+        return True
     
-    # Method 6: Try with empty data
-    try:
-        print('Method 6: POST with empty data...')
-        response = urequests.post(post_url, data="")
-        print('✅ Method 6 successful!')
-        print('Response status:', response.status_code)
-        print('Response text:', response.text)
-        response.close()
-        print('🎉 Empty POST request was successful!')
-        
-    except Exception as e:
-        print('❌ Method 6 failed:', e)
+    # Method 6: POST with empty data
+    if _try_post_method(6, post_url, "POST with empty data", 
+                       lambda: urequests.post(post_url, data="")):
+        return True
     
     print('\n🔍 All POST methods failed. This suggests:')
     print('   - The passthrough endpoint might not be running on port 5001')
     print('   - There might be a firewall/network issue')
     print('   - The endpoint might expect different data format')
-    print('   - Check if your server is actually listening on 192.168.0.101:5001')
+    print('   - Check if your server is actually listening on 192.168.0.100:5001')
     print('   - The server might be expecting a different endpoint or protocol')
     
-    print('\n=== Message Complete ===')
+    return False
+
+
+def _try_post_method(method_num, url, description, request_func):
+    """Helper function to try a POST method and handle the response"""
+    try:
+        print(f'Method {method_num}: {description}...')
+        response = request_func()
+        print(f'✅ Method {method_num} successful!')
+        print('Response status:', response.status_code)
+        print('Response text:', response.text)
+        response.close()
+        print('🎉 Your message was sent to the server console!')
+        return True
+    except Exception as e:
+        print(f'❌ Method {method_num} failed:', e)
+        return False
+
+
+def _post_with_json_data(url, data):
+    """Helper function to POST with JSON data as string"""
+    import json
+    json_data = json.dumps(data)
+    return urequests.post(url, data=json_data)
+
+
+def send_message():
+    """Main function to send messages to the server"""
+    print('=== Sending Hello Message ===')
+    print('Hello from Raspberry Pi!')
     
-if __name__ == "__main__":
-    connect()
-    send_message()
+    # Test version endpoint
+    version_success = test_get_endpoint()
+    
+    # Test passthrough endpoint
+    passthrough_success = test_post_endpoint()
+    
+    print('\n=== Message Complete ===')
+    return version_success and passthrough_success
