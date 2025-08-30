@@ -1,0 +1,228 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "NaoBlocks.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "bin/placeholder/NaoBlocks.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NaoBlocks.Common.dll": {}
+        }
+      },
+      "NaoBlocks.Engine/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "EPPlus": "7.1.2",
+          "Esprima": "3.0.5",
+          "IronPdf": "2024.5.2",
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "8.0.4",
+          "Microsoft.Extensions.Logging": "8.0.0",
+          "NaoBlocks.Common": "1.0.0",
+          "NaoBlocks.Parser": "1.0.0",
+          "Newtonsoft.Json": "13.0.3",
+          "RavenDB.Client": "6.0.102",
+          "RavenDB.Embedded": "6.0.102"
+        },
+        "compile": {
+          "bin/placeholder/NaoBlocks.Engine.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NaoBlocks.Engine.dll": {}
+        }
+      },
+      "NaoBlocks.Parser/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "NaoBlocks.Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NaoBlocks.Parser.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NaoBlocks.Parser.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "NaoBlocks.Common/1.0.0": {
+      "type": "project",
+      "path": "../../../Common/NaoBlocks.Common/NaoBlocks.Common.csproj",
+      "msbuildProject": "../../../Common/NaoBlocks.Common/NaoBlocks.Common.csproj"
+    },
+    "NaoBlocks.Engine/1.0.0": {
+      "type": "project",
+      "path": "../../NaoBlocks.Engine/NaoBlocks.Engine.csproj",
+      "msbuildProject": "../../NaoBlocks.Engine/NaoBlocks.Engine.csproj"
+    },
+    "NaoBlocks.Parser/1.0.0": {
+      "type": "project",
+      "path": "../../../Common/NaoBlocks.Parser/NaoBlocks.Parser.csproj",
+      "msbuildProject": "../../../Common/NaoBlocks.Parser/NaoBlocks.Parser.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "NaoBlocks.Common >= 1.0.0",
+      "NaoBlocks.Engine >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\pkasc\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "projectName": "NaoBlocks.Definitions.Angular",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "packagesPath": "C:\\Users\\pkasc\\.nuget\\packages\\",
+      "outputPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\pkasc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\NaoBlocks.Common.csproj": {
+              "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Common\\NaoBlocks.Common\\NaoBlocks.Common.csproj"
+            },
+            "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\NaoBlocks.Engine\\NaoBlocks.Engine.csproj": {
+              "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\NaoBlocks.Engine\\NaoBlocks.Engine.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "allWarningsAsErrors": true,
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Microsoft.AspNetCore.Cryptography.KeyDerivation. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.AspNetCore.Cryptography.KeyDerivation",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Microsoft.Extensions.Logging. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.Extensions.Logging",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package EPPlus. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "EPPlus",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package IronPdf. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "IronPdf",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package RavenDB.Embedded. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "RavenDB.Embedded",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Esprima. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "Esprima",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package RavenDB.Client. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "RavenDB.Client",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1102",
+      "level": "Error",
+      "message": "Unable to find package Newtonsoft.Json with version (>= 13.0.3)\r\n  - Found 1 version(s) in Microsoft Visual Studio Offline Packages [ Nearest version: 13.0.1 ]",
+      "libraryId": "Newtonsoft.Json",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "version": 2,
+  "dgSpecHash": "tNV9Ipb4eo8=",
+  "success": false,
+  "projectFilePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Microsoft.AspNetCore.Cryptography.KeyDerivation. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "libraryId": "Microsoft.AspNetCore.Cryptography.KeyDerivation",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Microsoft.Extensions.Logging. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "libraryId": "Microsoft.Extensions.Logging",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package EPPlus. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "libraryId": "EPPlus",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package IronPdf. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "libraryId": "IronPdf",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package RavenDB.Embedded. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "libraryId": "RavenDB.Embedded",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Esprima. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "libraryId": "Esprima",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package RavenDB.Client. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "libraryId": "RavenDB.Client",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1102",
+      "level": "Error",
+      "message": "Unable to find package Newtonsoft.Json with version (>= 13.0.3)\r\n  - Found 1 version(s) in Microsoft Visual Studio Offline Packages [ Nearest version: 13.0.1 ]",
+      "projectPath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "filePath": "D:\\Documents\\GitHub_University\\p4p-2025-physical-coding-blocks\\server\\Server\\Definitions\\NaoBlocks.Definitions.Angular\\NaoBlocks.Definitions.Angular.csproj",
+      "libraryId": "Newtonsoft.Json",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}
