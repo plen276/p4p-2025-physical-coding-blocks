@@ -36,16 +36,16 @@ def test_robot_commands():
     
     print("✅ All robot commands sent!")
 
-if __name__ == "__main__":
-    # Test simple message first
-    test_simple_message()
+# if __name__ == "__main__":
+#     # Test simple message first
+#     test_simple_message()
     
-    # Wait a bit
-    sleep(3)
+#     # Wait a bit
+#     sleep(3)
     
-    # Test robot commands
-    test_robot_commands()
+#     # Test robot commands
+#     test_robot_commands()
     
-    print("\n🎉 API testing complete!")
+#     print("\n🎉 API testing complete!")
 
 

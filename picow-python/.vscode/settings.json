@@ -1,17 +1,48 @@
 {
-    "python.languageServer": "Pylance",
-    "python.analysis.typeCheckingMode": "basic",
-    "python.analysis.diagnosticSeverityOverrides": {
-        "reportMissingModuleSource": "none"
-    },
-    "python.terminal.activateEnvironment": false,
-    "micropico.openOnStart": false,
-    "python.analysis.typeshedPaths": [
-        "~/.micropico-stubs/included"
-    ],
-    "python.analysis.extraPaths": [
-        "~/.micropico-stubs/included"
-    ],
-    "pylint.enabled": false,
-    "micropico.autoConnect": true,
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportMissingModuleSource": "none"
+  },
+  "python.terminal.activateEnvironment": false,
+  "python.analysis.typeshedPaths": [
+    "~/.micropico-stubs/included"
+  ],
+  "python.analysis.extraPaths": [
+    "~/.micropico-stubs/included"
+  ],
+  "pylint.enabled": false,
+  "micropico.openOnStart": false,
+  "micropico.autoConnect": false,
+  "micropico.manualComDevice": "COM6",
+  // "micropico.syncFolder": "../firmware",
+  "micropico.gcBeforeUpload": true,
+  // "micropico.executeOnConnect": "main.py",
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "git.openRepositoryInParentFolders": "always",
+  "cSpell.words": [
+    "BOOTSEL",
+    "Cooldown",
+    "DGRAM",
+    "ECONNABORTED",
+    "ECONNREFUSED",
+    "ECONNRESET",
+    "EHOSTUNREACH",
+    "ETIMEDOUT",
+    "evget",
+    "evput",
+    "Hinch",
+    "isconnected",
+    "picozero",
+    "REUSEADDR",
+    "sreader",
+    "uasyncio",
+    "urequests",
+    "WIFI",
+    "WLAN"
+  ]
 }
