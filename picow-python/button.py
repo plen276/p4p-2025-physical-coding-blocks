@@ -1,5 +1,5 @@
 from machine import Pin
-from utime import sleep
+from utime import sleep, ticks_ms
 
 from commands import process_commands
 from api import post_request
@@ -13,14 +13,19 @@ Configure GPIO pin `15` (`BUTTON_PIN` from `config.py` as input with internal pu
 `Pin.PULL_DOWN` = Internal pull-up resistor (pulls pin `HIGH` when button pressed)
 """
 
+DEBOUNCE_DELAY_MS = 300  # Debounce delay in milliseconds
+LAST_PRESS_TIME = 0  # Timestamp of the last button press
+
 
 def button_pressed(pin):
     """Interrupt service routine called when the button is pressed."""
-    print("Button interrupt: pressed")
-    commands = process_commands()
-    post_request(commands, len(commands))
-    sleep(1)  # Debounce delay
-    # test_post_endpoint()
+    global LAST_PRESS_TIME
+    time = ticks_ms()
+    if time - LAST_PRESS_TIME > DEBOUNCE_DELAY_MS:
+        print("Button interrupt: pressed")
+        commands = process_commands()
+        post_request(commands, len(commands))
+        LAST_PRESS_TIME = time
 
 
 def is_button_pressed():
