@@ -4,6 +4,7 @@ from utime import sleep, ticks_ms
 from commands import process_commands
 from api import post_request
 from test_api import test_post_endpoint
+import led
 from config import BUTTON_PIN
 
 button = Pin(BUTTON_PIN, Pin.IN, Pin.PULL_DOWN)
@@ -23,8 +24,25 @@ def button_pressed(pin):
     time = ticks_ms()
     if time - LAST_PRESS_TIME > DEBOUNCE_DELAY_MS:
         print("Button interrupt: pressed")
+
+        # Flash LED to indicate button press
+        led.blink()
+
+        # Process commands
         commands = process_commands()
-        post_request(commands, len(commands))
+
+        # Flash LED to indicate transmission starting
+        led.flash_on()
+
+        # Send data (this will block)
+        success = post_request(commands, len(commands))
+
+        # Flash LED to indicate transmission complete
+        if success:
+            led.flash_off()
+        else:
+            led.flash_on()
+
         LAST_PRESS_TIME = time
 
 
