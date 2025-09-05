@@ -1,6 +1,7 @@
 from machine import Pin
 from utime import sleep
 
+from commands import process_commands
 from api import post_request
 from test_api import test_post_endpoint
 from config import BUTTON_PIN
@@ -12,30 +13,36 @@ Configure GPIO pin `15` (`BUTTON_PIN` from `config.py` as input with internal pu
 `Pin.PULL_DOWN` = Internal pull-up resistor (pulls pin `HIGH` when button pressed)
 """
 
+
 def button_pressed(pin):
-    """ Interrupt service routine called when the button is pressed. """
+    """Interrupt service routine called when the button is pressed."""
     print("Button interrupt: pressed")
-    test_post_endpoint()
+    commands = process_commands()
+    post_request(commands, len(commands))
+    sleep(1)  # Debounce delay
+    # test_post_endpoint()
+
 
 def is_button_pressed():
     """
     Check if the button is currently pressed.
-    
+
     With PULL_UP resistor:
     - Button NOT pressed = HIGH (1) - pulled up to 3.3V
     - Button pressed = LOW (0) - connected to ground
-    
+
     Returns:
         bool: True if button is pressed, False otherwise
     """
     button_state = button.value()
-    
+
     if button_state == 0:  # LOW = button pressed (with pull-up)
         print("Button is pressed")
         return True
     else:  # HIGH = button not pressed
         print("Button is not pressed")
         return False
+
 
 # Interrupt to trigger on rising edge
 button.irq(trigger=Pin.IRQ_RISING, handler=button_pressed)

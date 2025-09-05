@@ -3,6 +3,7 @@ from utime import sleep
 from wifi import connect
 from api import post_request, get_request
 
+
 def test_get_endpoint():
     """
     Test server connectivity using GET request to version endpoint.
@@ -27,7 +28,7 @@ def test_post_endpoint():
     The test data represents:
     - "A" = Move forward 1 step
     - "C" = Turn left
-    - "B" = Move backward 1 step  
+    - "B" = Move backward 1 step
     - "D" = Turn right
 
     Returns:
@@ -37,6 +38,7 @@ def test_post_endpoint():
     data_count = len(data)
 
     post_request(data, data_count)
+
 
 if __name__ == "__main__":
 

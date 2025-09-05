@@ -1,4 +1,9 @@
 {
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "editor.formatOnSaveMode": "file",
   "python.languageServer": "Pylance",
   "python.analysis.typeCheckingMode": "basic",
   "python.analysis.diagnosticSeverityOverrides": {
