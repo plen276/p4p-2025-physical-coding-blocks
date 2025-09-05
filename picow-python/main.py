@@ -1,31 +1,17 @@
-from machine import Pin
-from utime import sleep
+from utime import sleep, sleep_us
 
-from led import *
-
-from wifi_connect import connect
-
-pin = Pin("LED", Pin.OUT)
-
-# print("LED starts flashing...")
-# while True:
-#     try:
-#         pin.toggle()
-#         sleep(1) # sleep 1sec
-#     except KeyboardInterrupt:
-#         break
-# pin.off()
-# print("Finished.")
+from led import led_toggle, led_off
+import button
+from commands import read_commands, read_muxes, process_commands
+from wifi import connect
 
 if __name__ == "__main__":
+    iteration = 0
     # print("In main")
-    # while True:
-    #     try:
-    #         led_toggle()
-    #         sleep(1)
-    #         # connect()
-    #     except KeyboardInterrupt:
-    #         break
-    # led_off()
     connect()
-    
+    # test_post_endpoint()
+    while True:
+        led_off()
+        process_commands()
+        sleep(2)
+        led_toggle()
