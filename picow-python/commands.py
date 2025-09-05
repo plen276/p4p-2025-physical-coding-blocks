@@ -1,5 +1,6 @@
-from machine import Pin, ADC
+from machine import Pin
 from utime import sleep_us, sleep
+
 import config
 
 # Pin Setup
@@ -220,4 +221,4 @@ def get_repeat_count(secondary_val):
         return 3
     elif secondary_val == SecondaryMove.FOUR:
         return 4
-    return 0  # Default to 1 repeat if unknown
+    return 0  # Default to 0 repeat if unknown

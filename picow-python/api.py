@@ -1,4 +1,5 @@
 import urequests
+
 from config import (
     SERVER_BASE_ADDRESSES,
     URL_PREFIX,

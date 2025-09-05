@@ -1,15 +1,10 @@
 import machine
 import network
 from utime import sleep
-import urequests
 
 from config import (
     WIFI_SSID, 
     WIFI_PASSWORD, 
-    SERVER_BASE_ADDRESSES, 
-    URL_PREFIX, 
-    VERSION_URL_SUFFIX, 
-    PASSTHROUGH_URL_SUFFIX
 ) 
 
 def connect():

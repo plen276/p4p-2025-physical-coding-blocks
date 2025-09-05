@@ -1,5 +1,8 @@
 from machine import Pin
 from utime import sleep
+
+from api import post_request
+from test_api import test_post_endpoint
 from config import BUTTON_PIN
 
 button = Pin(BUTTON_PIN, Pin.IN, Pin.PULL_DOWN)
@@ -12,6 +15,7 @@ Configure GPIO pin `15` (`BUTTON_PIN` from `config.py` as input with internal pu
 def button_pressed(pin):
     """ Interrupt service routine called when the button is pressed. """
     print("Button interrupt: pressed")
+    test_post_endpoint()
 
 def is_button_pressed():
     """
