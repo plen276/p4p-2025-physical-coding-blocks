@@ -10,12 +10,6 @@ sel0_pin = Pin(config.SEL0, Pin.OUT)
 sel1_pin = Pin(config.SEL1, Pin.OUT)
 sel2_pin = Pin(config.SEL2, Pin.OUT)
 
-# Mux outputs (input from MUX to Pico W)
-# mux1_pin = Pin(config.MUX1, Pin.IN)
-# mux2_pin = Pin(config.MUX2, Pin.IN)
-# mux3_pin = Pin(config.MUX3, Pin.IN)
-# mux4_pin = Pin(config.MUX4, Pin.IN)
-
 mux_outputs = [
     Pin(config.MUX1, Pin.IN),
     Pin(config.MUX2, Pin.IN),
@@ -43,35 +37,6 @@ class SecondaryTurn:
     TURN_90 = 0b0100  # 0b0010
     TURN_180 = 0b1100  # 0b0011
     TURN_270 = 0b1101  # 0b0111
-
-
-# def read_commands():
-#     print(f"Mux 1: {mux1_pin.value()}")
-#     print(f"Mux 2: {mux2_pin.value()}")
-#     print(f"Mux 3: {mux3_pin.value()}")
-#     print(f"Mux 4: {mux4_pin.value()}")
-
-# def select_channel(channel):
-# """Set the multiplexer select pins to choose the desired channel"""
-# sel0_pin.value((channel >> 0) & 1)
-# sel1_pin.value((channel >> 1) & 1)
-# sel2_pin.value((channel >> 2) & 1)
-# sleep_us(10)  # Small delay to allow signals to stabilize
-
-# def read_mux(channel):
-#     """Read the value from the specified multiplexer channel"""
-#     select_channel(channel)
-#     sleep_us(10)  # Small delay to allow signals to stabilize
-#     if channel == 0:
-#         return mux1_pin.value()
-#     elif channel == 1:
-#         return mux2_pin.value()
-#     elif channel == 2:
-#         return mux3_pin.value()
-#     elif channel == 3:
-#         return mux4_pin.value()
-#     else:
-#         return None
 
 
 def read_commands():
@@ -138,6 +103,7 @@ def read_blocks_separated():
     return primary, secondary
 
 
+# Main functions
 def process_commands():
     """Process blocks and output commands one by one (column by column)"""
     print("==== PROCESSING COMMANDS ====")
