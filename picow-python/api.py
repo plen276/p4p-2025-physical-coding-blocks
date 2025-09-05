@@ -1,5 +1,6 @@
 import urequests
 
+from wifi import is_connected, connect
 from config import (
     SERVER_BASE_ADDRESSES,
     URL_PREFIX,
@@ -27,6 +28,9 @@ def post_request(commands, count):
 
     # Prepare JSON payload with command data
     data = {"commands": commands, "count": count}
+
+    if not is_connected():
+        connect()
 
     try:
         print("---- Sending Robot Commands w POST ----")
@@ -61,6 +65,9 @@ def get_request():
     """
     # Build the full URL for the version endpoint
     url = URL_PREFIX + SERVER_BASE_ADDRESSES[0] + VERSION_URL_SUFFIX
+
+    if not is_connected():
+        connect()
 
     try:
         print("Sending GET request to", url)

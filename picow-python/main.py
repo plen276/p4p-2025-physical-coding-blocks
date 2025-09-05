@@ -6,10 +6,7 @@ from commands import read_commands, read_muxes, process_commands
 from wifi import connect
 
 if __name__ == "__main__":
-    iteration = 0
-    # print("In main")
     connect()
-    # test_post_endpoint()
     while True:
         led_off()
         process_commands()
