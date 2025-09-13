@@ -18,12 +18,24 @@ SPEED = 15
 VERSION = '1.07'
 
 # Wifi settings - these will need to change to match the network
-SERVER_BASE_ADDRESSES = ['192.168.68.111']
+SERVER_BASE_ADDRESSES = ['192.168.20.16']
 URL_PREFIX = 'http://'
 VERSION_URL_SUFFIX = ':5000/api/v1/version'
+POST_URL_SUFFIX = ':5000/api/robot/'
 GET_URL_SUFFIX = ':5000/api/v1/passthrough/' + NAME
 WIFI_SSID= 'NaoBlocks'
 WIFI_PASSWORD= 'letmein1'
+
+# Robot settings
+ROBOT_ID = "09"
+MAC_ADDRESS = cyberpi.get_mac_address()
+
+# Register robot
+registration_data = {
+    "action": "register",
+    "robotId": ROBOT_ID,
+    "macAddress": MAC_ADDRESS
+}
 
 # ACTIONS
 ACTION_NONE = 32            # space
@@ -287,6 +299,7 @@ class Robot():
         for address in SERVER_BASE_ADDRESSES:
             try:
                 version_url = URL_PREFIX + address + VERSION_URL_SUFFIX
+                self.post_url = URL_PREFIX + address + POST_URL_SUFFIX
                 self.getting_url = URL_PREFIX + address + GET_URL_SUFFIX
                 resp = requests.get(version_url)
                 if resp.status_code == 200:
@@ -326,7 +339,17 @@ class Robot():
         self.toggle_mode(0, False)
         return True
 
+    def register(self):
+        response = requests.post(self.post_url, json=registration_data)
+        if response.status_code == 200:
+            self.display('Registered')
+            self.is_registered = True
+        else:
+            self.display('Failed to register')
+            self.is_registered = False
+
     def run(self):
+        self.is_registered = False
         cyberpi.smart_camera.open_light()
         cyberpi.led.play('flash_red')
 
@@ -336,6 +359,8 @@ class Robot():
         self.has_stopped = True
         while self.is_running:
             self.display('Polling')
+            if not self.is_registered:
+                self.register()
             response = requests.get(self.getting_url).content
             while len(response) > 0:
                 command = response[0]
