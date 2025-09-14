@@ -18,6 +18,11 @@ SPEED = 15
 VERSION = '1.07'
 
 # Wifi settings - these will need to change to match the network
+# TODO: Change SERVER_BASE_ADDRESSES to match your server's IP address
+#       Either:
+#       1. Set a static IP on the server device, or
+#       2. Configure DHCP reservation on your router for the server
+#       Also verify WIFI_SSID and WIFI_PASSWORD match your router settings
 SERVER_BASE_ADDRESSES = ['192.168.0.150']
 URL_PREFIX = 'http://'
 VERSION_URL_SUFFIX = ':5000/api/v1/version'
@@ -27,13 +32,13 @@ WIFI_PASSWORD= 'letmein1'
 
 # ACTIONS
 ACTION_NONE = 32            # space
-ACTION_BACKWARD = 66        # B
-ACTION_CURVE_LEFT = 69      # E
-ACTION_CURVE_RIGHT = 70     # F
 ACTION_FORWARD = 65         # A
-ACTION_STOP = 71            # G
+ACTION_BACKWARD = 66        # B
 ACTION_TURN_LEFT = 67       # C
 ACTION_TURN_RIGHT = 68      # D
+ACTION_CURVE_LEFT = 69      # E
+ACTION_CURVE_RIGHT = 70     # F
+ACTION_STOP = 71            # G
 
 class Dispatcher():
     def __init__(self, executor, robot, prefix, can_repeat):
