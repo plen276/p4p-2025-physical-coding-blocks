@@ -21,6 +21,7 @@
   "micropico.openOnStart": false,
   "micropico.autoConnect": false,
   "micropico.manualComDevice": "COM11",
+  "micropico.softResetAfterUpload": true,
   // "micropico.syncFolder": "../firmware",
   "micropico.gcBeforeUpload": true,
   // "micropico.executeOnConnect": "main.py",

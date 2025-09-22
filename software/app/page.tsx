@@ -1,51 +1,73 @@
 "use client"
 
-import { Command, Pico, QueueStatus } from "@/lib/types/command"
+import { Command, QueueStatus } from "@/lib/types/command"
+import { Pico } from "@/lib/types/pico"
+import { Robot } from "@/lib/types/robot"
 import { useEffect, useState } from "react"
 
 export default function Home() {
   const [queueStatus, setQueueStatus] = useState<QueueStatus | null>(null)
   const [commands, setCommands] = useState<Command[]>([])
   const [connectedPicos, setConnectedPicos] = useState<Pico[]>([])
+  const [connectedRobots, setConnectedRobots] = useState<Robot[]>([])
   const [loading, setLoading] = useState(true)
 
   const fetchQueueData = async () => {
     try {
-      const [statusRes, commandsRes, picosRes] = await Promise.all([
-        fetch("/api/robot?action=status"),
-        fetch("/api/pico/commands"),
+      console.log("Fetching queue data...")
+      // const [statusRes, commandsRes, picoRes, robotRes] = await Promise.all([
+      //   fetch("/api/robot?action=status"),
+      //   fetch("/api/pico/commands"),
+      //   fetch("/api/pico/register"),
+      //   fetch("/api/robot/register"),
+      // ])
+      const [picoRes, robotRes] = await Promise.all([
         fetch("/api/pico/register"),
+        fetch("/api/robot/register"),
       ])
-
+      // console.log("Responses:", statusRes, commandsRes, picosRes, robotRes)
+      console.log("Robots API response:", robotRes)
       // Check if responses are ok before parsing JSON
-      if (!commandsRes.ok) {
-        console.error("Commands API error:", commandsRes.status, commandsRes.statusText)
-        const errorText = await commandsRes.text()
+      // if (!commandsRes.ok) {
+      //   console.error("Commands API error:", commandsRes.status, commandsRes.statusText)
+      //   const errorText = await commandsRes.text()
+      //   console.error("Error response:", errorText)
+      //   return
+      // }
+
+      if (!picoRes.ok) {
+        console.error("Picos API error:", picoRes.status, picoRes.statusText)
+        const errorText = await picoRes.text()
         console.error("Error response:", errorText)
         return
       }
 
-      if (!picosRes.ok) {
-        console.error("Picos API error:", picosRes.status, picosRes.statusText)
-        const errorText = await picosRes.text()
+      if (!robotRes.ok) {
+        console.error("Robots API error:", robotRes.status, robotRes.statusText)
+        const errorText = await robotRes.text()
         console.error("Error response:", errorText)
         return
       }
 
-      const statusData = await statusRes.json()
-      const commandsData = await commandsRes.json()
-      const picosData = await picosRes.json()
+      // const statusData = await statusRes.json()
+      // const commandsData = await commandsRes.json()
+      const picosData = await picoRes.json()
+      const robotsData = await robotRes.json()
 
-      if (statusData.success) {
-        setQueueStatus(statusData.status)
-      }
+      // if (statusData.success) {
+      //   setQueueStatus(statusData.status)
+      // }
 
-      if (commandsData.queueLength !== undefined) {
-        setCommands(commandsData.commands || [])
-      }
+      // if (commandsData.queueLength !== undefined) {
+      //   setCommands(commandsData.commands || [])
+      // }
 
       if (picosData.success && picosData.connectedPicos) {
         setConnectedPicos(picosData.connectedPicos)
+      }
+
+      if (robotsData.success && robotsData.connectedRobots) {
+        setConnectedRobots(robotsData.connectedRobots)
       }
     } catch (error) {
       console.error("Error fetching queue data:", error)
@@ -154,6 +176,40 @@ export default function Home() {
                       <div>Commands sent: {pico.commandCount}</div>
                       <div>Last seen: {new Date(pico.lastSeen).toLocaleString()}</div>
                     </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Connected Robots */}
+        <div className="mb-8 rounded-lg bg-white shadow">
+          <div className="border-b border-gray-200 px-6 py-4">
+            <h2 className="text-lg font-medium text-gray-900">Connected Robots</h2>
+            <p className="text-sm text-gray-500">Robots that have sent commands</p>
+          </div>
+          <div className="p-6">
+            {connectedRobots.length === 0 ? (
+              <div className="py-8 text-center text-gray-500">No Robots connected yet</div>
+            ) : (
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {connectedRobots.map((robot) => (
+                  <div key={robot.address} className="rounded-lg border border-gray-200 p-4">
+                    <div className="mb-2 flex items-center justify-between">
+                      <h3 className="truncate font-medium text-gray-900" title={robot.address}>
+                        {robot.address}
+                      </h3>
+                      <span
+                        className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getPicoStatusColor(robot.status)}`}
+                      >
+                        {robot.status}
+                      </span>
+                    </div>
+                    {/* <div className="space-y-1 text-sm text-gray-500">
+                      <div>Commands sent: {robot.commandCount || 0}</div>
+                      <div>Last seen: {new Date(robot.lastSeen).toLocaleString()}</div>
+                    </div> */}
                   </div>
                 ))}
               </div>

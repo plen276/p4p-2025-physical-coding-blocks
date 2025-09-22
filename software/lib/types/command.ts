@@ -1,10 +1,3 @@
-export interface Pico {
-  address: string
-  lastSeen: number
-  status: "online" | "offline"
-  commandCount: number
-}
-
 export interface Command {
   id: string
   type: string
