@@ -4,27 +4,27 @@ import { useEffect, useState } from 'react';
 import { Command, QueueStatus } from './types/command';
 
 export default function Home() {
-  const [queueStatus, setQueueStatus] = useState<QueueStatus | null>(null);
-  const [commands, setCommands] = useState<Command[]>([]);
+  // const [queueStatus, setQueueStatus] = useState<QueueStatus | null>(null);
+  // const [commands, setCommands] = useState<Command[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchQueueData = async () => {
     try {
-      const [statusRes, commandsRes] = await Promise.all([
-        fetch('/api/robot?action=status'),
-        fetch('/api/pico')
+      const [picoRes, robotRes] = await Promise.all([
+        fetch('/api/pico/register'),
+        fetch('/api/robot/register')
       ]);
       
-      const statusData = await statusRes.json();
-      const commandsData = await commandsRes.json();
+      // const statusData = await statusRes.json();
+      // const commandsData = await commandsRes.json();
       
-      if (statusData.success) {
-        setQueueStatus(statusData.status);
-      }
+      // if (statusData.success) {
+      //   setQueueStatus(statusData.status);
+      // }
       
-      if (commandsData.queueLength !== undefined) {
-        setCommands(commandsData.commands || []);
-      }
+      // if (commandsData.queueLength !== undefined) {
+      //   setCommands(commandsData.commands || []);
+      // }
     } catch (error) {
       console.error('Error fetching queue data:', error);
     } finally {
@@ -64,7 +64,7 @@ export default function Home() {
         </h1>
         
         {/* Queue Status Cards */}
-        {queueStatus && (
+        {/* {queueStatus && (
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-sm font-medium text-gray-500">Total Commands</h3>
@@ -87,7 +87,7 @@ export default function Home() {
               <p className="text-2xl font-bold text-red-600">{queueStatus.failed}</p>
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Commands List */}
         <div className="bg-white rounded-lg shadow">
@@ -115,7 +115,7 @@ export default function Home() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              {/* <tbody className="bg-white divide-y divide-gray-200">
                 {commands.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
@@ -147,7 +147,7 @@ export default function Home() {
                     </tr>
                   ))
                 )}
-              </tbody>
+              </tbody> */}
             </table>
           </div>
         </div>
