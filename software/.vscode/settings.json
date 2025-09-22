@@ -14,6 +14,9 @@
   "prettier.requireConfig": true,
   "prettier.configPath": ".prettierrc",
   "typescript.tsdk": "node_modules/typescript/lib",
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
   "files.exclude": {
     ".husky": true,
     ".github": true,

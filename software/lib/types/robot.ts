@@ -1,5 +1,10 @@
 export interface Robot {
-    address: string
-    lastSeen: number
-    status: "offline" | "online"
+  macAddress: string
+  lastSeen: number
+  status: "offline" | "online"
+}
+
+export interface RobotRegistry {
+  connectedRobots: Robot[]
+  totalRobots: number
 }

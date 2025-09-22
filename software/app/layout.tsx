@@ -1,16 +1,15 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-})
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// })
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-})
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// })
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,9 +21,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // const [sidebarOpen, setSidebarOpen] = useState(false)
+  // // const pathname = usePathname()
+
+  // const navigation = [
+  //   { name: "Overview", href: "/", icon: Home },
+  //   { name: "Robots", href: "/robots", icon: Bot },
+  //   { name: "Picos", href: "/picos", icon: Cpu },
+  //   { name: "Command Queue", href: "/commands", icon: Terminal },
+  //   { name: "Settings", href: "/settings", icon: Settings },
+  // ]
+
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body> */}
+      <body className="antialiased">{children}</body>
     </html>
   )
 }
