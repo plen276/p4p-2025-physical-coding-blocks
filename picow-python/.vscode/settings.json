@@ -1,7 +1,8 @@
 {
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true
   },
   "editor.formatOnSaveMode": "file",
   "python.languageServer": "Pylance",
@@ -20,6 +21,7 @@
   "micropico.openOnStart": false,
   "micropico.autoConnect": false,
   "micropico.manualComDevice": "COM11",
+  "micropico.softResetAfterUpload": true,
   // "micropico.syncFolder": "../firmware",
   "micropico.gcBeforeUpload": true,
   // "micropico.executeOnConnect": "main.py",
