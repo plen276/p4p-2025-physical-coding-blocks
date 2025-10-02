@@ -1,53 +1,51 @@
-""" mBot2 Tangibles client
+"""mBot2 Tangibles client
 
-This client runs directly on an mBot2 client. It scans for barcodes on paper cards
-and directly executes the commands. The details are then logged to the server.
+This client runs directly on an mBot2 client. It polls the server for commands
+and directly executes them.
 
 This file needs to be deployed via mBlock. All the code must be in a single file,
 otherwise mBlock won't compile it correctly.
 """
 
-import cyberpi
-import urequests as requests
 import random
 import time
 
+import cyberpi
+import urequests as requests
+
 # Base settings
-NAME = cyberpi.get_name()       # This lines means we don't need to hardcode the robot name
+NAME = cyberpi.get_name()  # This lines means we don't need to hardcode the robot name
 SPEED = 15
-VERSION = '1.07'
+VERSION = "1.07"
 
 # Wifi settings - these will need to change to match the network
-SERVER_BASE_ADDRESSES = ['192.168.20.16']
-URL_PREFIX = 'http://'
-VERSION_URL_SUFFIX = ':5000/api/v1/version'
-POST_URL_SUFFIX = ':5000/api/robot/'
-GET_URL_SUFFIX = ':5000/api/v1/passthrough/' + NAME
-WIFI_SSID= 'NaoBlocks'
-WIFI_PASSWORD= 'letmein1'
-
-# Robot settings
-ROBOT_ID = "09"
-MAC_ADDRESS = cyberpi.get_mac_address()
-
-# Register robot
-registration_data = {
-    "action": "register",
-    "robotId": ROBOT_ID,
-    "macAddress": MAC_ADDRESS
-}
+# TODO: Change SERVER_BASE_ADDRESSES to match your server's IP address
+#       Either:
+#       1. Set a static IP on the server device, or
+#       2. Configure DHCP reservation on your router for the server
+#       Also verify WIFI_SSID and WIFI_PASSWORD match your router settings
+SERVER_BASE_ADDRESSES = ["192.168.0.201"]
+URL_PREFIX = "http://"
+# VERSION_URL_SUFFIX = ":5000/api/v1/version"
+# GET_URL_SUFFIX = ":5000/api/v1/passthrough/" + NAME
+# GET_URL_SUFFIX = ":3000/api/robot/commands/" + NAME
+REGISTER_URL_SUFFIX = ":3000/api/robot/register"
+COMMANDS_URL_SUFFIX = ":3000/api/robot/commands"
+WIFI_SSID = "NaoBlocks"
+WIFI_PASSWORD = "letmein1"
 
 # ACTIONS
-ACTION_NONE = 32            # space
-ACTION_BACKWARD = 66        # B
-ACTION_CURVE_LEFT = 69      # E
-ACTION_CURVE_RIGHT = 70     # F
-ACTION_FORWARD = 65         # A
-ACTION_STOP = 71            # G
-ACTION_TURN_LEFT = 67       # C
-ACTION_TURN_RIGHT = 68      # D
+ACTION_NONE = 32  # space
+ACTION_FORWARD = 65  # A
+ACTION_BACKWARD = 66  # B
+ACTION_TURN_LEFT = 67  # C
+ACTION_TURN_RIGHT = 68  # D
+ACTION_CURVE_LEFT = 69  # E
+ACTION_CURVE_RIGHT = 70  # F
+ACTION_STOP = 71  # G
 
-class Dispatcher():
+
+class Dispatcher:
     def __init__(self, executor, robot, prefix, can_repeat):
         self.actions = []
         self.executor = executor
@@ -57,34 +55,35 @@ class Dispatcher():
 
     def execute(self, action):
         if action == ACTION_BACKWARD:
-            self.robot.display(self.prefix + 'Backward')
+            self.robot.display(self.prefix + "Backward")
             self.executor.backward()
         elif action == ACTION_FORWARD:
-            self.robot.display(self.prefix + 'Forward')
+            self.robot.display(self.prefix + "Forward")
             self.executor.forward()
         elif action == ACTION_TURN_LEFT:
-            self.robot.display(self.prefix + 'Left Turn')
+            self.robot.display(self.prefix + "Left Turn")
             self.executor.turn_left()
         elif action == ACTION_TURN_RIGHT:
-            self.robot.display(self.prefix + 'Right Turn')
+            self.robot.display(self.prefix + "Right Turn")
             self.executor.turn_right()
         elif action == ACTION_CURVE_LEFT:
-            self.robot.display(self.prefix + 'Left Curve')
+            self.robot.display(self.prefix + "Left Curve")
             self.executor.curve_left()
         elif action == ACTION_CURVE_RIGHT:
-            self.robot.display(self.prefix + 'Right Curve')
+            self.robot.display(self.prefix + "Right Curve")
             self.executor.curve_right()
 
-class Program():
+
+class Program:
     def __init__(self, executor, robot):
         self.actions = []
         self.executor = executor
         self.robot = robot
-        self.dispatcher = Dispatcher(executor, robot, ':', True)
+        self.dispatcher = Dispatcher(executor, robot, ":", True)
 
     def add(self, action):
         self.actions.append(action)
-        cyberpi.led.play('meteor_green')
+        cyberpi.led.play("meteor_green")
 
     def clear(self):
         self.actions.clear()
@@ -99,8 +98,9 @@ class Program():
     def stop(self):
         pass
 
-class Actions():
-    def backward(self):        
+
+class Actions:
+    def backward(self):
         pass
 
     def can_perform(self, _):
@@ -124,11 +124,12 @@ class Actions():
     def turn_right(self):
         pass
 
+
 class ContinuousActions(Actions):
     def __init__(self, robot):
         # Identification details
-        self.name = 'Continuous'
-        self.code = 'C'
+        self.name = "Continuous"
+        self.code = "C"
 
         # Configuration options
         self.robot = robot
@@ -137,7 +138,7 @@ class ContinuousActions(Actions):
         # Internal state
         self.last_action = ACTION_NONE
 
-    def backward(self):        
+    def backward(self):
         cyberpi.mbot2.backward(self.speed)
         self.last_action = ACTION_BACKWARD
 
@@ -167,11 +168,12 @@ class ContinuousActions(Actions):
         cyberpi.mbot2.turn_right(self.speed)
         self.last_action = ACTION_TURN_RIGHT
 
+
 class DiscreteActions(Actions):
     def __init__(self, robot):
         # Identification details
-        self.name = 'Discrete'
-        self.code = 'D'
+        self.name = "Discrete"
+        self.code = "D"
 
         # Configuration options
         self.robot = robot
@@ -181,7 +183,7 @@ class DiscreteActions(Actions):
 
         # Internal state
         self.last_action = ACTION_NONE
-        self.dispatcher = Dispatcher(self, robot, '-', False)
+        self.dispatcher = Dispatcher(self, robot, "-", False)
 
     def backward(self):
         cyberpi.mbot2.backward(self.speed, self.distance)
@@ -193,13 +195,13 @@ class DiscreteActions(Actions):
     def curve_left(self):
         cyberpi.mbot2.drive_power(self.speed, -self.speed * 2)
         time.sleep(self.distance)
-        cyberpi.mbot2.EM_stop('all')
+        cyberpi.mbot2.EM_stop("all")
         self.last_action = ACTION_CURVE_LEFT
 
     def curve_right(self):
         cyberpi.mbot2.drive_power(self.speed * 2, -self.speed)
         time.sleep(self.distance)
-        cyberpi.mbot2.EM_stop('all')
+        cyberpi.mbot2.EM_stop("all")
         self.last_action = ACTION_CURVE_RIGHT
 
     def forward(self):
@@ -214,25 +216,27 @@ class DiscreteActions(Actions):
         cyberpi.mbot2.turn(self.angle, self.speed)
         self.last_action = ACTION_TURN_RIGHT
 
+
 class UniqueActions(DiscreteActions):
     def __init__(self, robot):
         super().__init__(robot)
 
         # Identification details
-        self.name = 'Unique'
-        self.code = 'U'
+        self.name = "Unique"
+        self.code = "U"
 
     def can_perform(self, action):
         can_perform = self.last_action != action
         return can_perform and super().can_perform(action)
+
 
 class RandomValueActions(DiscreteActions):
     def __init__(self, robot):
         super().__init__(robot)
 
         # Identification details
-        self.name = 'RandVal'
-        self.code = 'RV'
+        self.name = "RandVal"
+        self.code = "RV"
 
     def can_perform(self, action):
         self.speed = random.randint(1, 5) * 5
@@ -241,7 +245,7 @@ class RandomValueActions(DiscreteActions):
         return super().can_perform(action)
 
 
-class Robot():
+class Robot:
     def __init__(self):
         # Internal state
         self.has_stopped = True
@@ -251,8 +255,8 @@ class Robot():
         self.is_connected = False
 
         # Update robot
-        cyberpi.smart_camera.set_mode(mode = "line")
-        cyberpi.quad_rgb_sensor.set_led('w')
+        cyberpi.smart_camera.set_mode(mode="line")
+        cyberpi.quad_rgb_sensor.set_led("w")
 
         # Modes
         self.modes = [
@@ -262,105 +266,94 @@ class Robot():
             ContinuousActions(self),
         ]
 
-    def display(self, message, clear_screen = False):
+    def display(self, message, clear_screen=False):
         self.lines += 1
         if clear_screen or (self.lines > 6):
             cyberpi.console.clear()
             self.lines = 1
-            cyberpi.console.print('>')
+            cyberpi.console.print(">")
             cyberpi.console.print(NAME)
-            
-        cyberpi.console.println(' ')
+
+        cyberpi.console.println(" ")
         cyberpi.console.print(message)
 
     def initialise(self):
-        self.display('Version ' + VERSION)
+        self.display("Version " + VERSION)
         cyberpi.wifi.connect(WIFI_SSID, WIFI_PASSWORD)
         count = 20
-        self.display('Wifi connect')
+        self.display("Wifi connect")
         while (count > 0) and not cyberpi.wifi.is_connect():
             time.sleep(0.5)
             count -= 1
 
         if not cyberpi.wifi.is_connect():
-            self.display('...failed')
+            self.display("...failed")
             self.toggle_mode(0, False)
             return False
 
-        self.display('...connected')
-        self.display('Check config')
-        data = {
-            "action": "init",
-            "version": VERSION
-        }
+        self.display("...connected")
+        self.display("Check config")
+        # data = {"action": "init", "version": VERSION}
+        MAC_ADDRESS = cyberpi.get_mac_address()
+        self.register_data = {"macAddress": MAC_ADDRESS}
+        self.display("Mac Address: " + MAC_ADDRESS)
 
         # Check each of the possible addresses to se if any are active
         is_connected = False
         for address in SERVER_BASE_ADDRESSES:
             try:
-                version_url = URL_PREFIX + address + VERSION_URL_SUFFIX
-                self.post_url = URL_PREFIX + address + POST_URL_SUFFIX
-                self.getting_url = URL_PREFIX + address + GET_URL_SUFFIX
-                resp = requests.get(version_url)
+                # version_url = URL_PREFIX + address + VERSION_URL_SUFFIX
+                self.register_url = URL_PREFIX + address + REGISTER_URL_SUFFIX
+                self.getting_url = URL_PREFIX + address + COMMANDS_URL_SUFFIX
+                resp = requests.post(self.register_url, json=self.register_data)
                 if resp.status_code == 200:
                     is_connected = True
                     break
             except:
                 pass
 
-        self.display('...done...')
+        self.display("...done...")
 
         if not is_connected:
             # We don't care how it failed, only that it failed
-            self.display('...failed')
+            self.display("...failed")
             self.toggle_mode(0, False)
             return False
 
         self.is_connected = True
-        self.display('...retrieved')
+        self.display("...retrieved")
         options = resp.json()
         try:
-            values = options['values']
+            values = options["values"]
         except KeyError:
             # No options, we can stop parsing here
             self.toggle_mode(0, False)
             return True
 
         try:
-            self.mode = int(values['mode'])
+            self.mode = int(values["mode"])
         except:
             pass
 
         try:
-            self.map = values['map']
+            self.map = values["map"]
         except:
             self.map = 0
-            
+
         self.toggle_mode(0, False)
         return True
 
-    def register(self):
-        response = requests.post(self.post_url, json=registration_data)
-        if response.status_code == 200:
-            self.display('Registered')
-            self.is_registered = True
-        else:
-            self.display('Failed to register')
-            self.is_registered = False
-
     def run(self):
-        self.is_registered = False
         cyberpi.smart_camera.open_light()
-        cyberpi.led.play('flash_red')
+        cyberpi.led.play("flash_red")
 
-        self.display('Running [' + self.actions.code + ']', 'status')
+        self.display("Running [" + self.actions.code + "]", "status")
 
         self.is_running = True
         self.has_stopped = True
         while self.is_running:
-            self.display('Polling')
-            if not self.is_registered:
-                self.register()
+            self.display("Polling")
+            requests.post(self.register_url,json=self.register_data)
             response = requests.get(self.getting_url).content
             while len(response) > 0:
                 command = response[0]
@@ -368,46 +361,46 @@ class Robot():
 
                 if command == ACTION_STOP:
                     self.stop()
-                
+
                 elif command == ACTION_FORWARD:
                     if self.actions.can_perform(ACTION_FORWARD):
-                        self.display('Forward')
+                        self.display("Forward")
                         self.has_stopped = False
                         self.actions.forward()
 
                 elif command == ACTION_BACKWARD:
                     if self.actions.can_perform(ACTION_BACKWARD):
-                        self.display('Backward')
+                        self.display("Backward")
                         self.has_stopped = False
                         self.actions.backward()
 
                 elif command == ACTION_TURN_LEFT:
                     if self.actions.can_perform(ACTION_TURN_LEFT):
-                        self.display('Left Turn')
+                        self.display("Left Turn")
                         self.has_stopped = False
                         self.actions.turn_left()
 
                 elif command == ACTION_TURN_RIGHT:
                     if self.actions.can_perform(ACTION_TURN_RIGHT):
-                        self.display('Right Turn')
+                        self.display("Right Turn")
                         self.has_stopped = False
                         self.actions.turn_right()
 
                 elif command == ACTION_CURVE_LEFT:
                     if self.actions.can_perform(ACTION_CURVE_LEFT):
-                        self.display('Left Curve')
+                        self.display("Left Curve")
                         self.has_stopped = False
                         self.actions.curve_left()
 
                 elif command == ACTION_CURVE_RIGHT:
                     if self.actions.can_perform(ACTION_CURVE_RIGHT):
-                        self.display('Right Curve')
+                        self.display("Right Curve")
                         self.has_stopped = False
                         self.actions.curve_right()
 
     # Stop is a special command - we always want it to stop anything that is happening
-    def stop(self, message = 'Stop', restart = True):
-        cyberpi.mbot2.EM_stop('all')
+    def stop(self, message="Stop", restart=True):
+        cyberpi.mbot2.EM_stop("all")
         if not self.has_stopped:
             self.display(message)
             self.has_stopped = True
@@ -415,25 +408,27 @@ class Robot():
         self.actions.stop()
         if not restart:
             self.is_running = False
-            cyberpi.led.on('y')
+            cyberpi.led.on("y")
         else:
             self.is_running = True
-            cyberpi.led.on('r')
+            cyberpi.led.on("r")
 
-    def toggle_mode(self, direction, is_change = True):
+    def toggle_mode(self, direction, is_change=True):
         self.mode += direction
         if self.mode >= len(self.modes):
             self.mode = 0
         elif self.mode < 0:
             self.mode = len(self.modes) - 1
-            
-        if is_change:   
-            self.display('Mode change', clear_screen=True)
+
+        if is_change:
+            self.display("Mode change", clear_screen=True)
 
         self.actions = self.modes[self.mode]
-        self.display(self.actions.name, 'mode')
+        self.display(self.actions.name, "mode")
+
 
 r = Robot()
+
 
 # Start the robot when the CyberPi starts
 @cyberpi.event.start
@@ -443,26 +438,24 @@ def on_start():
     if r.initialise():
         r.run()
 
+
 # Handle the stop (square) button
-@cyberpi.event.is_press('a')
+@cyberpi.event.is_press("a")
 def button_a_callback():
     cyberpi.smart_camera.close_light()
-    r.stop('Halt', False)           # Don't resume execution
+    r.stop("Halt", False)  # Don't resume execution
+
 
 # Start running when a reset message is received
-@cyberpi.event.receive('reset')
+@cyberpi.event.receive("reset")
 def reset_callback():
     r.run()
+
 
 # Handle the play (triangle) button
-@cyberpi.event.is_press('b')
+@cyberpi.event.is_press("b")
 def button_b_callback():
     if r.is_running:
-        r.stop('Reset')
+        r.stop("Reset")
     else:
-        cyberpi.broadcast('reset')
-
-# Start running when a reset message is received
-@cyberpi.event.receive('reset')
-def reset_callback():
-    r.run()
+        cyberpi.broadcast("reset")
