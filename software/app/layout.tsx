@@ -1,18 +1,46 @@
 import Sidebar from "@/components/sidebar"
 import type { Metadata } from "next"
 import { ThemeProvider } from "next-themes"
-import { Geist, Geist_Mono } from "next/font/google"
+import localFont from "next/font/local"
 import { Toaster } from "sonner"
 import "./globals.css"
 
-const geistSans = Geist({
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// })
+
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// })
+
+const geistSans = localFont({
+  src: [
+    {
+      path: "../public/fonts/Geist[wght].woff2",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Geist-Italic[wght].woff2",
+      style: "italic",
+    },
+  ],
   variable: "--font-geist-sans",
-  subsets: ["latin"],
 })
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+  src: [
+    {
+      path: "../public/fonts/GeistMono[wght].woff2",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/GeistMono-Italic[wght].woff2",
+      style: "italic",
+    },
+  ],
   variable: "--font-geist-mono",
-  subsets: ["latin"],
 })
 
 export const metadata: Metadata = {
@@ -25,21 +53,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // const [sidebarOpen, setSidebarOpen] = useState(false)
-  // const pathname = usePathname()
-
-  // const navigation = [
-  //   { name: "Overview", href: "/", icon: Home },
-  //   { name: "Robots", href: "/robots", icon: Bot },
-  //   { name: "Picos", href: "/picos", icon: Cpu },
-  //   { name: "Command Queue", href: "/commands", icon: Terminal },
-  //   { name: "Settings", href: "/settings", icon: Settings },
-  // ]
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* <body className="antialiased"> */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
