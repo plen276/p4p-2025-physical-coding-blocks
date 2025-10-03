@@ -1,9 +1,10 @@
 from machine import Pin
 from utime import sleep, ticks_ms
 
+# from api import post_request
+import api  # noqa
+import api_next  # noqa
 from commands import process_commands
-from api import post_request
-from test_api import test_post_endpoint
 from config import BUTTON_PIN
 
 button = Pin(BUTTON_PIN, Pin.IN, Pin.PULL_DOWN)
@@ -13,7 +14,7 @@ Configure GPIO pin `15` (`BUTTON_PIN` from `config.py` as input with internal pu
 `Pin.PULL_DOWN` = Internal pull-up resistor (pulls pin `HIGH` when button pressed)
 """
 
-DEBOUNCE_DELAY_MS = 300  # Debounce delay in milliseconds
+DEBOUNCE_DELAY_MS = 1000  # Debounce delay in milliseconds
 LAST_PRESS_TIME = 0  # Timestamp of the last button press
 
 
@@ -24,7 +25,10 @@ def button_pressed(pin):
     if time - LAST_PRESS_TIME > DEBOUNCE_DELAY_MS:
         print("Button interrupt: pressed")
         commands = process_commands()
-        post_request(commands, len(commands))
+        # TODO: Uncomment the respective line depending on which server to connect to
+        # api.post_request(commands, len(commands))
+        api_next.post_request(commands, len(commands))
+        # ---------------------------------------------------------------------------
         LAST_PRESS_TIME = time
 
 

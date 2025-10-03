@@ -1,12 +1,12 @@
 import urequests
 
-from wifi import is_connected, connect
 from config import (
+    PASSTHROUGH_URL_SUFFIX,
     SERVER_BASE_ADDRESSES,
     URL_PREFIX,
-    PASSTHROUGH_URL_SUFFIX,
     VERSION_URL_SUFFIX,
 )
+from wifi import connect, is_connected
 
 
 def post_request(commands, count):
@@ -79,5 +79,5 @@ def get_request():
         print("[PASS] Get request successful!")
         return True
     except Exception as e:
-        print(f"[FAIL] Error sending get request:", e)
+        print("[FAIL] Error sending get request:", e)
         return False

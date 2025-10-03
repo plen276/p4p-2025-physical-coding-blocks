@@ -1,6 +1,6 @@
 from utime import sleep
 
-from led import led_toggle, led_on, led_off
+from led import led_off, led_on, led_toggle
 
 
 def test_led():

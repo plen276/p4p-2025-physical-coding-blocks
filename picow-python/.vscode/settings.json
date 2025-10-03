@@ -2,7 +2,10 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    }
   },
   "editor.formatOnSaveMode": "file",
   "python.languageServer": "Pylance",

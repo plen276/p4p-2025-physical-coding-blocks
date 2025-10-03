@@ -1,5 +1,5 @@
 from machine import Pin
-from utime import sleep_us, sleep
+from utime import sleep, sleep_us
 
 import config
 
