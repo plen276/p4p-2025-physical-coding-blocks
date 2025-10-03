@@ -294,9 +294,11 @@ class Robot:
         self.display("...connected")
         self.display("Check config")
         # data = {"action": "init", "version": VERSION}
-        MAC_ADDRESS = cyberpi.get_mac_address()
-        self.register_data = {"macAddress": MAC_ADDRESS}
-        self.display("Mac Address: " + MAC_ADDRESS)
+        raw_mac_address = cyberpi.get_mac_address()
+        mac_address = ":".join(raw_mac_address[i:i+2] for i in range(0, 12, 2))
+        
+        self.register_data = {"macAddress": mac_address}
+        self.display("Mac Address: " + mac_address)
 
         # Check each of the possible addresses to se if any are active
         is_connected = False
