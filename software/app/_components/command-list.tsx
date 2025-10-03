@@ -1,75 +1,102 @@
 "use client"
 
-export default function CommandList() {
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Command } from "@/lib/types/command"
+import { parseMoveIcons } from "@/lib/utils"
+import { formatDistanceToNow } from "date-fns"
+import { Terminal } from "lucide-react"
+
+interface CommandListProps {
+  commands: Command[]
+}
+
+export default function CommandList({ commands }: CommandListProps) {
+  // const getCommandStatusColor = (status: boolean) => {
+  //   switch (status) {
+  //     case true:
+  //       return "bg-green-100 text-green-800"
+  //     case false:
+  //       return "bg-gray-100 text-gray-800"
+  //     default:
+  //       return "bg-gray-100 text-gray-800"
+  //   }
+  // }
+
   return (
-    <div className="rounded-lg bg-white shadow">
-      <div className="border-b border-gray-200 px-6 py-4">
-        <h2 className="text-lg font-medium text-gray-900">Command Queue</h2>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                ID
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                Type
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                Pico Address
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                Data
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                Timestamp
-              </th>
-            </tr>
-          </thead>
-          {/* <tbody className="bg-white divide-y divide-gray-200">
-                {commands.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
-                      No commands in queue
-                    </td>
-                  </tr>
-                ) : (
-                  commands.map((command) => (
-                    <tr key={command.id}>
-                      <td className="px-6 py-4 font-mono text-sm whitespace-nowrap text-gray-900">
-                        {command.id}
-                      </td>
-                      <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
-                        {command.type}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getStatusColor(command.status)}`}
-                        >
-                          {command.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
-                        {command.picoAddress || "Unknown"}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        <pre className="rounded bg-gray-100 p-2 text-xs">
-                          {JSON.stringify(command.data, null, 2)}
-                        </pre>
-                      </td>
-                      <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-                        {new Date(command.timestamp).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody> */}
-        </table>
-      </div>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Terminal className="h-5 w-5" />
+          Recent Commands
+        </CardTitle>
+        <CardDescription>Latest commands sent through the system</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Pico Address</TableHead>
+              <TableHead>Data</TableHead>
+              <TableHead>Timestamp</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {commands.map((command) => (
+              <TableRow key={command.id}>
+                <TableCell>{command.id}</TableCell>
+                <TableCell>
+                  {command.read ? (
+                    <Badge variant="outline">Completed</Badge>
+                  ) : (
+                    <Badge variant="default">Queued</Badge>
+                  )}
+                </TableCell>
+                <TableCell className="font-mono">{command.macAddress}</TableCell>
+                <TableCell className="flex gap-1">
+                  {/* {command.data.map((m, i) => (
+                    <Badge key={i} variant="secondary">
+                      {m} {i > 1 ? `x${i}` : ""}
+                    </Badge>
+                  ))} */}
+                  {parseMoveIcons(command.data).map((move, index) => (
+                    <Tooltip key={index}>
+                      <TooltipTrigger>
+                        <Badge key={index} variant="secondary">
+                          {move.icon} {move.count > 1 ? `x${move.count}` : ""}
+                        </Badge>
+                      </TooltipTrigger>
+                      <TooltipContent>{move.move}</TooltipContent>
+                    </Tooltip>
+                  ))}
+                </TableCell>
+                <TableCell>
+                  <Tooltip>
+                    <TooltipTrigger>{command.createdAt.toLocaleString("en-UK")}</TooltipTrigger>
+                    <TooltipContent>
+                      {formatDistanceToNow(command.createdAt, {
+                        includeSeconds: true,
+                        addSuffix: true,
+                      })}
+                    </TooltipContent>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   )
 }

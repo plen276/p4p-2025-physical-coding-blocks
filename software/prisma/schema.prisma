@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  // output   = "../app/generate/prisma"
+  output   = "../app/generated/prisma"
 }
 
 datasource db {
@@ -15,17 +15,44 @@ datasource db {
 }
 
 model Pico {
-  id         Int    @id @default(autoincrement())
-  macAddress String @unique
-  lastSeen   Int
-  status     String
+  id          Int                   @id @default(autoincrement())
+  name        String? // Optional human-readable name
+  macAddress  String                @unique
+  lastSeen    DateTime
+  status      String
+  assignments RobotPicoAssignment[]
 }
 
 model Robot {
-  id         Int    @id @default(autoincrement())
-  macAddress String @unique
-  lastSeen   Int
-  status     String
+  id          Int                   @id @default(autoincrement())
+  name        String? // Optional human-readable name
+  macAddress  String                @unique
+  lastSeen    DateTime
+  status      String
+  assignments RobotPicoAssignment[]
+}
+
+model RobotPicoAssignment {
+  id        Int      @id @default(autoincrement())
+  robotId   Int
+  picoId    Int
+  createdAt DateTime @default(now())
+  isActive  Boolean  @default(true)
+
+  robot Robot @relation(fields: [robotId], references: [id], onDelete: Cascade)
+  pico  Pico  @relation(fields: [picoId], references: [id], onDelete: Cascade)
+
+  @@unique([robotId, picoId])
+  @@index([robotId])
+  @@index([picoId])
+}
+
+model Commands {
+  id         Int      @id @default(autoincrement())
+  macAddress String
+  data       String
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
 }
 
 model Notification {

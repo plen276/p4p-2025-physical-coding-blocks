@@ -1,3 +1,4 @@
+import { Command, CommandRegistry } from "@/lib/types/command"
 import { PicoRegistry } from "@/lib/types/pico"
 import { RobotRegistry } from "@/lib/types/robot"
 import ApiDocumentation from "./_components/api-documentation"
@@ -19,18 +20,35 @@ export default async function Home() {
   const loading: boolean = false
   // const connectedPicos: Pico[] = []
   // const connectedRobots: Robot[] = []
+  console.log("deafult url:", defaultUrl)
 
-  const picoResponse = await fetch(`${defaultUrl}/api/pico/register`, { cache: "no-store" })
+  // const picoResponse = await fetch(`${defaultUrl}/api/pico/register`, { cache: "no-store" })
+  const picoResponse = await fetch("http://localhost:3000/api/pico/register", { cache: "no-store" })
   // const {connectedPicos: Pico[],totalPicos:number} = await picoResponse.json()
   const picoData = (await picoResponse.json()) as PicoRegistry
   console.log("The API returned:", picoData)
-  console.log(`Total connected [${picoData.totalPicos}]:`, picoData.connectedPicos)
+  console.log(`Total connected [${picoData.connectedPicos.length}]:`, picoData.connectedPicos)
 
-  const robotResponse = await fetch(`${defaultUrl}/api/robot/register`, { cache: "no-store" })
+  const robotResponse = await fetch("http://localhost:3000/api/robot/register", {
+    cache: "no-store",
+  })
   const robotData = (await robotResponse.json()) as RobotRegistry
   console.log("The API returned:", robotData)
-  console.log(`Total connected [${robotData.totalRobots}]:`, robotData.connectedRobots)
+  console.log(`Total connected [${robotData.connectedRobots.length}]:`, robotData.connectedRobots)
 
+  const commandResponse = await fetch("http://localhost:3000/api/pico/commands", {
+    cache: "no-store",
+  })
+  const commandData = (await commandResponse.json()) as CommandRegistry
+  console.log("The API returned:", commandData)
+  const commandList: Command[] = commandData.commandList.map((cmd) => ({
+    id: cmd.id,
+    macAddress: cmd.macAddress,
+    read: cmd.read,
+    createdAt: new Date(cmd.createdAt),
+    data: JSON.parse(cmd.data),
+  }))
+  console.log("Formatted commands:", commandList)
   // const fetchQueueData = async () => {
   //   try {
   //     const [picoRes, robotRes] = await Promise.all([
@@ -65,24 +83,24 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="mx-auto max-w-6xl">
-        <h1 className="mb-8 text-3xl font-bold text-gray-900">
-          Pico W & mBot2 Command Queue Dashboard
-        </h1>
-
+    <div className="space-y-6">
+      {/* Status Grid */}
+      <div className="grid gap-6 md:grid-cols-2">
         {/* Connected Picos */}
-        <PicoList connectedPicos={picoData.connectedPicos} totalPicos={picoData.totalPicos} />
+        <PicoList
+          connectedPicos={picoData.connectedPicos}
+          totalPicos={picoData.connectedPicos.length}
+        />
 
         {/* Connected Robots */}
         <RobotList connectedRobots={robotData.connectedRobots} />
-
-        {/* Commands List */}
-        <CommandList />
-
-        {/* API Documentation */}
-        <ApiDocumentation />
       </div>
+
+      {/* Commands List */}
+      <CommandList commands={commandList} />
+
+      {/* API Documentation */}
+      <ApiDocumentation />
     </div>
   )
 }

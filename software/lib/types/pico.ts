@@ -1,11 +1,14 @@
+import { RobotPicoAssignment } from "./robot-pico"
+
 export interface Pico {
+  id: number
+  name?: string
   macAddress: string
-  lastSeen: number
+  lastSeen: string
   status: "online" | "offline"
-  commandCount: number
+  assignments?: RobotPicoAssignment[]
 }
 
 export interface PicoRegistry {
   connectedPicos: Pico[]
-  totalPicos: number
 }

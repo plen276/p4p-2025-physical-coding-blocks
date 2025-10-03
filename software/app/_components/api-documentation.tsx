@@ -1,10 +1,14 @@
 "use client"
 
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+
 export default function ApiDocumentation() {
   return (
-    <div className="mt-8 rounded-lg bg-white p-6 shadow">
-      <h2 className="mb-4 text-lg font-medium text-gray-900">API Endpoints</h2>
-      <div className="space-y-4">
+    <Card>
+      <CardHeader>
+        <CardTitle>API Endpoints</CardTitle>
+      </CardHeader>
+      <CardContent>
         <div>
           <h3 className="font-medium text-gray-900">Pico W (Register)</h3>
           <code className="mt-1 block rounded bg-gray-100 p-2 text-sm text-gray-500">
@@ -43,7 +47,7 @@ export default function ApiDocumentation() {
           </code>
           <p className="mt-1 text-sm text-gray-600">Mark command as completed</p>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }

@@ -1,7 +1,5 @@
-import { Robot } from "@/lib/types/robot"
+import prisma from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
-
-let connectedRobots: Map<string, Robot> = new Map()
 
 interface RobotRegisterRequest {
   macAddress: string
@@ -18,21 +16,23 @@ export async function POST(request: NextRequest) {
       console.log("[ROBOT REGISTER] Robot address:", body.macAddress)
     }
 
-    const robotAddress = body.macAddress
-    const now = Date.now()
+    const now = new Date()
 
-    const robot: Robot = {
-      macAddress: robotAddress,
-      lastSeen: now,
-      status: "online",
-    }
-    connectedRobots.set(robotAddress, robot)
+    console.log(`[ROBOT REGISTER] Adding Robot ${body.macAddress} to database`)
 
-    console.log(`[ROBOT REGISTER] Robot registered: ${robotAddress}`)
-    console.log(`[ROBOT REGISTER] Total connected robots: ${connectedRobots}`)
+    const robot = await prisma.robot.upsert({
+      where: { macAddress: body.macAddress },
+      update: { lastSeen: now, status: "online" },
+      create: { macAddress: body.macAddress, lastSeen: now, status: "online" },
+    })
+
+    const allRobots = await prisma.robot.findMany()
+
+    console.log(`[ROBOT REGISTER] Robot registered: ${robot.macAddress}`)
+    console.log(`[ROBOT REGISTER] Total connected robots: ${allRobots.length}`)
 
     return NextResponse.json(
-      { text: `Robot ${robotAddress} has been registered with the server` },
+      { text: `Robot ${robot.macAddress} has been registered with the server` },
       { status: 200 }
     )
   } catch (error) {
@@ -42,17 +42,26 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  const now = Date.now()
-  const fiveMinutesAgo = now - 5 * 60 * 1000
+  console.log("[ROBOT REGISTER] Getting Robot List")
+  try {
+    const now = new Date()
+    const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000)
 
-  for (const [address, robot] of connectedRobots.entries()) {
-    if (robot.lastSeen < fiveMinutesAgo && robot.status === "online") {
-      robot.status = "offline"
-    }
+    const allRobots = await prisma.robot.findMany()
+    console.log("[ROBOT REGISTER] All Robots:", allRobots)
+
+    const updatedRobots = await Promise.all(
+      allRobots.map(async (robot) => {
+        if (robot.lastSeen < fiveMinutesAgo && robot.status === "online") {
+          return await prisma.robot.update({ where: { id: robot.id }, data: { status: "offline" } })
+        }
+        return robot
+      })
+    )
+
+    return NextResponse.json({ connectedRobots: updatedRobots }, { status: 200 })
+  } catch (error) {
+    console.error("[ROBOT REGSITER] Error fetching Robots:", error)
+    return NextResponse.json({ error: "Error fetching Picos" }, { status: 500 })
   }
-
-  return NextResponse.json(
-    { connectedRobots: Array.from(connectedRobots.values()), totalRobots: connectedRobots.size },
-    { status: 200 }
-  )
 }

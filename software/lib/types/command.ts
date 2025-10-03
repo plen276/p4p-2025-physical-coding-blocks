@@ -1,25 +1,36 @@
 export interface Command {
   id: string
-  type: string
-  data: any
-  timestamp: number
-  status: "pending" | "processing" | "completed" | "failed"
-  picoAddress?: string
+  macAddress: string
+  data: string[]
+  read: boolean
+  createdAt: Date
 }
 
 export interface CommandResponse {
-  success: boolean
-  commandId?: string
-  queueLength?: number
-  hasCommand?: boolean
-  command?: {
-    id: string
-    type: string
-    data: any
-  }
-  message?: string
-  error?: string
+  id: string
+  macAddress: string
+  data: string
+  read: boolean
+  createdAt: Date
 }
+
+export interface CommandRegistry {
+  commandList: CommandResponse[]
+}
+
+// export interface CommandResponse {
+//   success: boolean
+//   commandId?: string
+//   queueLength?: number
+//   hasCommand?: boolean
+//   command?: {
+//     id: string
+//     type: string
+//     data: any
+//   }
+//   message?: string
+//   error?: string
+// }
 
 export interface QueueStatus {
   total: number
