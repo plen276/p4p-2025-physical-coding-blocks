@@ -1,10 +1,10 @@
 import machine
 import network
-from utime import sleep, ticks_ms, ticks_diff
+from utime import sleep, ticks_diff, ticks_ms
 
 from config import (
-    WIFI_SSID,
     WIFI_PASSWORD,
+    WIFI_SSID,
 )
 
 
@@ -24,6 +24,15 @@ def connect():
 
     # Only attempt connection if not already connected
     if not wlan.isconnected():
+        networks = wlan.scan()
+        print("Available networks:")
+        for net in networks:
+            ssid = net[0].decode("utf-8")
+            rssi = net[3]
+            print(f"SSID: {ssid}, RSSI: {rssi} dBm")
+            if ssid == WIFI_SSID:
+                print(f"Found target SSID: {ssid} with RSSI: {rssi} dBm")
+
         print("Connecting to network... " + WIFI_SSID)
         wlan.connect(WIFI_SSID, WIFI_PASSWORD)
 
@@ -55,6 +64,15 @@ def connect():
 
         print("Connection successful")
     else:
+        print("Current connected SSID:", wlan.config("ssid"))
+        if wlan.config("ssid") != WIFI_SSID:
+            wlan.disconnect()
+            print(
+                "Not connected to the target WiFi SSID. Attempting to connect to ",
+                WIFI_SSID,
+            )
+            return connect()
+
         print("Already connected to network")
 
     # Display network configuration information

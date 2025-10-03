@@ -1,14 +1,16 @@
-from utime import sleep, sleep_us
+from utime import sleep
 
-from led import led_toggle, led_off
-import button
-from commands import read_commands, read_muxes, process_commands
+import api_next  # noqa
+import button  # noqa -- button module needs to be imported for the interrupt to run
+import commands
+import led
 from wifi import connect
 
 if __name__ == "__main__":
     connect()
     while True:
-        led_off()
-        process_commands()
+        led.led_off()
+        api_next.send_mac_address()  # TODO: Uncomment if connecting to next.js server
+        commands.process_commands()
         sleep(2)
-        led_toggle()
+        led.led_toggle()

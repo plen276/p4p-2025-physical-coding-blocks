@@ -8,6 +8,12 @@ URL_PREFIX = "http://"
 VERSION_URL_SUFFIX = ":5000/api/v1/version"
 PASSTHROUGH_URL_SUFFIX = ":5000/api/v1/passthrough/cyberpi"
 
+# Next Server Configuration
+NEXT_SERVER_BASE_ADDRESSES = ["192.168.0.201"]
+NEXT_URL_PREFIX = "http://"
+NEXT_REGISTER_URL_SUFFIX = ":3000/api/pico/register"
+NEXT_COMMANDS_URL_SUFFIX = ":3000/api/pico/commands"
+
 # Connection Settings
 CONNECTION_TIMEOUT = 10
 RETRY_ATTEMPTS = 3
