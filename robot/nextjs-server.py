@@ -306,7 +306,7 @@ class Robot:
             try:
                 # version_url = URL_PREFIX + address + VERSION_URL_SUFFIX
                 self.register_url = URL_PREFIX + address + REGISTER_URL_SUFFIX
-                self.getting_url = URL_PREFIX + address + COMMANDS_URL_SUFFIX
+                self.getting_url = URL_PREFIX + address + COMMANDS_URL_SUFFIX + "?macAddress=" + mac_address
                 resp = requests.post(self.register_url, json=self.register_data)
                 if resp.status_code == 200:
                     is_connected = True
