@@ -21,17 +21,6 @@ interface CommandListProps {
 }
 
 export default function CommandList({ commands }: CommandListProps) {
-  // const getCommandStatusColor = (status: boolean) => {
-  //   switch (status) {
-  //     case true:
-  //       return "bg-green-100 text-green-800"
-  //     case false:
-  //       return "bg-gray-100 text-gray-800"
-  //     default:
-  //       return "bg-gray-100 text-gray-800"
-  //   }
-  // }
-
   return (
     <Card>
       <CardHeader>
@@ -65,11 +54,6 @@ export default function CommandList({ commands }: CommandListProps) {
                 </TableCell>
                 <TableCell className="font-mono">{command.macAddress}</TableCell>
                 <TableCell className="flex gap-1">
-                  {/* {command.data.map((m, i) => (
-                    <Badge key={i} variant="secondary">
-                      {m} {i > 1 ? `x${i}` : ""}
-                    </Badge>
-                  ))} */}
                   {parseMoveIcons(command.data).map((move, index) => (
                     <Tooltip key={index}>
                       <TooltipTrigger>

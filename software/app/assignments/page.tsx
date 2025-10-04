@@ -1,4 +1,4 @@
-import AssignmentTable from "./_components/assignments-table"
+import AssignmentView from "./_components/assignment-view"
 
 export default async function Assignments() {
   return (
@@ -9,7 +9,7 @@ export default async function Assignments() {
           Manage Pico-Robot assignments and monitor connection status
         </p>
       </div>
-      <AssignmentTable />
+      <AssignmentView />
     </div>
   )
 }
