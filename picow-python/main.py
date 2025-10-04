@@ -9,8 +9,9 @@ from wifi import connect
 if __name__ == "__main__":
     connect()
     while True:
-        led.led_off()
+        led.led_on()
         api_next.send_mac_address()  # TODO: Uncomment if connecting to next.js server
-        commands.process_commands()
-        sleep(2)
-        led.led_toggle()
+        command_list = commands.process_commands()
+        api_next.live_request(command_list, len(command_list))
+        led.led_off()
+        sleep(1)
