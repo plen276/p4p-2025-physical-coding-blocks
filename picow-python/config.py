@@ -13,6 +13,7 @@ NEXT_SERVER_BASE_ADDRESSES = ["192.168.0.201"]
 NEXT_URL_PREFIX = "http://"
 NEXT_REGISTER_URL_SUFFIX = ":3000/api/pico/register"
 NEXT_COMMANDS_URL_SUFFIX = ":3000/api/pico/commands"
+NEXT_LIVE_URL_SUFFIX = ":3000/api/pico/live"
 
 # Connection Settings
 CONNECTION_TIMEOUT = 10

@@ -21,7 +21,7 @@ mux_outputs = [
 # Block type enums
 class PrimaryBlocks:
     FORWARDS = 0b0011  # 0b0011
-    BACKWARDS = 0b0001  # 0b0001
+    BACKWARDS = 0b0010  # 0b0001
     TURN = 0b1011  # 0b1011
     REPEAT = 0b1111  # 0b1111
 
@@ -36,7 +36,7 @@ class SecondaryMove:
 class SecondaryTurn:
     TURN_90 = 0b0100  # 0b0010
     TURN_180 = 0b1100  # 0b0011
-    TURN_270 = 0b1101  # 0b0111
+    TURN_270 = 0b1001  # 0b0111
 
 
 def read_commands():
