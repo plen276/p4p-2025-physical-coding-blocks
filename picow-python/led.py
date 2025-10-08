@@ -1,3 +1,5 @@
+from time import sleep
+
 from machine import Pin
 
 from config import ERROR_LED_PIN, PICO_LED_PIN, SUCCESS_LED_PIN
@@ -45,6 +47,16 @@ def success_led_off():
     success_led.off()
 
 
+def blink_success_led():
+    "Blink success LED"
+    print("Blink success LED")
+    all_led_off()
+    success_led_on()
+    sleep(1)
+    all_led_off()
+    sleep(1)
+
+
 # ERROR LED FUNCTIONS
 def error_led_toggle():
     """Toggle Error LED state (on/off)"""
@@ -62,6 +74,16 @@ def error_led_off():
     """Turn Error LED off"""
     print("Error LED Off")
     error_led.off()
+
+
+def blink_error_led():
+    "Blink error LED"
+    print("Blink error LED")
+    all_led_off()
+    error_led_on()
+    sleep(1)
+    all_led_off()
+    sleep(1)
 
 
 # ALL LED FUNCTIONS
@@ -87,3 +109,13 @@ def all_led_off():
     pico_led_off()
     success_led_off()
     error_led_off()
+
+
+def blink_all_led():
+    "Blink all LEDs"
+    print("Blink all LEDs")
+    all_led_off()
+    all_led_on()
+    sleep(1)
+    all_led_off()
+    sleep(1)
