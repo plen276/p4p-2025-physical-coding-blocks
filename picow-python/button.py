@@ -8,6 +8,7 @@ from commands import process_commands
 from config import BUTTON_PIN
 
 button = Pin(BUTTON_PIN, Pin.IN, Pin.PULL_DOWN)
+BUTTON_PRESSED_FLAG = False
 """
 Configure GPIO pin `15` (`BUTTON_PIN` from `config.py` as input with internal pull-up resistor enabled\n
 `Pin.IN` = Input mode (reads digital signals)\n
@@ -21,14 +22,11 @@ LAST_PRESS_TIME = 0  # Timestamp of the last button press
 def button_pressed(pin):
     """Interrupt service routine called when the button is pressed."""
     global LAST_PRESS_TIME
+    global BUTTON_PRESSED_FLAG
     time = ticks_ms()
     if time - LAST_PRESS_TIME > DEBOUNCE_DELAY_MS:
         print("Button interrupt: pressed")
-        commands = process_commands()
-        # TODO: Uncomment the respective line depending on which server to connect to
-        # api.post_request(commands, len(commands))
-        api_next.post_request(commands, len(commands))
-        # ---------------------------------------------------------------------------
+        BUTTON_PRESSED_FLAG = True
         LAST_PRESS_TIME = time
 
 
