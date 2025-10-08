@@ -1,6 +1,9 @@
+from time import sleep
+
 import network
 import urequests
 
+import led
 from config import (
     NEXT_COMMANDS_URL_SUFFIX,
     NEXT_LIVE_URL_SUFFIX,
@@ -37,13 +40,19 @@ def send_mac_address():
         print(f"URL: {url}")
         print(f"MAC Address: {mac_address}")
 
-        response = urequests.post(url, json=data)
+        response = urequests.post(url, json=data, timeout=5)
         print(f"Response status: {response.status_code}")
         print(f"Response text: {response.text}")
 
         response.close()
-        print("[PASS] MAC address sent successfully!")
-        return True
+
+        # Check if response was successful (200–299)
+        if 200 <= response.status_code < 300:
+            print("[PASS] MAC address sent successfully!")
+            return True
+        else:
+            print("[FAIL] Failed to send MAC address")
+            return False
     except Exception as e:
         print(f"[FAIL] Failed to send MAC address: {e}")
         return False
@@ -80,17 +89,32 @@ def post_request(commands, count):
         print(f"Count: {count}")
 
         # Send POST request with JSON data
-        response = urequests.post(url, json=data)
+        response = urequests.post(url, json=data, timeout=5)
         print(f"Response status: {response.status_code}")
         print(f"Response text: {response.text}")
 
         # Always close the response to free resources
         response.close()
-        print("[PASS] Commands sent successfully!")
-        return True
+
+        # Check if response was successful (200–299)
+        if 200 <= response.status_code < 300:
+            print("[PASS] Commands sent successfully!")
+            led.blink_success_led()
+            led.blink_success_led()
+            led.blink_success_led()
+            return True
+        else:
+            print("[FAIL] Server responded with an error.")
+            led.blink_error_led()
+            led.blink_error_led()
+            led.blink_error_led()
+            return False
 
     except Exception as e:
         print(f"[FAIL] Failed to send commands: {e}")
+        led.blink_error_led()
+        led.blink_error_led()
+        led.blink_error_led()
         return False
 
 
@@ -125,14 +149,20 @@ def live_request(commands, count):
         print(f"Count: {count}")
 
         # Send POST request with JSON data
-        response = urequests.post(url, json=data)
+        response = urequests.post(url, json=data, timeout=5)
         print(f"Response status: {response.status_code}")
         print(f"Response text: {response.text}")
 
         # Always close the response to free resources
         response.close()
-        print("[PASS] Commands sent successfully!")
-        return True
+
+        # Check if response was successful (200–299)
+        if 200 <= response.status_code < 300:
+            print("[PASS] Commands sent successfully!")
+            return True
+        else:
+            print("[FAIL] Failed to send commands")
+            return False
 
     except Exception as e:
         print(f"[FAIL] Failed to send commands: {e}")

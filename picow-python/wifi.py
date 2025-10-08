@@ -2,6 +2,7 @@ import machine
 import network
 from utime import sleep, ticks_diff, ticks_ms
 
+import led
 from config import (
     WIFI_PASSWORD,
     WIFI_SSID,
@@ -44,6 +45,7 @@ def connect():
         start = ticks_ms()
         while not wlan.isconnected():
             print("Waiting for connection...")
+            led.error_led_toggle()
             while ticks_diff(ticks_ms(), start) < wait_time * 1000:  # Check every 100ms
                 if wlan.isconnected():
                     break

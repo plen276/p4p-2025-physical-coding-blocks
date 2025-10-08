@@ -23,8 +23,10 @@ RETRY_ATTEMPTS = 3
 DEBUG_MODE = True
 VERBOSE_LOGGING = True
 
-# Button Pin
-LED_PIN = "LED"
+# Component Pins
+PICO_LED_PIN = "LED"
+ERROR_LED_PIN = 2
+SUCCESS_LED_PIN = 3
 BUTTON_PIN = 15
 
 # System constants
