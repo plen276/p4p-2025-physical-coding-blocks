@@ -11,6 +11,7 @@ from config import (
     NEXT_SERVER_BASE_ADDRESSES,
     NEXT_URL_PREFIX,
 )
+from helper import log, log_request_time
 from wifi import connect, is_connected
 
 
@@ -21,7 +22,7 @@ def get_mac_addresss():
 
     mac_bytes = wlan.config("mac")
     mac_address = ":".join("{:02X}".format(b) for b in mac_bytes)
-    print("Device MAC Address:", mac_address)
+    log("Device MAC Address:", mac_address)
 
     return mac_address
 
@@ -37,24 +38,24 @@ def send_mac_address():
 
     try:
         print("---- Sending MAC Address w POST ----")
-        print(f"URL: {url}")
+        log(f"URL: {url}")
         print(f"MAC Address: {mac_address}")
 
         response = urequests.post(url, json=data, timeout=5)
         print(f"Response status: {response.status_code}")
-        print(f"Response text: {response.text}")
+        log(f"Response text: {response.text}")
 
         response.close()
 
         # Check if response was successful (200–299)
         if 200 <= response.status_code < 300:
-            print("[PASS] MAC address sent successfully!")
+            log("[PASS] MAC address sent successfully!")
             return True
         else:
-            print("[FAIL] Failed to send MAC address")
+            log("[FAIL] Failed to send MAC address")
             return False
     except Exception as e:
-        print(f"[FAIL] Failed to send MAC address: {e}")
+        log(f"[FAIL] Failed to send MAC address: {e}")
         return False
 
 
@@ -84,9 +85,9 @@ def post_request(commands, count):
 
     try:
         print("---- Sending Robot Commands w POST ----")
-        print(f"URL: {url}")
-        print(f"Commands: {commands}")
-        print(f"Count: {count}")
+        log(f"URL: {url}")
+        log(f"Commands: {commands}")
+        log(f"Count: {count}")
 
         # Send POST request with JSON data
         response = urequests.post(url, json=data, timeout=5)
@@ -98,24 +99,23 @@ def post_request(commands, count):
 
         # Check if response was successful (200–299)
         if 200 <= response.status_code < 300:
-            print("[PASS] Commands sent successfully!")
-            led.blink_success_led()
-            led.blink_success_led()
-            led.blink_success_led()
+            log("[PASS] Commands sent successfully!")
+            for _ in range(3):
+                led.blink_success_led()
             return True
         else:
-            print("[FAIL] Server responded with an error.")
-            led.blink_error_led()
-            led.blink_error_led()
-            led.blink_error_led()
+            log("[FAIL] Server responded with an error.")
+            for _ in range(3):
+                led.blink_error_led()
             return False
 
     except Exception as e:
-        print(f"[FAIL] Failed to send commands: {e}")
-        led.blink_error_led()
-        led.blink_error_led()
-        led.blink_error_led()
+        log(f"[FAIL] Failed to send commands: {e}")
+        for _ in range(3):
+            led.blink_error_led()
         return False
+    finally:
+        log_request_time()
 
 
 def live_request(commands, count):
@@ -143,10 +143,10 @@ def live_request(commands, count):
         connect()
 
     try:
-        print("---- Sending Robot Commands w POST ----")
-        print(f"URL: {url}")
-        print(f"Commands: {commands}")
-        print(f"Count: {count}")
+        print("---- Sending Live Commands w POST ----")
+        log(f"URL: {url}")
+        log(f"Commands: {commands}")
+        log(f"Count: {count}")
 
         # Send POST request with JSON data
         response = urequests.post(url, json=data, timeout=5)
@@ -158,14 +158,14 @@ def live_request(commands, count):
 
         # Check if response was successful (200–299)
         if 200 <= response.status_code < 300:
-            print("[PASS] Commands sent successfully!")
+            log("[PASS] Commands sent successfully!")
             return True
         else:
-            print("[FAIL] Failed to send commands")
+            log("[FAIL] Failed to send commands")
             return False
 
     except Exception as e:
-        print(f"[FAIL] Failed to send commands: {e}")
+        log(f"[FAIL] Failed to send commands: {e}")
         return False
 
 
