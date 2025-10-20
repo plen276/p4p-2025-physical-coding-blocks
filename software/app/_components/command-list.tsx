@@ -11,13 +11,13 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { Command } from "@/lib/types/command"
 import { parseMoveIcons } from "@/lib/utils"
 import { formatDistanceToNow } from "date-fns"
 import { Terminal } from "lucide-react"
+import { Commands } from "../generated/prisma"
 
 interface CommandListProps {
-  commands: Command[]
+  commands: Commands[]
 }
 
 export default function CommandList({ commands }: CommandListProps) {
@@ -54,7 +54,7 @@ export default function CommandList({ commands }: CommandListProps) {
                 </TableCell>
                 <TableCell className="font-mono">{command.macAddress}</TableCell>
                 <TableCell className="flex gap-1">
-                  {parseMoveIcons(command.data).map((move, index) => (
+                  {parseMoveIcons(JSON.parse(command.data)).map((move, index) => (
                     <Tooltip key={index}>
                       <TooltipTrigger>
                         <Badge key={index} variant="secondary">

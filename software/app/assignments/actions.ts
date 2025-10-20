@@ -1,6 +1,6 @@
 "use server"
 
-import prisma from "@/lib/prisma"
+import { prisma } from "@/lib/prisma"
 import { Pico } from "@/lib/types/pico"
 import { Robot } from "@/lib/types/robot"
 import { RobotPicoAssignment } from "@/lib/types/robot-pico"

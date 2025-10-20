@@ -1,10 +1,11 @@
 "use client"
 
+import { StatusBubble } from "@/components/status-bubble"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Robot } from "@/lib/types/robot"
 import { formatDistanceToNow } from "date-fns"
 import { Bot } from "lucide-react"
+import { Robot } from "../generated/prisma"
 
 interface RobotListProps {
   connectedRobots: Robot[]
@@ -36,36 +37,40 @@ export default function RobotList({ connectedRobots }: RobotListProps) {
           <div className="py-8 text-center text-gray-500">No Robots connected yet</div>
         ) : (
           <div className="space-y-3">
-            {connectedRobots.map((robot) => (
-              <div
-                key={robot.macAddress}
-                className="flex items-center justify-between rounded-lg border p-3"
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`h-2 w-2 rounded-full ${robot.status === "online" ? "bg-chart-3" : "bg-destructive"}`}
-                  />
-                  <div>
-                    <p className="font-medium">{robot.macAddress}</p>
-                    <p className="text-sm text-muted-foreground">
-                      Last seen:{" "}
-                      {formatDistanceToNow(new Date(robot.lastSeen), {
-                        includeSeconds: true,
-                        addSuffix: true,
-                      })}
-                    </p>
+            {connectedRobots
+              .sort((a, b) => new Date(b.lastSeen).getTime() - new Date(a.lastSeen).getTime())
+              .slice(0, 5)
+              .map((robot) => (
+                <div
+                  key={robot.macAddress}
+                  className="flex items-center justify-between rounded-lg border p-3"
+                >
+                  <div className="flex items-center gap-3 px-2">
+                    <StatusBubble status={robot.status === "online" ? "online" : "offline"} />
+                    <div>
+                      <p className="text-base">{robot.name}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {robot.macAddress.toUpperCase()}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Last seen:{" "}
+                        {formatDistanceToNow(new Date(robot.lastSeen), {
+                          includeSeconds: true,
+                          addSuffix: true,
+                        })}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="text-right">
-                  <Badge variant={robot.status === "online" ? "default" : "destructive"}>
-                    {robot.status}
-                  </Badge>
-                  {/* {robot.assignedPico && (
+                  <div className="text-right">
+                    <Badge variant={robot.status === "online" ? "default" : "destructive"}>
+                      {robot.status}
+                    </Badge>
+                    {/* {robot.assignedPico && (
                       <p className="text-xs text-muted-foreground mt-1">Controlled by {robot.assignedPico}</p>
                     )} */}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         )}
       </CardContent>
