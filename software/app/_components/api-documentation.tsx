@@ -3,50 +3,51 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function ApiDocumentation() {
+  const apiList = [
+    {
+      title: "Pico W (Register)",
+      url: "POST /api/pico/register",
+      description: "Register a Pico W device with its address",
+    },
+    {
+      title: "Get Connected Picos",
+      url: "GET /api/pico/register",
+      description: "Get list of all registered Pico W devices",
+    },
+    {
+      title: "Pico W (Send Commands)",
+      url: " POST /api/pico",
+      description:
+        "Send commands from Pico W to be queued for the robot. Include picoAddress in body or x-pico-address header.",
+    },
+    {
+      title: "mBot2 (Poll Commands)",
+      url: "GET /api/robot?action=get&robotId=default",
+      description: "Robot polls for next command in queue",
+    },
+    {
+      title: "mBot2 (Complete Command)",
+      url: "GET /api/robot?action=complete&commandId=cmd_123",
+      description: "Mark command as completed",
+    },
+  ]
   return (
     <Card>
       <CardHeader>
         <CardTitle>API Endpoints</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div>
-          <h3 className="font-medium text-gray-900">Pico W (Register)</h3>
-          <code className="mt-1 block rounded bg-gray-100 p-2 text-sm text-gray-500">
-            POST /api/pico/register
-          </code>
-          <p className="mt-1 text-sm text-gray-600">Register a Pico W device with its address</p>
-        </div>
-        <div>
-          <h3 className="font-medium text-gray-900">Get Connected Picos</h3>
-          <code className="mt-1 block rounded bg-gray-100 p-2 text-sm text-gray-500">
-            GET /api/pico/register
-          </code>
-          <p className="mt-1 text-sm text-gray-600">Get list of all registered Pico W devices</p>
-        </div>
-        <div>
-          <h3 className="font-medium text-gray-900">Pico W (Send Commands)</h3>
-          <code className="mt-1 block rounded bg-gray-100 p-2 text-sm text-gray-500">
-            POST /api/pico
-          </code>
-          <p className="mt-1 text-sm text-gray-600">
-            Send commands from Pico W to be queued for the robot. Include picoAddress in body or
-            x-pico-address header.
-          </p>
-        </div>
-        <div>
-          <h3 className="font-medium text-gray-900">mBot2 (Poll Commands)</h3>
-          <code className="mt-1 block rounded bg-gray-100 p-2 text-sm text-gray-500">
-            GET /api/robot?action=get&robotId=default
-          </code>
-          <p className="mt-1 text-sm text-gray-600">Robot polls for next command in queue</p>
-        </div>
-        <div>
-          <h3 className="font-medium text-gray-900">mBot2 (Complete Command)</h3>
-          <code className="mt-1 block rounded bg-gray-100 p-2 text-sm text-gray-500">
-            GET /api/robot?action=complete&commandId=cmd_123
-          </code>
-          <p className="mt-1 text-sm text-gray-600">Mark command as completed</p>
-        </div>
+      <CardContent className="flex flex-col gap-3">
+        {apiList.map((api, index) => {
+          return (
+            <div key={index}>
+              <h3 className="font-medium">{api.title}</h3>
+              <code className="mt-1 block rounded bg-accent p-2 text-sm text-accent-foreground">
+                {api.url}
+              </code>
+              <p className="mt-1 text-sm text-foreground/50">{api.title}</p>
+            </div>
+          )
+        })}
       </CardContent>
     </Card>
   )
