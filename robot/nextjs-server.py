@@ -15,7 +15,8 @@ import urequests as requests
 
 # Base settings
 NAME = cyberpi.get_name()  # This lines means we don't need to hardcode the robot name
-SPEED = 15
+SPEED = 25
+ANGLE = 90
 VERSION = "1.07"
 
 # Wifi settings - these will need to change to match the network
@@ -179,7 +180,7 @@ class DiscreteActions(Actions):
         self.robot = robot
         self.speed = SPEED
         self.distance = 2
-        self.angle = 45
+        self.angle = ANGLE
 
         # Internal state
         self.last_action = ACTION_NONE

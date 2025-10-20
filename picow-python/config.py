@@ -21,7 +21,7 @@ RETRY_ATTEMPTS = 3
 
 # Debug Settings
 DEBUG_MODE = True
-VERBOSE_LOGGING = True
+VERBOSE = True
 
 # Component Pins
 PICO_LED_PIN = "LED"

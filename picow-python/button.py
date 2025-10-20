@@ -4,6 +4,7 @@ from utime import sleep, ticks_ms
 # from api import post_request
 import api  # noqa
 import api_next  # noqa
+import helper
 from commands import process_commands
 from config import BUTTON_PIN
 
@@ -23,11 +24,12 @@ def button_pressed(pin):
     """Interrupt service routine called when the button is pressed."""
     global LAST_PRESS_TIME
     global BUTTON_PRESSED_FLAG
-    time = ticks_ms()
-    if time - LAST_PRESS_TIME > DEBOUNCE_DELAY_MS:
+    time_now = ticks_ms()
+    if time_now - LAST_PRESS_TIME > DEBOUNCE_DELAY_MS:
         print("Button interrupt: pressed")
+        helper.REQUEST_START_TIME = time_now
         BUTTON_PRESSED_FLAG = True
-        LAST_PRESS_TIME = time
+        LAST_PRESS_TIME = time_now
 
 
 def is_button_pressed():
