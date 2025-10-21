@@ -1,6 +1,5 @@
 "use client"
 
-import { fetchPicos } from "@/app/assignments/actions"
 import { StatusBubble } from "@/components/status-bubble"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -13,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { fetchPicos } from "@/lib/database"
 import { Pico } from "@/lib/types"
 import { Cpu } from "lucide-react"
 import { useEffect, useState } from "react"

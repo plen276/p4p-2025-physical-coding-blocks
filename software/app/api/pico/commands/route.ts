@@ -30,11 +30,11 @@ export async function POST(request: NextRequest) {
       `[PICO COMMANDS] Adding [${body.commands.length}] commands from Pico ${body.macAddress} to database`
     )
 
-    const command = await prisma.commands.create({
+    const command = await prisma.command.create({
       data: { macAddress: body.macAddress, data: JSON.stringify(body.commands) },
     })
 
-    const commandQueue = await prisma.commands.findMany({ where: { macAddress: body.macAddress } })
+    const commandQueue = await prisma.command.findMany({ where: { macAddress: body.macAddress } })
 
     // const { macAddress, commands } = body
 
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   console.log("[PICO COMMANDS] Getting Commands List")
   try {
-    const allCommands = await prisma.commands.findMany()
+    const allCommands = await prisma.command.findMany()
 
     // console.log(`[PICO COMMANDS] Commands List[${allCommands.length}]: ${allCommands}`)
 

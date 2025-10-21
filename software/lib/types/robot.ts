@@ -4,7 +4,7 @@ export interface Robot {
   id: number
   name?: string
   macAddress: string
-  lastSeen: string
+  lastSeen: Date
   status: "offline" | "online"
   assignments?: Assignment[]
 }

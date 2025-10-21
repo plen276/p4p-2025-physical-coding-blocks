@@ -3,9 +3,9 @@
 import { StatusBubble } from "@/components/status-bubble"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Pico } from "@/lib/types"
 import { formatDistanceToNow } from "date-fns"
 import { Cpu } from "lucide-react"
-import { Pico } from "../generated/prisma"
 
 interface PicoListProps {
   connectedPicos: Pico[]
@@ -39,7 +39,7 @@ export default function PicoList({ connectedPicos }: PicoListProps) {
         ) : (
           <div className="space-y-3">
             {connectedPicos
-              .sort((a, b) => new Date(b.lastSeen).getTime() - new Date(a.lastSeen).getTime())
+              .sort((a, b) => b.lastSeen.getTime() - a.lastSeen.getTime())
               .slice(0, 5)
               .map((pico) => (
                 <div
@@ -47,7 +47,8 @@ export default function PicoList({ connectedPicos }: PicoListProps) {
                   className="flex items-center justify-between rounded-lg border p-3"
                 >
                   <div className="flex items-center gap-3 px-2">
-                    <StatusBubble status={pico.status === "online" ? "online" : "offline"} />
+                    {/* <StatusBubble status={pico.status === "online" ? "online" : "offline"} /> */}
+                    <StatusBubble status={pico.status} />
                     <div>
                       <p className="text-base">{pico.name}</p>
                       <p className="text-sm text-muted-foreground">
@@ -55,7 +56,7 @@ export default function PicoList({ connectedPicos }: PicoListProps) {
                       </p>
                       <p className="text-sm text-muted-foreground">
                         Last seen:{" "}
-                        {formatDistanceToNow(new Date(pico.lastSeen), {
+                        {formatDistanceToNow(pico.lastSeen, {
                           addSuffix: true,
                         })}
                       </p>

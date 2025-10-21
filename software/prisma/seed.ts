@@ -37,12 +37,13 @@ function createCommandStrings(count = 10) {
   })
 }
 
-function generateCommands(picos: Pico[]): Prisma.CommandsCreateInput[] {
+function generateCommands(picos: Pico[]): Prisma.CommandCreateInput[] {
   const targets = [...picos]
   return Array.from({ length: NUM_COMMANDS }).map(() => ({
     macAddress: faker.helpers.arrayElement(targets).macAddress,
     data: JSON.stringify(createCommandStrings()),
     read: faker.datatype.boolean(),
+    createdAt: faker.date.between({ from: tenMinutesAgo, to: now }),
   }))
 }
 
@@ -76,7 +77,7 @@ export async function main() {
   console.log("...seeding assignments...")
   for (const robot of createdRobots) {
     const pico = faker.helpers.arrayElement(createdPicos)
-    await prisma.robotPicoAssignment.upsert({
+    await prisma.assignment.upsert({
       where: { robotId_picoId: { robotId: robot.id, picoId: pico.id } },
       update: {},
       create: { robotId: robot.id, picoId: pico.id, isActive: faker.datatype.boolean() },
@@ -85,7 +86,7 @@ export async function main() {
 
   console.log("...seeding commands...")
   const commandData = generateCommands(createdPicos)
-  await prisma.commands.createMany({ data: commandData })
+  await prisma.command.createMany({ data: commandData })
 
   console.log("...seeding finished.")
 }

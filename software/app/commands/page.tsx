@@ -1,21 +1,8 @@
-import { prisma } from "@/lib/prisma"
+import { fetchCommands } from "@/lib/database"
 import CommandList from "../_components/command-list"
 
 export default async function Commands() {
-  // const commandResponse = await fetch("http://localhost:3000/api/pico/commands", {
-  //   cache: "no-store",
-  // })
-  // const commandData = (await commandResponse.json()) as CommandRegistry
-  // console.log("The API returned:", commandData)
-  // const commandList: Command[] = commandData.commandList.map((cmd) => ({
-  //   id: cmd.id,
-  //   macAddress: cmd.macAddress,
-  //   read: cmd.read,
-  //   createdAt: new Date(cmd.createdAt),
-  //   data: JSON.parse(cmd.data),
-  // }))
-  // console.log("Formatted commands:", commandList)
-  const commands = await prisma.commands.findMany()
+  const commands = await fetchCommands()
 
   return (
     <div className="space-y-6">

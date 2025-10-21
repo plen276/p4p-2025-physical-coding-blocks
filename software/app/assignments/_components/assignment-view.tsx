@@ -1,6 +1,6 @@
 "use client"
 
-import { fetchAssignments, fetchPicos, fetchRobots, setAssignment } from "@/app/assignments/actions"
+import { setAssignment } from "@/app/assignments/actions"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import {
@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { fetchAssignments, fetchPicos, fetchRobots } from "@/lib/database"
 import { Assignment, Pico, Robot } from "@/lib/types"
 import { Search } from "lucide-react"
 import { useEffect, useState } from "react"

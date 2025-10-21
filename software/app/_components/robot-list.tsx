@@ -3,9 +3,9 @@
 import { StatusBubble } from "@/components/status-bubble"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Robot } from "@/lib/types"
 import { formatDistanceToNow } from "date-fns"
 import { Bot } from "lucide-react"
-import { Robot } from "../generated/prisma"
 
 interface RobotListProps {
   connectedRobots: Robot[]
@@ -38,7 +38,7 @@ export default function RobotList({ connectedRobots }: RobotListProps) {
         ) : (
           <div className="space-y-3">
             {connectedRobots
-              .sort((a, b) => new Date(b.lastSeen).getTime() - new Date(a.lastSeen).getTime())
+              .sort((a, b) => b.lastSeen.getTime() - a.lastSeen.getTime())
               .slice(0, 5)
               .map((robot) => (
                 <div
@@ -46,7 +46,8 @@ export default function RobotList({ connectedRobots }: RobotListProps) {
                   className="flex items-center justify-between rounded-lg border p-3"
                 >
                   <div className="flex items-center gap-3 px-2">
-                    <StatusBubble status={robot.status === "online" ? "online" : "offline"} />
+                    {/* <StatusBubble status={robot.status === "online" ? "online" : "offline"} /> */}
+                    <StatusBubble status={robot.status} />
                     <div>
                       <p className="text-base">{robot.name}</p>
                       <p className="text-sm text-muted-foreground">
@@ -54,7 +55,7 @@ export default function RobotList({ connectedRobots }: RobotListProps) {
                       </p>
                       <p className="text-sm text-muted-foreground">
                         Last seen:{" "}
-                        {formatDistanceToNow(new Date(robot.lastSeen), {
+                        {formatDistanceToNow(robot.lastSeen, {
                           addSuffix: true,
                         })}
                       </p>

@@ -1,14 +1,17 @@
-import { prisma } from "@/lib/prisma"
+import { fetchCommands, fetchPicos, fetchRobots } from "@/lib/database"
+import { Command, Pico, Robot } from "@/lib/types"
 import ApiDocumentation from "./_components/api-documentation"
 import CommandList from "./_components/command-list"
 import PicoList from "./_components/pico-list"
 import RobotList from "./_components/robot-list"
-import { Commands, Pico, Robot } from "./generated/prisma"
 
 export default async function Home() {
-  const picos: Pico[] = await prisma.pico.findMany()
-  const robots: Robot[] = await prisma.robot.findMany()
-  const commands: Commands[] = await prisma.commands.findMany()
+  // const picos: Pico[] = await prisma.pico.findMany()
+  // const robots: Robot[] = await prisma.robot.findMany()
+  // const commands: Commands[] = await prisma.commands.findMany()
+  const picos: Pico[] = await fetchPicos()
+  const robots: Robot[] = await fetchRobots()
+  const commands: Command[] = await fetchCommands()
 
   return (
     <div className="space-y-6">

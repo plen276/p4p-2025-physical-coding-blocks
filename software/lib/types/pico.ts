@@ -4,7 +4,7 @@ export interface Pico {
   id: number
   name?: string
   macAddress: string
-  lastSeen: string
+  lastSeen: Date
   status: "online" | "offline"
   assignments?: Assignment[]
 }

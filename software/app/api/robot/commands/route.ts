@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Robot not found" }, { status: 404 })
     }
 
-    const assignment = await prisma.robotPicoAssignment.findFirst({
+    const assignment = await prisma.assignment.findFirst({
       where: {
         robotId: robot.id,
         isActive: true,
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Assigned Pico not found" }, { status: 404 })
     }
 
-    const commands = await prisma.commands.findMany({
+    const commands = await prisma.command.findMany({
       where: {
         macAddress: pico.macAddress,
         read: false,
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
 
     const commandIds = commands.map((command) => command.id)
 
-    await prisma.commands.updateMany({
+    await prisma.command.updateMany({
       where: {
         id: {
           in: commandIds,

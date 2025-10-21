@@ -86,9 +86,9 @@ export default function AssignmentTableBody({
             {/* Last Seen */}
             <TableCell className="text-sm text-muted-foreground">
               <Tooltip>
-                <TooltipTrigger>{new Date(robot.lastSeen).toLocaleString("en-UK")}</TooltipTrigger>
+                <TooltipTrigger>{robot.lastSeen.toLocaleString("en-UK")}</TooltipTrigger>
                 <TooltipContent>
-                  {formatDistanceToNow(new Date(robot.lastSeen), {
+                  {formatDistanceToNow(robot.lastSeen, {
                     addSuffix: true,
                   })}
                 </TooltipContent>

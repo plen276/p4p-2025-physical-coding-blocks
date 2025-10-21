@@ -15,24 +15,24 @@ datasource db {
 }
 
 model Pico {
-  id          Int                   @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   name        String? // Optional human-readable name
-  macAddress  String                @unique
+  macAddress  String       @unique
   lastSeen    DateTime
   status      String
-  assignments RobotPicoAssignment[]
+  assignments Assignment[]
 }
 
 model Robot {
-  id          Int                   @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   name        String? // Optional human-readable name
-  macAddress  String                @unique
+  macAddress  String       @unique
   lastSeen    DateTime
   status      String
-  assignments RobotPicoAssignment[]
+  assignments Assignment[]
 }
 
-model RobotPicoAssignment {
+model Assignment {
   id        Int      @id @default(autoincrement())
   robotId   Int
   picoId    Int
@@ -47,7 +47,7 @@ model RobotPicoAssignment {
   @@index([picoId])
 }
 
-model Commands {
+model Command {
   id         Int      @id @default(autoincrement())
   macAddress String
   data       String

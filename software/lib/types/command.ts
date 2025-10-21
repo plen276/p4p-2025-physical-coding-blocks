@@ -1,5 +1,5 @@
 export interface Command {
-  id: string
+  id: number
   macAddress: string
   data: string[]
   read: boolean

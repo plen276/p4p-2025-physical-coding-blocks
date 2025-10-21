@@ -12,12 +12,12 @@ import {
 } from "@/components/ui/table"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { parseMoveIcons } from "@/lib/moves"
+import { Command } from "@/lib/types"
 import { formatDistanceToNow } from "date-fns"
 import { Terminal } from "lucide-react"
-import { Commands } from "../generated/prisma"
 
 interface CommandListProps {
-  commands: Commands[]
+  commands: Command[]
 }
 
 export default function CommandList({ commands }: CommandListProps) {
@@ -28,7 +28,7 @@ export default function CommandList({ commands }: CommandListProps) {
           <Terminal className="h-5 w-5" />
           Recent Commands
         </CardTitle>
-        <CardDescription>Latest commands sent through the system</CardDescription>
+        <CardDescription>Latest 25 commands sent through the system</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
@@ -42,41 +42,45 @@ export default function CommandList({ commands }: CommandListProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {commands.map((command) => (
-              <TableRow key={command.id}>
-                <TableCell>{command.id}</TableCell>
-                <TableCell>
-                  {command.read ? (
-                    <Badge variant="outline">Completed</Badge>
-                  ) : (
-                    <Badge variant="default">Queued</Badge>
-                  )}
-                </TableCell>
-                <TableCell className="font-mono">{command.macAddress}</TableCell>
-                <TableCell className="flex gap-1">
-                  {parseMoveIcons(JSON.parse(command.data)).map((move, index) => (
-                    <Tooltip key={index}>
-                      <TooltipTrigger>
-                        <Badge key={index} variant="secondary">
-                          {move.icon} {move.count > 1 ? `x${move.count}` : ""}
-                        </Badge>
-                      </TooltipTrigger>
-                      <TooltipContent>{move.move}</TooltipContent>
+            {commands
+              .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+              .filter((command) => !command.read)
+              .slice(0, 25)
+              .map((command) => (
+                <TableRow key={command.id}>
+                  <TableCell>{command.id}</TableCell>
+                  <TableCell>
+                    {command.read ? (
+                      <Badge variant="outline">Completed</Badge>
+                    ) : (
+                      <Badge variant="default">Queued</Badge>
+                    )}
+                  </TableCell>
+                  <TableCell className="font-mono">{command.macAddress}</TableCell>
+                  <TableCell className="flex gap-1">
+                    {parseMoveIcons(command.data).map((move, index) => (
+                      <Tooltip key={index}>
+                        <TooltipTrigger>
+                          <Badge key={index} variant="secondary">
+                            {move.icon} {move.count > 1 ? `x${move.count}` : ""}
+                          </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent>{move.move}</TooltipContent>
+                      </Tooltip>
+                    ))}
+                  </TableCell>
+                  <TableCell>
+                    <Tooltip>
+                      <TooltipTrigger>{command.createdAt.toLocaleString("en-UK")}</TooltipTrigger>
+                      <TooltipContent>
+                        {formatDistanceToNow(command.createdAt, {
+                          addSuffix: true,
+                        })}
+                      </TooltipContent>
                     </Tooltip>
-                  ))}
-                </TableCell>
-                <TableCell>
-                  <Tooltip>
-                    <TooltipTrigger>{command.createdAt.toLocaleString("en-UK")}</TooltipTrigger>
-                    <TooltipContent>
-                      {formatDistanceToNow(command.createdAt, {
-                        addSuffix: true,
-                      })}
-                    </TooltipContent>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            ))}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </CardContent>
