@@ -2,12 +2,10 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { TableBody, TableCell, TableRow } from "@/components/ui/table"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { Pico } from "@/lib/types/pico"
-import { Robot } from "@/lib/types/robot"
-import { RobotPicoAssignment } from "@/lib/types/robot-pico"
+import { Assignment, Pico, Robot } from "@/lib/types"
 import { formatDistanceToNow } from "date-fns"
 import { Link, Unlink, XIcon } from "lucide-react"
 import AssignmentDialog from "./assignment-dialog"
@@ -15,7 +13,7 @@ import AssignmentDialog from "./assignment-dialog"
 interface AssignmentTableBodyProps {
   picos: Pico[]
   filteredRobots: Robot[]
-  assignments: RobotPicoAssignment[]
+  assignments: Assignment[]
   handleAssignment: (robotId: number, picoId: number | null) => void
 }
 
@@ -91,7 +89,6 @@ export default function AssignmentTableBody({
                 <TooltipTrigger>{new Date(robot.lastSeen).toLocaleString("en-UK")}</TooltipTrigger>
                 <TooltipContent>
                   {formatDistanceToNow(new Date(robot.lastSeen), {
-                    includeSeconds: true,
                     addSuffix: true,
                   })}
                 </TooltipContent>
@@ -101,10 +98,9 @@ export default function AssignmentTableBody({
             {/* Actions */}
             <TableCell className="items-center space-x-2">
               {/* Link */}
-
-              <Dialog>
+              <Sheet>
                 <Tooltip>
-                  <DialogTrigger asChild>
+                  <SheetTrigger asChild>
                     <TooltipTrigger asChild disabled={assignedPicos.length !== 0}>
                       <Button
                         variant="outline"
@@ -115,7 +111,7 @@ export default function AssignmentTableBody({
                         <Link className="h-4 w-4" />
                       </Button>
                     </TooltipTrigger>
-                  </DialogTrigger>
+                  </SheetTrigger>
                   <TooltipContent>Assign to Pico</TooltipContent>
                 </Tooltip>
                 <AssignmentDialog
@@ -125,7 +121,7 @@ export default function AssignmentTableBody({
                   disabledPicoIds={assignedPicoIds}
                   onAssign={handleAssignment}
                 />
-              </Dialog>
+              </Sheet>
 
               {/* Unlink */}
               <Tooltip>

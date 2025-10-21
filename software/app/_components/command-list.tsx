@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { parseMoveIcons } from "@/lib/utils"
+import { parseMoveIcons } from "@/lib/moves"
 import { formatDistanceToNow } from "date-fns"
 import { Terminal } from "lucide-react"
 import { Commands } from "../generated/prisma"
@@ -70,7 +70,6 @@ export default function CommandList({ commands }: CommandListProps) {
                     <TooltipTrigger>{command.createdAt.toLocaleString("en-UK")}</TooltipTrigger>
                     <TooltipContent>
                       {formatDistanceToNow(command.createdAt, {
-                        includeSeconds: true,
                         addSuffix: true,
                       })}
                     </TooltipContent>

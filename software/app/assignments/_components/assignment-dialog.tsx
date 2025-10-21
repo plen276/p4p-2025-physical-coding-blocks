@@ -1,11 +1,11 @@
 "use client"
 
-import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { DialogTitle } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Separator } from "@/components/ui/separator"
-import { Pico } from "@/lib/types/pico"
-import { Robot } from "@/lib/types/robot"
+import { SheetContent, SheetHeader } from "@/components/ui/sheet"
+import { Pico, Robot } from "@/lib/types"
 import { formatDistanceToNow } from "date-fns"
 
 interface AssignmentDialogProps {
@@ -26,10 +26,10 @@ export default function AssignmentDialog({
   const defaultValue = assignedPicos?.[0]?.macAddress ?? "unassigned"
 
   return (
-    <DialogContent>
-      <DialogHeader>
+    <SheetContent>
+      <SheetHeader>
         <DialogTitle>Assign Pico to {robot.name || robot.macAddress}</DialogTitle>
-      </DialogHeader>
+      </SheetHeader>
       <RadioGroup
         defaultValue={defaultValue}
         onValueChange={(value) => {
@@ -65,7 +65,6 @@ export default function AssignmentDialog({
                     Last seen{" "}
                     {formatDistanceToNow(new Date(pico.lastSeen), {
                       addSuffix: true,
-                      includeSeconds: true,
                     })}
                   </div>
                 </div>
@@ -74,6 +73,6 @@ export default function AssignmentDialog({
           </>
         )}
       </RadioGroup>
-    </DialogContent>
+    </SheetContent>
   )
 }

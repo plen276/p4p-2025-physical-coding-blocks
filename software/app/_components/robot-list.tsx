@@ -55,7 +55,6 @@ export default function RobotList({ connectedRobots }: RobotListProps) {
                       <p className="text-sm text-muted-foreground">
                         Last seen:{" "}
                         {formatDistanceToNow(new Date(robot.lastSeen), {
-                          includeSeconds: true,
                           addSuffix: true,
                         })}
                       </p>

@@ -1,16 +1,14 @@
 "use client"
 
 import { Table } from "@/components/ui/table"
-import { Pico } from "@/lib/types/pico"
-import { Robot } from "@/lib/types/robot"
-import { RobotPicoAssignment } from "@/lib/types/robot-pico"
+import { Assignment, Pico, Robot } from "@/lib/types"
 import AssignmentTableBody from "./assignment-table-body"
 import AssignmentTableHeader from "./assignment-table-header"
 
 interface AssignmentTableProps {
   picos: Pico[]
   filteredRobots: Robot[]
-  assignments: RobotPicoAssignment[]
+  assignments: Assignment[]
   handleAssignment: (robotId: number, picoId: number | null) => void
 }
 

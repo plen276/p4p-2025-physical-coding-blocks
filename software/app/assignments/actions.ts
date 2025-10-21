@@ -1,9 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
-import { Pico } from "@/lib/types/pico"
-import { Robot } from "@/lib/types/robot"
-import { RobotPicoAssignment } from "@/lib/types/robot-pico"
+import { Assignment, Pico, Robot } from "@/lib/types"
 
 export async function fetchRobots(): Promise<Robot[]> {
   const robots = await prisma.robot.findMany()
@@ -27,12 +25,12 @@ export async function fetchPicos(): Promise<Pico[]> {
   })) as Pico[]
 }
 
-export async function fetchAssignments(): Promise<RobotPicoAssignment[]> {
+export async function fetchAssignments(): Promise<Assignment[]> {
   const assignments = await prisma.robotPicoAssignment.findMany({
     include: { robot: true, pico: true },
   })
   // Types align closely; cast for client types that use string dates already
-  return assignments as unknown as RobotPicoAssignment[]
+  return assignments as unknown as Assignment[]
 }
 
 export async function setAssignment(robotId: number, picoId: number | null): Promise<void> {

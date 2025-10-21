@@ -56,7 +56,6 @@ export default function PicoList({ connectedPicos }: PicoListProps) {
                       <p className="text-sm text-muted-foreground">
                         Last seen:{" "}
                         {formatDistanceToNow(new Date(pico.lastSeen), {
-                          includeSeconds: true,
                           addSuffix: true,
                         })}
                       </p>

@@ -10,9 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Pico } from "@/lib/types/pico"
-import { Robot } from "@/lib/types/robot"
-import { RobotPicoAssignment } from "@/lib/types/robot-pico"
+import { Assignment, Pico, Robot } from "@/lib/types"
 import { Search } from "lucide-react"
 import { useEffect, useState } from "react"
 import AssignmentTable from "./assignment-table"
@@ -20,7 +18,7 @@ import AssignmentTable from "./assignment-table"
 export default function AssignmentView() {
   const [robots, setRobots] = useState<Robot[]>([])
   const [picos, setPicos] = useState<Pico[]>([])
-  const [assignments, setAssignments] = useState<RobotPicoAssignment[]>([])
+  const [assignments, setAssignments] = useState<Assignment[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
 

@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Pico } from "@/lib/types/pico"
+import { Pico } from "@/lib/types"
 import { Cpu } from "lucide-react"
 import { useEffect, useState } from "react"
 import LiveCommandFeed from "./live-command-feed"
