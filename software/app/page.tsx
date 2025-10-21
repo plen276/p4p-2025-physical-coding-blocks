@@ -6,9 +6,6 @@ import PicoList from "./_components/pico-list"
 import RobotList from "./_components/robot-list"
 
 export default async function Home() {
-  // const picos: Pico[] = await prisma.pico.findMany()
-  // const robots: Robot[] = await prisma.robot.findMany()
-  // const commands: Commands[] = await prisma.commands.findMany()
   const picos: Pico[] = await fetchPicos()
   const robots: Robot[] = await fetchRobots()
   const commands: Command[] = await fetchCommands()

@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Separator } from "@/components/ui/separator"
 import { SheetContent, SheetHeader } from "@/components/ui/sheet"
 import { Pico, Robot } from "@/lib/types"
+import { cn } from "@/lib/utils"
 import { formatDistanceToNow } from "date-fns"
 
 interface AssignmentDialogProps {
@@ -40,36 +41,51 @@ export default function AssignmentDialog({
           const selected = allPicos.find((pico) => pico.macAddress === value)
           onAssign(robot.id, selected ? selected.id : null)
         }}
+        className="scrollbar-hidden overflow-y-auto p-5"
       >
         {allPicos.length === 0 ? (
           <div className="py-10 text-center text-sm text-muted-foreground">No Picos available</div>
         ) : (
           <>
-            <div className="flex items-center space-x-2 py-2">
+            <Separator />
+            <div className="flex items-center space-x-2 align-middle">
               <RadioGroupItem id="unassigned" value="unassigned" />
               <Label htmlFor="unassigned">Unassigned</Label>
             </div>
-            {allPicos.map((pico) => (
-              <div key={pico.id}>
-                <Separator />
-                <div className="flex items-center justify-between py-2 opacity-100 data-[disabled=true]:opacity-50">
-                  <div className="flex items-center space-x-2">
+            {allPicos.map((pico) => {
+              const isDisabled = disabledPicoIds.includes(pico.id)
+              return (
+                <div key={pico.id}>
+                  <Separator />
+                  <div
+                    className={cn(
+                      "flex items-center justify-start gap-2 pt-3 align-middle",
+                      isDisabled ? "opacity-50" : "opacity-100"
+                    )}
+                  >
                     <RadioGroupItem
                       id={pico.macAddress}
                       value={pico.macAddress}
-                      disabled={disabledPicoIds.includes(pico.id)}
+                      disabled={isDisabled}
                     />
-                    <Label htmlFor={pico.macAddress}>{pico.name || pico.macAddress}</Label>
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    Last seen{" "}
-                    {formatDistanceToNow(new Date(pico.lastSeen), {
-                      addSuffix: true,
-                    })}
+                    {/* Radio Button Label */}
+                    <Label
+                      htmlFor={pico.macAddress}
+                      className={cn(
+                        "flex flex-col items-start gap-1",
+                        isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+                      )}
+                    >
+                      <span>{pico.name}</span>
+                      <span className="text-sm text-muted-foreground">{pico.macAddress}</span>
+                      <span className="text-xs text-muted-foreground">
+                        Last seen {formatDistanceToNow(pico.lastSeen, { addSuffix: true })}
+                      </span>
+                    </Label>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </>
         )}
       </RadioGroup>
