@@ -1,5 +1,6 @@
 "use client"
 
+import { CommandStatus } from "@/components/command-status"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -50,11 +51,12 @@ export default function CommandList({ commands }: CommandListProps) {
                 <TableRow key={command.id}>
                   <TableCell>{command.id}</TableCell>
                   <TableCell>
-                    {command.read ? (
+                    {/* {command.read ? (
                       <Badge variant="outline">Completed</Badge>
                     ) : (
                       <Badge variant="default">Queued</Badge>
-                    )}
+                    )} */}
+                    <CommandStatus status={command.read} />
                   </TableCell>
                   <TableCell className="font-mono">{command.macAddress.toUpperCase()}</TableCell>
                   <TableCell className="flex gap-1">

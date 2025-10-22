@@ -1,6 +1,6 @@
 "use client"
 
-import { StatusBadge } from "@/components/status-badge"
+import { DeviceStatus } from "@/components/device-status"
 import { StatusBubble } from "@/components/status-bubble"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -75,7 +75,7 @@ export default function RobotCard({ robot }: RobotCardProps) {
               </div>
             </div>
             <div className="flex flex-col items-end gap-1">
-              <StatusBadge status={robot.status} />
+              <DeviceStatus status={robot.status} />
             </div>
           </div>
         </CardHeader>
@@ -96,7 +96,7 @@ export default function RobotCard({ robot }: RobotCardProps) {
               <Label>Status</Label>
               <div className="flex items-center gap-2">
                 <StatusBubble status={robot.status} />
-                <StatusBadge status={robot.status} />
+                <DeviceStatus status={robot.status} />
               </div>
             </div>
 

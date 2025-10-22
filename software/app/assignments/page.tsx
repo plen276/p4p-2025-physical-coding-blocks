@@ -1,6 +1,8 @@
+import { wait } from "@/lib/utils"
 import AssignmentView from "./_components/assignment-view"
 
 export default async function Assignments() {
+  await wait(2000)
   return (
     <div className="space-y-6">
       <div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { StatusBadge } from "@/components/status-badge"
+import { DeviceStatus } from "@/components/device-status"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
@@ -56,7 +56,7 @@ export default function AssignmentTableBody({
 
             {/* Robot Status */}
             <TableCell>
-              <StatusBadge status={robot.status} />
+              <DeviceStatus status={robot.status} />
             </TableCell>
 
             {/* Assigned Picos */}

@@ -1,6 +1,6 @@
 "use client"
 
-import { StatusBadge } from "@/components/status-badge"
+import { DeviceStatus } from "@/components/device-status"
 import { StatusBubble } from "@/components/status-bubble"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Robot } from "@/lib/types"
@@ -63,7 +63,7 @@ export default function RobotList({ connectedRobots }: RobotListProps) {
                     </div>
                   </div>
                   <div className="text-right">
-                    <StatusBadge status={robot.status} />
+                    <DeviceStatus status={robot.status} />
                     {/* {robot.assignedPico && (
                       <p className="text-xs text-muted-foreground mt-1">Controlled by {robot.assignedPico}</p>
                     )} */}

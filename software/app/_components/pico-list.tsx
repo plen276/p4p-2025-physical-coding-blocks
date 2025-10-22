@@ -1,6 +1,6 @@
 "use client"
 
-import { StatusBadge } from "@/components/status-badge"
+import { DeviceStatus } from "@/components/device-status"
 import { StatusBubble } from "@/components/status-bubble"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Pico } from "@/lib/types"
@@ -64,7 +64,7 @@ export default function PicoList({ connectedPicos }: PicoListProps) {
                     </div>
                   </div>
                   <div className="text-right">
-                    <StatusBadge status={pico.status} />
+                    <DeviceStatus status={pico.status} />
                     {/* {pico.assignedRobot&& (
                       <p className="text-xs text-muted-foreground mt-1">Controlled by {pico.assignedRobot}</p>
                     )} */}

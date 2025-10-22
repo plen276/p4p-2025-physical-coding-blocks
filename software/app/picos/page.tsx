@@ -10,7 +10,7 @@ export default async function Picos() {
   await wait(2000)
 
   return (
-    <div className="space-y-6">
+    <div className="scrollbar-hidden space-y-6">
       <div className="flex flex-row items-center gap-2">
         <Cpu className="size-10" />
         <div>

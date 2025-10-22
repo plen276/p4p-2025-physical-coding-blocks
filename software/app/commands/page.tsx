@@ -1,19 +1,22 @@
 import { fetchCommands } from "@/lib/database"
-import CommandList from "../_components/command-list"
+import { wait } from "@/lib/utils"
+import { columns } from "./_components/columns"
+import { DataTable } from "./_components/data-table"
 
 export default async function Commands() {
   const commands = await fetchCommands()
+
+  await wait(2000)
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Command Queue</h1>
-        <p className="text-muted-foreground">Monitor and manage all Robots in the system</p>
+        <p className="text-muted-foreground">View all commands saved in the system</p>
       </div>
-      {/* <Filters /> */}
 
       {/* Pico Grid */}
-      <CommandList commands={commands} />
+      <DataTable columns={columns} data={commands} />
     </div>
   )
 }

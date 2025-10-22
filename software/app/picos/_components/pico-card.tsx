@@ -1,6 +1,6 @@
 "use client"
 
-import { StatusBadge } from "@/components/status-badge"
+import { DeviceStatus } from "@/components/device-status"
 import { StatusBubble } from "@/components/status-bubble"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -90,7 +90,7 @@ export default function PicoCard({ pico }: PicoCardProps) {
               </div>
             </div>
             <div className="flex flex-col items-end gap-1">
-              <StatusBadge status={pico.status} />
+              <DeviceStatus status={pico.status} />
             </div>
           </div>
         </CardHeader>
@@ -129,7 +129,7 @@ export default function PicoCard({ pico }: PicoCardProps) {
               <Label>Status</Label>
               <div className="flex items-center gap-2">
                 <StatusBubble status={pico.status} />
-                <StatusBadge status={pico.status} />
+                <DeviceStatus status={pico.status} />
               </div>
             </div>
 
