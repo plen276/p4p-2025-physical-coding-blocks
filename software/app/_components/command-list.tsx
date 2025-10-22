@@ -45,7 +45,7 @@ export default function CommandList({ commands }: CommandListProps) {
             {commands
               .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
               .filter((command) => !command.read)
-              .slice(0, 25)
+              .slice(0, 15)
               .map((command) => (
                 <TableRow key={command.id}>
                   <TableCell>{command.id}</TableCell>

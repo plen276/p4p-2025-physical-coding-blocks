@@ -74,7 +74,7 @@ export default function PicoCard({ pico }: PicoCardProps) {
       <Card
         onClick={handleCardClick}
         key={pico.id}
-        className="relative transition-shadow hover:shadow-md"
+        className="relative transition-shadow hover:shadow-lg hover:shadow-foreground"
       >
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
