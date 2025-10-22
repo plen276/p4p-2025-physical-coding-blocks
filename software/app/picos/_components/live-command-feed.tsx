@@ -14,11 +14,11 @@ const Command = ({ commandString }: { commandString: string }) => {
   if (commandType === "A") {
     icon = <ArrowUp className="h-8 w-8" />
     label = "Forwards"
-    extra = count > 1 ? `${count} times` : null
+    extra = count > 1 ? `${count} times` : "1 time"
   } else if (commandType === "B") {
     icon = <ArrowDown className="h-8 w-8" />
     label = "Backwards"
-    extra = count > 1 ? `${count} times` : null
+    extra = count > 1 ? `${count} times` : "1 time"
   } else if (commandType === "D") {
     icon = <RotateCw className="h-8 w-8" />
     label = "Turn Right"

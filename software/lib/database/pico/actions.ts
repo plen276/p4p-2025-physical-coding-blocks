@@ -26,3 +26,28 @@ export async function fetchPicos(): Promise<Pico[]> {
     status: pico.status as "online" | "offline",
   })) as Pico[]
 }
+
+export async function updatePico(
+  picoId: number,
+  updates: Partial<Pick<Pico, "name">>
+): Promise<Pico> {
+  try {
+    const updatedPico = await prisma.pico.update({
+      where: { id: picoId },
+      data: {
+        name: updates.name || null,
+      },
+    })
+
+    return {
+      id: updatedPico.id,
+      name: updatedPico.name ?? undefined,
+      macAddress: updatedPico.macAddress,
+      lastSeen: updatedPico.lastSeen,
+      status: updatedPico.status as "online" | "offline",
+    } as Pico
+  } catch (error) {
+    console.error("Error updating pico:", error)
+    throw new Error("Failed to update pico")
+  }
+}

@@ -1,7 +1,7 @@
 "use client"
 
+import { StatusBadge } from "@/components/status-badge"
 import { StatusBubble } from "@/components/status-bubble"
-import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Pico } from "@/lib/types"
 import { formatDistanceToNow } from "date-fns"
@@ -27,7 +27,7 @@ export default function PicoList({ connectedPicos }: PicoListProps) {
           {online} online
         </CardTitle>
         <CardDescription className="flex items-center justify-between">
-          <div>Status of all Pico W controllers</div>
+          <div>Status of recently active Pico W controllers</div>
           <div>
             of {total} total controller{total === 1 ? "" : "s"}
           </div>
@@ -47,10 +47,11 @@ export default function PicoList({ connectedPicos }: PicoListProps) {
                   className="flex items-center justify-between rounded-lg border p-3"
                 >
                   <div className="flex items-center gap-3 px-2">
-                    {/* <StatusBubble status={pico.status === "online" ? "online" : "offline"} /> */}
                     <StatusBubble status={pico.status} />
                     <div>
-                      <p className="text-base">{pico.name}</p>
+                      <p className="text-base">
+                        {pico.name ? pico.name : `Unnamed Pico ${pico.id}`}
+                      </p>
                       <p className="text-sm text-muted-foreground">
                         {pico.macAddress.toUpperCase()}
                       </p>
@@ -63,9 +64,7 @@ export default function PicoList({ connectedPicos }: PicoListProps) {
                     </div>
                   </div>
                   <div className="text-right">
-                    <Badge variant={pico.status === "online" ? "default" : "destructive"}>
-                      {pico.status}
-                    </Badge>
+                    <StatusBadge status={pico.status} />
                     {/* {pico.assignedRobot&& (
                       <p className="text-xs text-muted-foreground mt-1">Controlled by {pico.assignedRobot}</p>
                     )} */}

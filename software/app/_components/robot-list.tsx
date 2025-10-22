@@ -1,7 +1,7 @@
 "use client"
 
+import { StatusBadge } from "@/components/status-badge"
 import { StatusBubble } from "@/components/status-bubble"
-import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Robot } from "@/lib/types"
 import { formatDistanceToNow } from "date-fns"
@@ -26,7 +26,7 @@ export default function RobotList({ connectedRobots }: RobotListProps) {
           {online} online
         </CardTitle>
         <CardDescription className="flex items-center justify-between">
-          <div>Status of all Robots</div>
+          <div>Status of recently active Robots</div>
           <div>
             of {total} total robot{total === 1 ? "" : "s"}
           </div>
@@ -46,10 +46,11 @@ export default function RobotList({ connectedRobots }: RobotListProps) {
                   className="flex items-center justify-between rounded-lg border p-3"
                 >
                   <div className="flex items-center gap-3 px-2">
-                    {/* <StatusBubble status={robot.status === "online" ? "online" : "offline"} /> */}
                     <StatusBubble status={robot.status} />
                     <div>
-                      <p className="text-base">{robot.name}</p>
+                      <p className="text-base">
+                        {robot.name ? robot.name : `Unnamed Robot ${robot.id}`}
+                      </p>
                       <p className="text-sm text-muted-foreground">
                         {robot.macAddress.toUpperCase()}
                       </p>
@@ -62,9 +63,7 @@ export default function RobotList({ connectedRobots }: RobotListProps) {
                     </div>
                   </div>
                   <div className="text-right">
-                    <Badge variant={robot.status === "online" ? "default" : "destructive"}>
-                      {robot.status}
-                    </Badge>
+                    <StatusBadge status={robot.status} />
                     {/* {robot.assignedPico && (
                       <p className="text-xs text-muted-foreground mt-1">Controlled by {robot.assignedPico}</p>
                     )} */}

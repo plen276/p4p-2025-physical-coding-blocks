@@ -7,14 +7,14 @@ import AssignmentTableHeader from "./assignment-table-header"
 
 interface AssignmentTableProps {
   picos: Pico[]
-  filteredRobots: Robot[]
+  robots: Robot[]
   assignments: Assignment[]
   handleAssignment: (robotId: number, picoId: number | null) => void
 }
 
 export default function AssignmentTable({
   picos,
-  filteredRobots,
+  robots,
   assignments,
   handleAssignment,
 }: AssignmentTableProps) {
@@ -23,10 +23,11 @@ export default function AssignmentTable({
       <AssignmentTableHeader />
       <AssignmentTableBody
         picos={picos}
-        filteredRobots={filteredRobots}
+        robots={robots}
         assignments={assignments}
         handleAssignment={handleAssignment}
       />
     </Table>
   )
+  // return(<DataTable columns={columns} data = {})
 }

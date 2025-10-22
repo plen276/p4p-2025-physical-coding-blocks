@@ -47,10 +47,11 @@ export default function AssignmentDialog({
           <div className="py-10 text-center text-sm text-muted-foreground">No Picos available</div>
         ) : (
           <>
-            <Separator />
             <div className="flex items-center space-x-2 align-middle">
               <RadioGroupItem id="unassigned" value="unassigned" />
-              <Label htmlFor="unassigned">Unassigned</Label>
+              <Label htmlFor="unassigned" className="w-full">
+                Unassigned
+              </Label>
             </div>
             {allPicos.map((pico) => {
               const isDisabled = disabledPicoIds.includes(pico.id)
@@ -72,12 +73,14 @@ export default function AssignmentDialog({
                     <Label
                       htmlFor={pico.macAddress}
                       className={cn(
-                        "flex flex-col items-start gap-1",
+                        "flex w-full flex-col items-start gap-1",
                         isDisabled ? "cursor-not-allowed" : "cursor-pointer"
                       )}
                     >
                       <span>{pico.name}</span>
-                      <span className="text-sm text-muted-foreground">{pico.macAddress}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {pico.macAddress.toUpperCase()}
+                      </span>
                       <span className="text-xs text-muted-foreground">
                         Last seen {formatDistanceToNow(pico.lastSeen, { addSuffix: true })}
                       </span>

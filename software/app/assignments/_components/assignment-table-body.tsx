@@ -1,5 +1,6 @@
 "use client"
 
+import { StatusBadge } from "@/components/status-badge"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
@@ -12,14 +13,14 @@ import AssignmentDialog from "./assignment-dialog"
 
 interface AssignmentTableBodyProps {
   picos: Pico[]
-  filteredRobots: Robot[]
+  robots: Robot[]
   assignments: Assignment[]
   handleAssignment: (robotId: number, picoId: number | null) => void
 }
 
 export default function AssignmentTableBody({
   picos,
-  filteredRobots,
+  robots,
   assignments,
   handleAssignment,
 }: AssignmentTableBodyProps) {
@@ -35,20 +36,9 @@ export default function AssignmentTableBody({
       .map((assignment) => assignment.picoId)
   }
 
-  const getStatusBadge = (status: string) => {
-    const variants = {
-      online: "default",
-      offline: "outline",
-    } as const
-
-    return (
-      <Badge variant={variants[status as keyof typeof variants] || "secondary"}>{status}</Badge>
-    )
-  }
-
   return (
     <TableBody>
-      {filteredRobots.map((robot) => {
+      {robots.map((robot) => {
         const assignedPicos = getAssignedPicos(robot.id)
         const assignedPicoIds = getAssignedPicoIds(robot.id)
 
@@ -58,12 +48,16 @@ export default function AssignmentTableBody({
             <TableCell>
               <div>
                 <div className="font-medium">{robot.name || `Robot ${robot.id}`}</div>
-                <div className="text-sm text-muted-foreground">{robot.macAddress}</div>
+                <div className="text-sm text-muted-foreground">
+                  {robot.macAddress.toUpperCase()}
+                </div>
               </div>
             </TableCell>
 
             {/* Robot Status */}
-            <TableCell>{getStatusBadge(robot.status)}</TableCell>
+            <TableCell>
+              <StatusBadge status={robot.status} />
+            </TableCell>
 
             {/* Assigned Picos */}
             <TableCell>

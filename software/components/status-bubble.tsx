@@ -14,5 +14,5 @@ export const StatusBubble = ({ status }: StatusBubbleProps) => {
     )
   }
 
-  return <div className="h-[8px] w-[8px] rounded-full bg-gray-400" />
+  return <div className="h-[8px] w-[8px] animate-pulse rounded-full bg-gray-500" />
 }

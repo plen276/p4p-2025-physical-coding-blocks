@@ -1,5 +1,6 @@
 import { fetchCommands, fetchPicos, fetchRobots } from "@/lib/database"
 import { Command, Pico, Robot } from "@/lib/types"
+import { wait } from "@/lib/utils"
 import ApiDocumentation from "./_components/api-documentation"
 import CommandList from "./_components/command-list"
 import PicoList from "./_components/pico-list"
@@ -9,6 +10,8 @@ export default async function Home() {
   const picos: Pico[] = await fetchPicos()
   const robots: Robot[] = await fetchRobots()
   const commands: Command[] = await fetchCommands()
+
+  await wait(2000)
 
   return (
     <div className="space-y-6">

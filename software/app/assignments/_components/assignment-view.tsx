@@ -79,7 +79,6 @@ export default function AssignmentView() {
             <SelectItem value="all">All Status</SelectItem>
             <SelectItem value="online">Online</SelectItem>
             <SelectItem value="offline">Offline</SelectItem>
-            <SelectItem value="maintenance">Maintenance</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -91,7 +90,7 @@ export default function AssignmentView() {
         <CardContent>
           <AssignmentTable
             picos={picos}
-            filteredRobots={filteredRobots}
+            robots={filteredRobots}
             assignments={assignments}
             handleAssignment={handleAssignment}
           />

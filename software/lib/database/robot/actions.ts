@@ -26,3 +26,28 @@ export async function fetchRobots(): Promise<Robot[]> {
     status: robot.status as "online" | "offline",
   })) as Robot[]
 }
+
+export async function updateRobot(
+  robotId: number,
+  updates: Partial<Pick<Robot, "name">>
+): Promise<Robot> {
+  try {
+    const updatedRobot = await prisma.robot.update({
+      where: { id: robotId },
+      data: {
+        name: updates.name || null,
+      },
+    })
+
+    return {
+      id: updatedRobot.id,
+      name: updatedRobot.name ?? undefined,
+      macAddress: updatedRobot.macAddress,
+      lastSeen: updatedRobot.lastSeen,
+      status: updatedRobot.status as "online" | "offline",
+    } as Robot
+  } catch (error) {
+    console.error("Error updating robot:", error)
+    throw new Error("Failed to update robot")
+  }
+}

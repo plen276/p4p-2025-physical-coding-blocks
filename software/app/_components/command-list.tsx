@@ -56,7 +56,7 @@ export default function CommandList({ commands }: CommandListProps) {
                       <Badge variant="default">Queued</Badge>
                     )}
                   </TableCell>
-                  <TableCell className="font-mono">{command.macAddress}</TableCell>
+                  <TableCell className="font-mono">{command.macAddress.toUpperCase()}</TableCell>
                   <TableCell className="flex gap-1">
                     {parseMoveIcons(command.data).map((move, index) => (
                       <Tooltip key={index}>
@@ -72,7 +72,7 @@ export default function CommandList({ commands }: CommandListProps) {
                   <TableCell>
                     <Tooltip>
                       <TooltipTrigger>{command.createdAt.toLocaleString("en-UK")}</TooltipTrigger>
-                      <TooltipContent>
+                      <TooltipContent side="right">
                         {formatDistanceToNow(command.createdAt, {
                           addSuffix: true,
                         })}
