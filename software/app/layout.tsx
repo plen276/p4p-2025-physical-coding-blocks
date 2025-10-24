@@ -1,3 +1,4 @@
+import FloatingActionButton from "@/components/floating-action-button"
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
 import { BreadcrumbNavigation } from "@/components/sidebar/breadcrumb-navigation"
 import { Separator } from "@/components/ui/separator"
@@ -73,6 +74,7 @@ export default async function RootLayout({
               </div>
             </SidebarInset>
           </SidebarProvider>
+          <FloatingActionButton />
         </ThemeProvider>
       </body>
     </html>
