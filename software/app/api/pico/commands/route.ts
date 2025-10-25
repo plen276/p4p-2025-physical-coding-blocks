@@ -36,10 +36,6 @@ export async function POST(request: NextRequest) {
 
     const commandQueue = await prisma.command.findMany({ where: { macAddress: body.macAddress } })
 
-    // const { macAddress, commands } = body
-
-    // commandQueue.push(...commands)
-
     console.log(`[PICO COMMANDS] Commands added to queue: ${body.commands.length}`)
     console.log(
       `[PICO COMMANDS] Command queue: ${commandQueue.filter((cmd) => cmd.read === false).length}`
@@ -53,19 +49,4 @@ export async function POST(request: NextRequest) {
     console.error("[PICO COMMANDS] Error sending commands from Pico:", error)
     return NextResponse.json({ error: "Invalid JSON or server error" }, { status: 500 })
   }
-}
-
-export async function GET() {
-  console.log("[PICO COMMANDS] Getting Commands List")
-  try {
-    const allCommands = await prisma.command.findMany()
-
-    // console.log(`[PICO COMMANDS] Commands List[${allCommands.length}]: ${allCommands}`)
-
-    return NextResponse.json({ commandList: allCommands }, { status: 200 })
-  } catch (error) {
-    console.error("[PICO COMMANDS] Error fetching Commands:", error)
-    return NextResponse.json({ error: "Error fetching Commands" }, { status: 500 })
-  }
-  // return NextResponse.json({ commandQueue: commandQueue }, { status: 200 })
 }

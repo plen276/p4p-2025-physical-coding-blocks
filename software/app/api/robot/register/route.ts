@@ -40,28 +40,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON or server error" }, { status: 500 })
   }
 }
-
-export async function GET() {
-  console.log("[ROBOT REGISTER] Getting Robot List")
-  try {
-    const now = new Date()
-    const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000)
-
-    const allRobots = await prisma.robot.findMany()
-    console.log("[ROBOT REGISTER] All Robots:", allRobots)
-
-    const updatedRobots = await Promise.all(
-      allRobots.map(async (robot) => {
-        if (robot.lastSeen < fiveMinutesAgo && robot.status === "online") {
-          return await prisma.robot.update({ where: { id: robot.id }, data: { status: "offline" } })
-        }
-        return robot
-      })
-    )
-
-    return NextResponse.json({ connectedRobots: updatedRobots }, { status: 200 })
-  } catch (error) {
-    console.error("[ROBOT REGSITER] Error fetching Robots:", error)
-    return NextResponse.json({ error: "Error fetching Picos" }, { status: 500 })
-  }
-}

@@ -1,6 +1,5 @@
 "use client"
 
-import { setAssignment } from "@/app/assignments/actions"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import {
@@ -10,35 +9,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { fetchAssignments, fetchPicos, fetchRobots } from "@/lib/database"
+import { setAssignment } from "@/lib/database"
 import { Assignment, Pico, Robot } from "@/lib/types"
 import { Search } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import AssignmentTable from "./assignment-table"
 
-export default function AssignmentView() {
-  const [robots, setRobots] = useState<Robot[]>([])
-  const [picos, setPicos] = useState<Pico[]>([])
-  const [assignments, setAssignments] = useState<Assignment[]>([])
+interface AssignmentViewProps {
+  robots: Robot[]
+  picos: Pico[]
+  assignments: Assignment[]
+  onAssignment: () => void
+}
+
+export default function AssignmentView({
+  robots,
+  picos,
+  assignments,
+  onAssignment,
+}: AssignmentViewProps) {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const load = async () => {
-        const [robotsData, picosData, assignmentsData] = await Promise.all([
-          fetchRobots(),
-          fetchPicos(),
-          fetchAssignments(),
-        ])
-        setRobots(robotsData)
-        setPicos(picosData)
-        setAssignments(assignmentsData)
-      }
-      load()
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
 
   const filteredRobots = robots.filter((robot) => {
     const matchesSearch =
@@ -51,8 +42,7 @@ export default function AssignmentView() {
   const handleAssignment = async (robotId: number, picoId: number | null) => {
     try {
       await setAssignment(robotId, picoId)
-      const [assignmentsData] = await Promise.all([fetchAssignments()])
-      setAssignments(assignmentsData)
+      onAssignment()
     } catch (error) {
       console.error("Error updating assignment:", error)
     }
