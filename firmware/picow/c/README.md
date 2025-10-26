@@ -26,7 +26,7 @@ From within the build directory, just run `make`.
 
 Note that the compiler can be particularly problematic. If you are using Brew, you must use `brew install --cask gcc-arm-embedded`. Note that if you used `brew install arm-none-eabi-gcc` you will run into a breaking issue:
 
-```
+```bash
 $ make
 [  1%] Building ASM object pico-sdk/src/rp2_common/boot_stage2/CMakeFiles/bs2_default.dir/compile_time_choice.S.obj
 [  2%] Linking ASM executable bs2_default.elf
@@ -70,4 +70,3 @@ screen -S pico -X quit                    # make it release the lock on the devi
 ```
 
 And because it behaves similarly to any other file, you can just as easily write to the Pico with `echo Hello, world! > /dev/tty.usbmodem1201`. You can read from it as per usual with `cat`, e.g. using `cat /dev/tty.usbmodem*`.
-

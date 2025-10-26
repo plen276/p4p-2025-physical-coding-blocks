@@ -486,3 +486,5 @@ Notes:
 <details><summary>Does the notifications type do anything?</summary>
 
 <ul><li>Nope I was too lazy to implement that too :) so you can have a look at `notification-controller.tsx` as a start</li></ul></details>
+
+I would probably integrate Husky if more than one person works on this repo, just thought it was redundant since I was the only one
