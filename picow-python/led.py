@@ -1,6 +1,7 @@
 from time import sleep
 
 from machine import Pin
+from utime import sleep
 
 from config import ERROR_LED_PIN, PICO_LED_PIN, SUCCESS_LED_PIN
 from helper import log
