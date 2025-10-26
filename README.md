@@ -29,7 +29,7 @@ p4p-2025-physical-coding-blocks/
 
 ### Software (Web Server)
 
-The `software` directory contains the Next.js web server. It's built with TypeScript and uses Prisma with SQLite for database management. It provides API endpoints for devices and a real-time web interface for system monitoring.
+The [`software/`](software/README.md) directory contains the Next.js web server. It's built with TypeScript and uses Prisma with SQLite for database management. It provides API endpoints for devices and a real-time web interface for system monitoring.
 
 **Key Features:**
 
@@ -42,12 +42,12 @@ For detailed instructions on how to set up and run the web server, see the [`sof
 
 ### Firmware
 
-The `firmware` directory contains the code for both the TUI devices (Pico W) and the robots.
+The [`firmware/`](firmware/README.md) directory contains the code for both the TUI devices (Pico W) and the robots.
 
 - The **TUI firmware** is responsible for reading the physical block configurations and sending the corresponding commands to the server.
 - The **Robot firmware** is responsible for connecting to the server, polling for commands, and executing them.
 
-For detailed instructions on building and flashing the firmware, see the relevant READMEs inside the [`firmware`](firmware) directory.
+For detailed instructions on building and flashing the firmware, see the relevant `README`s inside the [`firmware/`](firmware/README.md) directory.
 
 ## Getting Started
 
@@ -64,7 +64,7 @@ To get the full system running, you will need to set up both the software and th
     ```
 
 2. **Set up the Web Server:**
-    - Navigate to the `software` directory and follow the instructions in its `README.md` file.
+    - Navigate to the [`software/`](software/README.md) directory and follow the instructions in its `README.md` file.
 
 3. **Set up the Firmware:**
-    - Navigate to the `firmware/` directory and follow the instructions in its `README.md` file to build and upload the firmware to the devices.
+    - Navigate to the [`firmware/`](firmware/README.md) directory and follow the instructions in its `README.md` file to build and upload the firmware to the devices.
