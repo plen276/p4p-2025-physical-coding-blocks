@@ -1,4 +1,4 @@
-export const ROUTES = {
+export const API_ROUTES = {
   PICO: {
     REGISTER: "/api/pico/register",
     COMMANDS: "/api/pico/commands",
@@ -10,4 +10,11 @@ export const ROUTES = {
     STATUS: "/api/robot?action=status",
     REGISTER: "/api/robot/register",
   },
+}
+
+export const APP_ROUTES = {
+  ASSIGNMENTS: "/assignments",
+  COMMNADS: "/commands",
+  PICO: "/picos",
+  ROBOT: "/robots",
 }

@@ -8,7 +8,3 @@ export interface Pico {
   status: "online" | "offline"
   assignments?: Assignment[]
 }
-
-export interface PicoRegistry {
-  connectedPicos: Pico[]
-}

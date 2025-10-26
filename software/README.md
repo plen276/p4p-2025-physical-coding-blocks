@@ -1,14 +1,14 @@
-# Physical Coding Blocks - Web Interface
+# Physical Coding Blocks - Web Server
 
-A modern web interface for managing and controlling Physical Coding Blocks, built with Next.js 15 and TypeScript. This application provides a robust interface for managing Pico devices, robots, and their assignments.
+A central connection server that facilitates communication between Pico devices and robots in the TUI (Tangible User Interface) system. Built with [Next.js 15](https://nextjs.org/) and TypeScript, it manages device registration, command routing, and real-time status updates. The server includes a web interface for monitoring and managing device connections, assignments, and command queues.
 
 ## Features
 
 - Real-time device status monitoring
 - Robot and Pico device management
-- Assignment management between robots and Picos
+- Assignment management between robots and picos
 - Responsive design with dark/light mode support
-- Command execution and monitoring
+- Command execution and live monitoring
 - Live status updates and notifications
 
 ## Tech Stack
@@ -17,7 +17,7 @@ A modern web interface for managing and controlling Physical Coding Blocks, buil
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
 - **Database:** SQLite with [Prisma](https://www.prisma.io/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **UI Components:** [Radix UI](https://www.radix-ui.com/)
+- **UI Components:** [shadcn UI](https://ui.shadcn.com/)
 - **State Management:** React Hooks + Server Components
 - **Development Tools:**
   - [Turbopack](https://turbo.build/pack) for fast builds
@@ -29,25 +29,36 @@ A modern web interface for managing and controlling Physical Coding Blocks, buil
 ```bash
 software/
 ├── app/                    # Next.js app router pages and components
-│   ├── api/               # API routes for Pico and Robot management
-│   ├── assignments/       # Assignment management interface
-│   ├── commands/         # Command execution interface
-│   ├── picos/           # Pico device management
-│   └── robots/          # Robot management
-├── components/            # Reusable UI components
-│   ├── ui/              # Base UI components (buttons, cards, etc.)
-│   └── sidebar/         # Navigation components
-├── lib/                   # Utility functions and database operations
-│   ├── database/        # Database operations and queries
-│   └── types/          # TypeScript type definitions
-└── prisma/               # Database schema and migrations
+│   ├── api/                # API endpoints for device management
+│   │   ├── pico/           # Pico registration, commands, and live status
+│   │   └── robot/          # Robot registration and command retrieval
+│   ├── assignments/        # Device pairing and connection management page
+│   ├── commands/           # Command queue monitoring page
+│   ├── picos/              # Pico device status and configuration
+│   └── robots/             # Robot status and assignment control
+├── components/             # Shared UI components
+│   ├── ui/                 # shadcn UI components (buttons, cards, etc.)
+│   └── sidebar/            # Navigation and layout components
+├── lib/                    # Utility functions and database operations
+│   ├── database/           # Database operations and queries
+│   └── types/              # TypeScript type definitions
+└── prisma/                 # Database schema and migrations
+```
+
+### Page Structure
+
+```bash
+/
+├── _components_/           # Page-specific components
+├── loading.tsx             # Loading state while data fetches
+└── page.tsx                # Main page component with server-side data fetching
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ and pnpm
+- [Node.js 18+](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and [pnpm](https://pnpm.io/installation)
 - Git
 - VS Code (recommended)
 
@@ -66,18 +77,26 @@ software/
    pnpm install
    ```
 
-3. Set up the database:
+3. Copy the environment example file:
 
    ```bash
-   pnpm run db:push      # Initialize the database
-   pnpm run db:seed      # Seed with sample data
+   cp .env.example .env
    ```
 
-4. Start the development server:
+4. Set up the database:
 
    ```bash
-   pnpm run dev
+   pnpm db:push      # Initialize the database
+   pnpm db:seed      # Seed with sample data (optional)
    ```
+
+5. Start the development server:
+
+   ```bash
+   pnpm dev
+   ```
+
+This will start the development server with Turbopack. Open <http://localhost:3000> with your browser to see the result.
 
 ### Available Scripts
 
@@ -106,11 +125,11 @@ The application provides QR codes for easy mobile access:
 
 Key models in the application:
 
-- **Pico**: Manages Pico device information and status
-- **Robot**: Tracks robot information and connectivity
+- **Pico**: Pico device information and status
+- **Robot**: Robot information and status
 - **Assignment**: Links Picos with Robots
 - **Command**: Stores commands for execution
-- **Notification**: System notifications and alerts
+- **Notification**: System notifications and alerts `(not implemented)`
 
 ### Database Operations
 
@@ -121,77 +140,104 @@ Key models in the application:
 
    ```bash
    # For versioned migrations (recommended)
-   pnpm run db:migrate -- name <migration-name>
+   pnpm db:migrate -- name <migration-name>
 
    # For quick prototyping
-   pnpm run db:push
+   pnpm db:push
    ```
 
 3. Explore data using Prisma Studio:
 
    ```bash
-   pnpm run db:studio
+   pnpm db:studio
    ```
 
-## 🔧 Development
+## Development
 
-### Code Style
+### Code Style & Standards
 
-- Use TypeScript for type safety
-- Follow ESLint rules
-- Format with Prettier
-- Use Next.js best practices and Server Components where appropriate
+- **TypeScript**
+  - Use strict type checking
+  - Define interfaces for all data structures in `lib/types`
+  - Avoid `any` types except in edge cases
+- **ESLint & Prettier**
+  - ESLint rules are configured in `eslint.config.mjs`
+  - Run `pnpm lint` to check for issues
+  - Format on save is enabled for VS Code
+  - Run `pnpm format:fix` to format all files
 
-### Architecture
+### Architecture Principles
 
-- Uses Next.js App Router for routing
-- Server Components for data fetching
-- Client Components for interactivity
-- Prisma for database operations
-- Radix UI for accessible components
+- **Server Components (Default)**
+  - Use for data fetching and static content
+  - Place in `app/**/page.tsx` and non-interactive components
+- **Client Components**
+  - Mark with `"use client"` directive
+  - Use for interactive features
+  - Keep state management close to where it's needed
+- **Data Flow**
+  - Database operations in `lib/database/*`
+  - API routes handle device communication
+  - Server actions for form submissions and database fetches
+  - Client-side state for UI interactions
+
+### Component Organization
+
+- **Page Components**
+  - Place in `app/**/page.tsx`
+  - Handle data fetching and layout
+  - Split complex UI into smaller components
+- **Shared Components**
+  - Place reusable UI in `components/`
+  - Create new folders for related components
+- **Loading States**
+  - Implement `loading.tsx` for each route
+  - Use skeleton components from shadcn/ui
+  - Show loading indicators for async actions
+
+### UI Development with shadcn/ui
+
+This project uses [shadcn/ui](https://ui.shadcn.com/) for component primitives:
+
+- Install new components:
+
+  ```bash
+  pnpm dlx shadcn@latest add
+  ```
+
+- Available components:
+  - Check [shadcn/ui docs](https://ui.shadcn.com/docs/components) for options
+  - Components are copied to `components/ui/`
+  - Can be customized after installation
 
 ### Adding New Features
 
-1. Create new components in the appropriate directory
-2. Update Prisma schema if needed
-3. Add API routes if required
-4. Update types in `lib/types`
-5. Add UI components to relevant pages
+1. **Plan the Feature**
+   - Determine server/client component split
+   - Identify required database changes
+   - Plan API endpoints if needed
+
+2. **Implementation Steps**
+   - Add/update database models in `schema.prisma`
+   - Create/update API routes if needed
+   - Add type definitions in `lib/types`
+   - Implement database operations in `lib/database`
+   - Create UI components and pages
+
+3. **Testing & Validation**
+   - Test API endpoints with Postman/curl
+   - Verify database operations
+   - Check UI in different states
+   - Test error scenarios
 
 ## Database Management
-
-After changing db
-
-```shell
-pnpm run db:migrate -- --name <name>
-```
-
-To explore the db
-
-```shell
-pnpm run db:studio
-```
-
-Either run
-
-```bash
-pnpm run db:migrate -- --name <name>
-```
-
-or
-
-```bash
-pnpm run db:push
-```
-
-both will run `prisma generate` under the hood
 
 ### Apply schema changes
 
 #### Versioned migrations (recommended)
 
 ```bash
-pnpm run db:migrate -- --name <migration-name>
+pnpm db:migrate -- --name <migration-name>
 ```
 
 - Creates a migration file
@@ -201,7 +247,7 @@ pnpm run db:migrate -- --name <migration-name>
 #### Quick prototype (no migration files)
 
 ```bash
-pnpm run db:push
+pnpm db:push
 ```
 
 - Updates the database directly from `schema.prisma`
@@ -211,7 +257,7 @@ pnpm run db:push
 ### Explore the database
 
 ```bash
-pnpm run db:studio
+pnpm db:studio
 ```
 
 - Opens a visual GUI for inspecting and editing your data
@@ -370,3 +416,73 @@ Common HTTP status codes:
 - The system maintains active assignments between Picos and Robots
 - Live status updates use a separate in-memory storage system
 - All endpoints include detailed logging for debugging
+
+### Testing API Endpoints
+
+#### Pico Endpoints
+
+1. Register Pico:
+
+   ```bash
+   curl -X POST http://localhost:3000/api/pico/register \
+     -H "Content-Type: application/json" \
+     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\"}"
+   ```
+
+2. Send Commands from Pico:
+
+   ```bash
+   curl -X POST http://localhost:3000/api/pico/commands \
+     -H "Content-Type: application/json" \
+     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\", \"commands\": [\"AAAAAAAAAA\", \"BBBBBBBBBB\", \"DDDDDD\"]}"
+   ```
+
+3. Live Feed of Commands from Pico:
+
+   ```bash
+   # GET current commands (used to display in UI)
+   curl -X GET "http://localhost:3000/api/pico/live?macAddress=AA:BB:CC:DD:EE:FF"
+
+   # POST new commands
+   curl -X POST http://localhost:3000/api/pico/live \
+     -H "Content-Type: application/json" \
+     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\", \"commands\": [\"A\", \"BB\", \"DDD\"]}"
+   ```
+
+#### Robot Endpoints
+
+1. Register Robot:
+
+   ```bash
+   curl -X POST http://localhost:3000/api/robot/register \
+     -H "Content-Type: application/json" \
+     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\"}"
+   ```
+
+2. Get Robot Commands:
+
+   ```bash
+   # Get commands for a specific robot
+   curl -X GET "http://localhost:3000/api/robot/commands?macAddress=AA:BB:CC:DD:EE:FF"
+   ```
+
+Notes:
+
+- Replace `AA:BB:CC:DD:EE:FF` with actual MAC addresses
+- All POST requests require `Content-Type: application/json` header
+- Commands are examples; use actual command strings for your devices
+
+## FAQ
+
+<details>
+<summary>Are the search bars and filters meant to work?</summary>
+<ul>
+  <li>
+  Yeah, but I was too lazy to spend too much time on linking the search feature for most of the pages
+  </li>
+</ul>
+</details>
+
+<details><summary>Does the notifications type do anything?</summary>
+
+<ul><li>Nope I was too lazy to implement that too :) so you can have a look at `notification-controller.tsx` as a start</li></ul></details>

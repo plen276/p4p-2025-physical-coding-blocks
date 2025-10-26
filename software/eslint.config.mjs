@@ -22,6 +22,7 @@ const eslintConfig = [
       semi: ["error", "never"],
       "react/no-unescaped-entities": "off",
     },
+    ignorePatterns: ["**/generated/**"],
   }),
 ]
 

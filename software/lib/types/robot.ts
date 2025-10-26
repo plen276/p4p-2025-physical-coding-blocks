@@ -8,7 +8,3 @@ export interface Robot {
   status: "offline" | "online"
   assignments?: Assignment[]
 }
-
-export interface RobotRegistry {
-  connectedRobots: Robot[]
-}
