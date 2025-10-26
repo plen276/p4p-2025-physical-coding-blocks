@@ -25,7 +25,7 @@ This is a well-tested setup, offering good project management and REPL integrati
 4. **Install MicroPico VS Code Extension:**
     - Open VS Code.
     - Go to the Extensions view (Ctrl+Shift+X or Cmd+Shift+X).
-    - Search for `paulober.pico-w-go` and install it.
+    - Search for [`paulober.pico-w-go`](vscode:extension/paulober.pico-w-go) and install it.
 
 ### 2. Thonny IDE
 
@@ -75,9 +75,9 @@ Before you can run MicroPython scripts, you need to flash the MicroPython firmwa
     >
     > This will automatically connect and open the Pico on the REPL terminal.
 3. **Upload Project:**
-    - In the Command Palette, type `MicroPico: Upload project to Pico` and select it. This will copy all files from your configured project directory (`firmware/picow/python/`) to the Pico W.
-4. **Run `main.py`:**
-    - To run the main script, simply reset the Pico (e.g., by power cycling or using `machine.reset()` in the REPL). The `main.py` script is designed to run on boot.
+    - In the Command Palette, type `MicroPico: Upload project to Pico` and select it. This will copy all files from your configured project directory [`/python`](firmware/picow/python/) to the Pico W.
+4. **Run [`main.py`](/firmware/picow/python/main.py):**
+    - To run the main script, simply reset the Pico (e.g., by power cycling or using `machine.reset()` in the REPL). The [`main.py`](/firmware/picow/python/main.py) script is designed to run on boot.
     - Additionally, for testing purposes, open the Command Palette, type `MicroPico: Run current file` with the [`main.py`](/firmware/picow/python/main.py) file in focus.
     > [!NOTE]
     > If `micropico.softResetAfterUpload` is set, it will run the code as soon as the project upload is done in step 3.
@@ -92,8 +92,8 @@ Before you can run MicroPython scripts, you need to flash the MicroPython firmwa
     - For each file you want on the Pico, open it, then go to `File` > `Save copy...`.
     - Choose `Raspberry Pi Pico` as the destination.
     - Save the file with the same name in the root directory of the Pico's filesystem.
-3. **Run `main.py`:**
-    - Open `main.py` from the Pico (Thonny's file browser should show files on the computer and the Pico).
+3. **Run [`main.py`](/firmware/picow/python/main.py):**
+    - Open [`main.py`](/firmware/picow/python/main.py) from the Pico (Thonny's file browser should show files on the computer and the Pico).
     - Click the "Run current script" button (green play icon) or press F5.
 
 ## Server-Side Setup

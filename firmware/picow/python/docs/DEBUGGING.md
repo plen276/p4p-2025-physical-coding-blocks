@@ -26,12 +26,12 @@ This script is used to test the command processing logic.
 This script provides a visual confirmation that all LEDs are working as expected.
 
 - It includes a variety of test functions to check individual LEDs (onboard, success, error) as well as all LEDs together.
-- It runs through different patterns, sequences, and toggle tests to ensure the `led.py` module is functioning correctly.
+- It runs through different patterns, sequences, and toggle tests to ensure the [`led.py`](/firmware/picow/python/led.py) module is functioning correctly.
 
 ## Debugging
 
 > [!NOTE]
-> **Controlling Output Verbosity:** The level of detail in the print statements can be controlled by changing the `VERBOSE` boolean constant in the `config.py` file.
+> **Controlling Output Verbosity:** The level of detail in the print statements can be controlled by changing the `VERBOSE` boolean constant in the [`config.py`](/firmware/picow/python/config.py) file.
 
 The most effective way to debug the firmware is by using a serial monitor to view `print()` statements from the Pico W. This provides real-time feedback on the device's state and execution flow. The Pico W is designed to run [`main.py`](/firmware/picow/python/main.py) on boot, so serial output will begin as soon as the device is powered and a monitor is connected.
 
@@ -68,7 +68,7 @@ For simple, view-only output without the interactive REPL, the official [VS Code
     - A "Serial Monitor" tab will open.
     - In the top, select the correct **Port** for your Pico from the dropdown list.
     - Click **Start Monitoring**.
-4. **View Output:** The terminal will immediately show any `print()` output from the Pico as it runs `main.py` on boot.
+4. **View Output:** The terminal will immediately show any `print()` output from the Pico as it runs [`main.py`](/firmware/picow/python/main.py) on boot.
 
 <p align="center">
   <img src="serial-monitor.png" alt="Serial Monitor">

@@ -17,8 +17,8 @@ This document outlines potential improvements and new features for the TUI firmw
 - [ ] **Improve Wi-Fi Connection Logic:**
   - Implement a more robust backoff strategy for Wi-Fi connection attempts.
   - Consider adding a "captive portal" mode to allow users to configure Wi-Fi credentials without hardcoding them in `config.py`.
-- [ ] **Enhanced Error Handling:** Improve error handling in the API modules (`api.py`, `api_next.py`) to gracefully handle server errors (e.g., 5xx status codes), network timeouts, and malformed responses.
-- [ ] **Refactor API Modules:** Abstract the common HTTP request logic from `api.py` and `api_next.py` into a shared helper module to reduce code duplication.
+- [ ] **Enhanced Error Handling:** Improve error handling in the API modules (`api_net.py`, `api_next.py`) to gracefully handle server errors (e.g., 5xx status codes), network timeouts, and malformed responses.
+- [ ] **Refactor API Modules:** Abstract the common HTTP request logic from `api_net.py` and `api_next.py` into a shared helper module to reduce code duplication.
 - [ ] **Configuration Management:** Instead of hardcoding server IPs in `config.py`, consider a discovery mechanism (e.g., UDP broadcast) or loading configuration from a separate `config.json` file.
 
 ## Features
