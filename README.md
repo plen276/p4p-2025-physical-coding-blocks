@@ -51,6 +51,15 @@ For detailed instructions on building and flashing the firmware, see the relevan
 
 ## Getting Started
 
+> [!TIP]
+> To take full advantage of the configured workspace settings, modify the project using **one** of the following approaches:
+>
+> 1. Open the [`mono-workspace.code-workspace`](mono-workspace.code-workspace) file at the root of this repository, **or**
+> 2. Open each directory in a seperate workspace, e.g.:
+>       - `firmware/picow/python`
+>       - `firmware/mBot2/`
+>       - `software/`
+
 To get the full system running, you will need to set up both the software and the firmware.
 
 > [!NOTE]

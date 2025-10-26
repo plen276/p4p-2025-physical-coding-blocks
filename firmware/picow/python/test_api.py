@@ -1,6 +1,6 @@
 from utime import sleep
 
-from api import get_request, post_request
+from api_net import get_request, post_request
 from wifi import connect
 
 

@@ -20,6 +20,7 @@ CONNECTION_TIMEOUT = 10
 RETRY_ATTEMPTS = 3
 
 # Debug Settings
+LEGACY = False
 DEBUG_MODE = True
 VERBOSE = True
 

@@ -1,11 +1,7 @@
 from machine import Pin
 from utime import sleep, ticks_ms
 
-# from api import post_request
-import api  # noqa
-import api_next  # noqa
 import helper
-from commands import process_commands
 from config import BUTTON_PIN
 
 button = Pin(BUTTON_PIN, Pin.IN, Pin.PULL_DOWN)

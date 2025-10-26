@@ -2,11 +2,12 @@ import gc
 
 from utime import sleep
 
-import api  # noqa
+import api_net  # noqa
 import api_next  # noqa
 import button
 import commands
 import led
+from config import LEGACY
 from wifi import connect
 
 if __name__ == "__main__":
@@ -15,18 +16,25 @@ if __name__ == "__main__":
     connect()
     while True:
         led.all_led_on()
-        # Send MAC Address to server to register Pico
-        api_next.send_mac_address()  # TODO: Uncomment if connecting to next.js server
+
+        # Send MAC Address to server to register Pico (Next.js only)
+        if not LEGACY:
+            api_next.send_mac_address()
+
         # Interpret current commands on Pico
         command_list = commands.process_commands()
-        # Send live command feed
-        api_next.live_request(command_list, len(command_list))
+
+        # Send live command feed (Next.js only)
+        if not LEGACY:
+            api_next.live_request(command_list, len(command_list))
+
         # Send commands to queue if the button is pressed
         if button.BUTTON_PRESSED_FLAG:
             button.BUTTON_PRESSED_FLAG = False
-            # TODO: Uncomment the respective line depending on which server to connect to
-            # api.post_request(command_list, len(command_list))
-            api_next.post_request(command_list, len(command_list))
+            if LEGACY:
+                api_net.post_request(command_list, len(command_list))
+            else:
+                api_next.post_request(command_list, len(command_list))
             # ---------------------------------------------------------------------------
 
         led.all_led_off()
