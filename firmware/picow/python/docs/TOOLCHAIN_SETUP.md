@@ -67,7 +67,7 @@ Before you can run MicroPython scripts, you need to flash the MicroPython firmwa
     > The following instructions assume that no manual COM device is set.
     >
     > If a connection error occurs check to see if `micropico.manualComDevice` in [`settings.json`](/firmware/picow/python/.vscode/settings.json) is set. This value might not match with the COM port of the connected Pico.
-    - Open the Command Palette (<kbd>⌃ Control</kbd> + <kbd>⇧ Shift</kbd> + <kbd>P</kbd> or <kbd>⌘ Command</kbd> + <kbd>⇧ Shift</kbd> + <kbd>P</kbd>).
+    - Open the Command Palette (<kbd>⌃ Control</kbd> <kbd>⇧ Shift</kbd> <kbd>P</kbd> or <kbd>⌘ Command</kbd> <kbd>⇧ Shift</kbd> <kbd>P</kbd>).
     - Type `MicroPico: Connect` and select it. Choose your Pico's serial port.
     - The MicroPico terminal should open and show the MicroPython REPL prompt (`>>>`).
     > [!TIP]
