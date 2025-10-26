@@ -4,9 +4,9 @@ from commands import (
     PrimaryBlocks,
     SecondaryMove,
     SecondaryTurn,
-    process_commands,
-    convert_to_command,
     add_command_to_list,
+    convert_to_command,
+    process_commands,
 )
 
 

@@ -1,7 +1,8 @@
 from machine import Pin
-from utime import sleep_us, sleep
+from utime import sleep, sleep_us
 
 import config
+from helper import log
 
 # Pin Setup
 
@@ -21,7 +22,7 @@ mux_outputs = [
 # Block type enums
 class PrimaryBlocks:
     FORWARDS = 0b0011  # 0b0011
-    BACKWARDS = 0b0001  # 0b0001
+    BACKWARDS = 0b0010  # 0b0001
     TURN = 0b1011  # 0b1011
     REPEAT = 0b1111  # 0b1111
 
@@ -36,23 +37,23 @@ class SecondaryMove:
 class SecondaryTurn:
     TURN_90 = 0b0100  # 0b0010
     TURN_180 = 0b1100  # 0b0011
-    TURN_270 = 0b1101  # 0b0111
+    TURN_270 = 0b1001  # 0b0111
 
 
 def read_commands():
     """Read all multiplexer channels and display primary/secondary blocks separately"""
-    print("==== PRIMARY BLOCKS (Channels 0-3) ====")
+    log("==== PRIMARY BLOCKS (Channels 0-3) ====")
     for channel in range(4):  # Channels 0-3 are primary blocks
         values = read_muxes(channel)
-        print(f"Channel {channel}: {values}")
+        log(f"Channel {channel}: {values}")
 
-    print("\n")
-    print("=== SECONDARY BLOCKS (Channels 4-7) ===")
+    log("\n")
+    log("=== SECONDARY BLOCKS (Channels 4-7) ===")
     for channel in range(4, 8):  # Channels 4-7 are secondary blocks
         values = read_muxes(channel)
-        print(f"Channel {channel}: {values}")
+        log(f"Channel {channel}: {values}")
 
-    print("=======================================")
+    log("=======================================")
     sleep(0.1)
 
 
@@ -75,30 +76,30 @@ def read_muxes(ch: int):
 
 def read_primary_blocks():
     """Read only the primary blocks (channels 0-3)"""
-    print("=== PRIMARY BLOCKS (Action Type) ===")
+    log("=== PRIMARY BLOCKS (Action Type) ===")
     primary_data = []
     for channel in range(4):  # Channels 0-3
         values = read_muxes(channel)
         primary_data.append(values)
-        print(f"Channel {channel}: {values}")
+        log(f"Channel {channel}: {values}")
     return primary_data
 
 
 def read_secondary_blocks():
     """Read only the secondary blocks (channels 4-7)"""
-    print("=== SECONDARY BLOCKS (Magnitude/Quantity) ===")
+    log("=== SECONDARY BLOCKS (Magnitude/Quantity) ===")
     secondary_data = []
     for channel in range(4, 8):  # Channels 4-7
         values = read_muxes(channel)
         secondary_data.append(values)
-        print(f"Channel {channel}: {values}")
+        log(f"Channel {channel}: {values}")
     return secondary_data
 
 
 def read_blocks_separated():
     """Read both primary and secondary blocks separately"""
     primary = read_primary_blocks()
-    print()  # Add spacing
+    log()  # Add spacing
     secondary = read_secondary_blocks()
     return primary, secondary
 
@@ -106,7 +107,7 @@ def read_blocks_separated():
 # Main functions
 def process_commands():
     """Process blocks and output commands one by one (column by column)"""
-    print("==== PROCESSING COMMANDS ====")
+    log("==== PROCESSING COMMANDS ====")
 
     # Read all blocks
     primary, secondary = read_blocks_separated()
@@ -142,7 +143,7 @@ def process_commands():
         print(f"Command: '{command}'")
 
     print(f"\nAll Commands: {commands}")
-    print(f"Count: {len(commands)}")
+    log(f"Count: {len(commands)}")
     return commands
 
 

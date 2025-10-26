@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Pico {
+  id          Int          @id @default(autoincrement())
+  name        String? // Optional human-readable name
+  macAddress  String       @unique
+  lastSeen    DateTime
+  status      String
+  assignments Assignment[]
+}
+
+model Robot {
+  id          Int          @id @default(autoincrement())
+  name        String? // Optional human-readable name
+  macAddress  String       @unique
+  lastSeen    DateTime
+  status      String
+  assignments Assignment[]
+}
+
+model Assignment {
+  id        Int      @id @default(autoincrement())
+  robotId   Int
+  picoId    Int
+  createdAt DateTime @default(now())
+  isActive  Boolean  @default(true)
+
+  robot Robot @relation(fields: [robotId], references: [id], onDelete: Cascade)
+  pico  Pico  @relation(fields: [picoId], references: [id], onDelete: Cascade)
+
+  @@unique([robotId, picoId])
+  @@index([robotId])
+  @@index([picoId])
+}
+
+model Command {
+  id         Int      @id @default(autoincrement())
+  macAddress String
+  data       String
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  message   String
+  data      Json?
+  createdAt DateTime @default(now())
+  read      Boolean  @default(false)
+}

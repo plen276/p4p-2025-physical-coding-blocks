@@ -1,14 +1,34 @@
-from utime import sleep, sleep_us
+import gc
 
-from led import led_toggle, led_off
+from utime import sleep
+
+import api  # noqa
+import api_next  # noqa
 import button
-from commands import read_commands, read_muxes, process_commands
+import commands
+import led
 from wifi import connect
 
 if __name__ == "__main__":
+    led.all_led_on()
+    # Connect to Wi-Fi
     connect()
     while True:
-        led_off()
-        process_commands()
-        sleep(2)
-        led_toggle()
+        led.all_led_on()
+        # Send MAC Address to server to register Pico
+        api_next.send_mac_address()  # TODO: Uncomment if connecting to next.js server
+        # Interpret current commands on Pico
+        command_list = commands.process_commands()
+        # Send live command feed
+        api_next.live_request(command_list, len(command_list))
+        # Send commands to queue if the button is pressed
+        if button.BUTTON_PRESSED_FLAG:
+            button.BUTTON_PRESSED_FLAG = False
+            # TODO: Uncomment the respective line depending on which server to connect to
+            # api.post_request(command_list, len(command_list))
+            api_next.post_request(command_list, len(command_list))
+            # ---------------------------------------------------------------------------
+
+        led.all_led_off()
+        sleep(1)
+        gc.collect()

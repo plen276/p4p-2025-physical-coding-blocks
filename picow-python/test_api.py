@@ -1,7 +1,7 @@
 from utime import sleep
 
+from api import get_request, post_request
 from wifi import connect
-from api import post_request, get_request
 
 
 def test_get_endpoint():
