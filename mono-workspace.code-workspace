@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "software"
+		},
+		{
+			"path": "firmware/picow/python"
+		},
+		{
+			"path": "firmware/mBot2"
+		}
+	]
+}

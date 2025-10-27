@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+
 # Physical Coding Blocks - Web Server
 
 A central connection server that facilitates communication between Pico devices and robots in the TUI (Tangible User Interface) system. Built with [Next.js 15](https://nextjs.org/) and TypeScript, it manages device registration, command routing, and real-time status updates. The server includes a web interface for monitoring and managing device connections, assignments, and command queues.
@@ -282,7 +284,7 @@ The application provides several API endpoints for device management and communi
 
   ```json
   {
-    "macAddress": "string"
+    "macAddress": string  // AA:BB:CC:DD:EE:FF
   }
   ```
 
@@ -296,6 +298,14 @@ The application provides several API endpoints for device management and communi
 
 - **Description:** Registers a new Pico device or updates its online status. Sets status to "online" and updates lastSeen timestamp.
 
+- **Testing:**
+
+   ```bash
+   curl -X POST http://localhost:3000/api/pico/register \
+     -H "Content-Type: application/json" \
+     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\"}"
+   ```
+
 #### Pico Commands
 
 - **URL:** `/api/pico/commands`
@@ -304,7 +314,7 @@ The application provides several API endpoints for device management and communi
 
   ```json
   {
-    "macAddress": "string",
+    "macAddress": string,  // AA:BB:CC:DD:EE:FF
     "commands": string[]  // Array of command strings
   }
   ```
@@ -319,6 +329,14 @@ The application provides several API endpoints for device management and communi
 
 - **Description:** Queues commands for a specific Pico device. Commands are stored in the database until processed.
 
+- **Testing:**
+
+   ```bash
+   curl -X POST http://localhost:3000/api/pico/commands \
+     -H "Content-Type: application/json" \
+     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\", \"commands\": [\"AAAAAAAAAA\", \"BBBBBBBBBB\", \"DDDDDD\"]}"
+   ```
+
 #### Pico Live Status
 
 - **URL:** `/api/pico/live`
@@ -329,8 +347,8 @@ The application provides several API endpoints for device management and communi
 
   ```json
   {
-    "macAddress": "string",
-    "commands": any[]  // Commands data
+    "macAddress": string,
+    "commands": string[]  // Commands data
   }
   ```
 
@@ -338,7 +356,7 @@ The application provides several API endpoints for device management and communi
 
   ```json
   {
-    "commands": any[]  // Current live commands for the device
+    "commands": string[]  // Current live commands for the device
   }
   ```
 
@@ -352,6 +370,18 @@ The application provides several API endpoints for device management and communi
 
 - **Description:** Manages real-time command updates between Picos and the server
 
+- **Testing:**
+
+   ```bash
+   # GET current commands (used to display in UI)
+   curl -X GET "http://localhost:3000/api/pico/live?macAddress=AA:BB:CC:DD:EE:FF"
+
+   # POST new commands
+   curl -X POST http://localhost:3000/api/pico/live \
+     -H "Content-Type: application/json" \
+     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\", \"commands\": [\"A\", \"BB\", \"DDD\"]}"
+   ```
+
 ### Robot Endpoints
 
 #### Register Robot
@@ -362,7 +392,7 @@ The application provides several API endpoints for device management and communi
 
   ```json
   {
-    "macAddress": "string"
+    "macAddress": string
   }
   ```
 
@@ -375,6 +405,14 @@ The application provides several API endpoints for device management and communi
   ```
 
 - **Description:** Registers a new robot or updates its status. Sets status to "online" and updates lastSeen timestamp.
+
+- **Testing:**
+
+   ```bash
+   curl -X POST http://localhost:3000/api/robot/register \
+     -H "Content-Type: application/json" \
+     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\"}"
+   ```
 
 #### Robot Commands
 
@@ -391,6 +429,13 @@ The application provides several API endpoints for device management and communi
   ```
 
 - **Description:** Retrieves pending commands for the robot from its assigned Pico. Marks retrieved commands as read.
+
+- **Testing:**
+
+   ```bash
+   # Get commands for a specific robot
+   curl -X GET "http://localhost:3000/api/robot/commands?macAddress=AA:BB:CC:DD:EE:FF"
+   ```
 
 ### Error Responses
 
@@ -411,78 +456,36 @@ Common HTTP status codes:
 
 ### Notes
 
-- All POST requests require JSON content type
+- All `POST` requests require `JSON` content type
 - Commands are queued in the database until marked as read
 - The system maintains active assignments between Picos and Robots
 - Live status updates use a separate in-memory storage system
 - All endpoints include detailed logging for debugging
 
-### Testing API Endpoints
-
-#### Pico Endpoints
-
-1. Register Pico:
-
-   ```bash
-   curl -X POST http://localhost:3000/api/pico/register \
-     -H "Content-Type: application/json" \
-     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\"}"
-   ```
-
-2. Send Commands from Pico:
-
-   ```bash
-   curl -X POST http://localhost:3000/api/pico/commands \
-     -H "Content-Type: application/json" \
-     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\", \"commands\": [\"AAAAAAAAAA\", \"BBBBBBBBBB\", \"DDDDDD\"]}"
-   ```
-
-3. Live Feed of Commands from Pico:
-
-   ```bash
-   # GET current commands (used to display in UI)
-   curl -X GET "http://localhost:3000/api/pico/live?macAddress=AA:BB:CC:DD:EE:FF"
-
-   # POST new commands
-   curl -X POST http://localhost:3000/api/pico/live \
-     -H "Content-Type: application/json" \
-     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\", \"commands\": [\"A\", \"BB\", \"DDD\"]}"
-   ```
-
-#### Robot Endpoints
-
-1. Register Robot:
-
-   ```bash
-   curl -X POST http://localhost:3000/api/robot/register \
-     -H "Content-Type: application/json" \
-     -d "{\"macAddress\": \"AA:BB:CC:DD:EE:FF\"}"
-   ```
-
-2. Get Robot Commands:
-
-   ```bash
-   # Get commands for a specific robot
-   curl -X GET "http://localhost:3000/api/robot/commands?macAddress=AA:BB:CC:DD:EE:FF"
-   ```
-
-Notes:
-
-- Replace `AA:BB:CC:DD:EE:FF` with actual MAC addresses
-- All POST requests require `Content-Type: application/json` header
-- Commands are examples; use actual command strings for your devices
-
 ## FAQ
 
 <details>
-<summary>Are the search bars and filters meant to work?</summary>
-<ul>
-  <li>
-  Yeah, but I was too lazy to spend too much time on linking the search feature for most of the pages
-  </li>
-</ul>
+
+  <summary>Are the search bars and filters meant to work?</summary>
+
+  <ul>
+    <li>
+      Yeah, but I was too lazy to spend too much time on linking the search feature for most of the pages
+    </li>
+  </ul>
+
 </details>
 
-<details><summary>Does the notifications type do anything?</summary>
+<details>
 
-<ul><li>Nope I was too lazy to implement that too :) so you can have a look at `notification-controller.tsx` as a start</li></ul></details>
+  <summary>Does the notifications type do anything?</summary>
+
+  <ul>
+    <li>
+      Nope I was too lazy to implement that too :upside_down_face: so you can have a look at `notification-controller.tsx` as a start
+    </li>
+  </ul>
+
+</details>
+
+I would probably integrate Husky if more than one person works on this repo, just thought it was redundant since I was the only one
