@@ -1,4 +1,10 @@
-from time import sleep
+"""
+Handles all API communication with the Next.js server.
+
+This module is responsible for registering the Pico W device by sending its
+MAC address and for sending command sequences to the server's 'commands'
+and 'live' endpoints.
+"""
 
 import network
 import urequests
@@ -15,7 +21,13 @@ from helper import log, log_request_time
 from wifi import connect, is_connected
 
 
-def get_mac_addresss():
+def get_mac_address():
+    """
+    Retrieves the MAC address of the Pico W's WLAN interface.
+
+    Returns:
+        str: The MAC address in 'XX:XX:XX:XX:XX:XX' format.
+    """
     wlan = network.WLAN(network.STA_IF)
 
     wlan.active(True)
@@ -28,7 +40,13 @@ def get_mac_addresss():
 
 
 def send_mac_address():
-    mac_address = get_mac_addresss()
+    """
+    Registers the device with the server by sending its MAC address.
+
+    Returns:
+        bool: True if the MAC address was sent and acknowledged successfully, False otherwise.
+    """
+    mac_address = get_mac_address()
 
     url = NEXT_URL_PREFIX + NEXT_SERVER_BASE_ADDRESSES[0] + NEXT_REGISTER_URL_SUFFIX
     data = {"macAddress": mac_address}
@@ -59,37 +77,35 @@ def send_mac_address():
         return False
 
 
-def post_request(commands, count):
+def _send_post_request(url_suffix, commands, endpoint_name):
     """
-    Send robot commands to the server via POST request.
-
-    Sends the generated command sequence to the passthrough endpoint
-    where it will be forwarded to the robot for execution.
+    A helper function to send a POST request with commands to a specific endpoint.
 
     Args:
-        commands (list): List of robot command strings (e.g., ["A", "B", "D"])
-        count (int): Number of commands in the sequence
+        url_suffix (str): The specific API endpoint suffix to append to the base URL.
+        commands (list): A list of command strings to be sent.
+        endpoint_name (str): A descriptive name for the endpoint for logging purposes.
 
     Returns:
-        bool: True if request successful, False if failed
+        bool: True if the request was successful, False otherwise.
     """
-    mac_address = get_mac_addresss()
-    # Build the full URL for the passthrough endpoint
-    url = NEXT_URL_PREFIX + NEXT_SERVER_BASE_ADDRESSES[0] + NEXT_COMMANDS_URL_SUFFIX
-
-    # Prepare JSON payload with command data
-    data = {"macAddress": mac_address, "commands": commands}
+    mac_address = get_mac_address()
+    url = (
+        NEXT_URL_PREFIX + NEXT_SERVER_BASE_ADDRESSES[0] + url_suffix
+    )  # Build the full URL for the passthrough endpoint
+    data = {
+        "macAddress": mac_address,
+        "commands": commands,
+    }  # Prepare JSON payload with command data
 
     if not is_connected():
         connect()
 
     try:
-        print("---- Sending Robot Commands w POST ----")
+        print(f"---- Sending {endpoint_name} Commands w POST ----")
         log(f"URL: {url}")
         log(f"Commands: {commands}")
-        log(f"Count: {count}")
 
-        # Send POST request with JSON data
         response = urequests.post(url, json=data, timeout=5)
         print(f"Response status: {response.status_code}")
         print(f"Response text: {response.text}")
@@ -99,74 +115,51 @@ def post_request(commands, count):
 
         # Check if response was successful (200–299)
         if 200 <= response.status_code < 300:
-            log("[PASS] Commands sent successfully!")
-            for _ in range(3):
-                led.blink_success_led()
+            log(f"[PASS] {endpoint_name} commands sent successfully!")
             return True
         else:
-            log("[FAIL] Server responded with an error.")
-            for _ in range(3):
-                led.blink_error_led()
+            log(f"[FAIL] Server responded with an error for {endpoint_name} commands.")
             return False
 
     except Exception as e:
-        log(f"[FAIL] Failed to send commands: {e}")
+        log(f"[FAIL] Failed to send {endpoint_name} commands: {e}")
+        return False
+
+
+def post_request(commands):
+    """
+    Sends a sequence of commands to the main command execution endpoint.
+
+    Blinks success or error LEDs based on the outcome.
+
+    Args:
+        commands (list): A list of command strings (e.g., ["A", "B", "D"]).
+
+    Returns:
+        bool: True if the request was successful, False otherwise.
+    """
+    success = _send_post_request(NEXT_COMMANDS_URL_SUFFIX, commands, "Robot")
+    log_request_time()  # Log the time taken for the request for metrics
+    if success:
+        for _ in range(3):
+            led.blink_success_led()
+    else:
         for _ in range(3):
             led.blink_error_led()
-        return False
-    finally:
-        log_request_time()
+    return success
 
 
-def live_request(commands, count):
+def live_request(commands):
     """
-    Send robot commands to the server via POST request.
-
-    Sends the generated command sequence to the passthrough endpoint
-    where it will be forwarded to the robot for execution.
+    Sends a sequence of commands to the 'live' endpoint for real-time updates.
 
     Args:
-        commands (list): List of robot command strings (e.g., ["A", "B", "D"])
-        count (int): Number of commands in the sequence
+        commands (list): A list of command strings (e.g., ["A", "B", "D"]).
 
     Returns:
-        bool: True if request successful, False if failed
+        bool: True if the request was successful, False otherwise.
     """
-    mac_address = get_mac_addresss()
-    # Build the full URL for the passthrough endpoint
-    url = NEXT_URL_PREFIX + NEXT_SERVER_BASE_ADDRESSES[0] + NEXT_LIVE_URL_SUFFIX
-
-    # Prepare JSON payload with command data
-    data = {"macAddress": mac_address, "commands": commands}
-
-    if not is_connected():
-        connect()
-
-    try:
-        print("---- Sending Live Commands w POST ----")
-        log(f"URL: {url}")
-        log(f"Commands: {commands}")
-        log(f"Count: {count}")
-
-        # Send POST request with JSON data
-        response = urequests.post(url, json=data, timeout=5)
-        print(f"Response status: {response.status_code}")
-        print(f"Response text: {response.text}")
-
-        # Always close the response to free resources
-        response.close()
-
-        # Check if response was successful (200–299)
-        if 200 <= response.status_code < 300:
-            log("[PASS] Commands sent successfully!")
-            return True
-        else:
-            log("[FAIL] Failed to send commands")
-            return False
-
-    except Exception as e:
-        log(f"[FAIL] Failed to send commands: {e}")
-        return False
+    return _send_post_request(NEXT_LIVE_URL_SUFFIX, commands, "Live")
 
 
 if __name__ == "__main__":

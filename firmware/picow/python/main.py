@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
         # Send live command feed (Next.js only)
         if not LEGACY:
-            api_next.live_request(command_list, len(command_list))
+            api_next.live_request(command_list)
 
         # Send commands to queue if the button is pressed
         if button.BUTTON_PRESSED_FLAG:
@@ -34,8 +34,7 @@ if __name__ == "__main__":
             if LEGACY:
                 api_net.post_request(command_list, len(command_list))
             else:
-                api_next.post_request(command_list, len(command_list))
-            # ---------------------------------------------------------------------------
+                api_next.post_request(command_list)
 
         led.all_led_off()
         sleep(1)
