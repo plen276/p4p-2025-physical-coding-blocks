@@ -44,14 +44,14 @@ Follow the Toolchain Setup Guide for detailed instructions on:
 
 ### 3. Configuration
 
-Before running, you must configure the firmware by editing the `config.py` file:
+Before running, you must configure the firmware by editing the [`config.py`](config.py) file:
 
 - **`WIFI_SSID`** and **`WIFI_PASSWORD`**: Set these to your Wi-Fi network's credentials.
 - **`NEXT_SERVER_BASE_ADDRESSES`**: Update the IP address to point to your Next.js server.
 
 ### 4. Running the Firmware
 
-Once the files are uploaded and configured, the Pico W will automatically run `main.py` on boot.
+Once the files are uploaded and configured, the Pico W will automatically run [`main.py`](main.py) on boot.
 
 - Arrange the physical blocks on the TUI grid to create a program.
 - The Pico W will connect to the server and continuously send a live feed of the commands.
@@ -59,10 +59,12 @@ Once the files are uploaded and configured, the Pico W will automatically run `m
 
 ## Documentation
 
-For more detailed information, please refer to the documentation in the `docs/` directory:
+For more detailed information, please refer to the documentation in the [`docs/`](docs/) directory:
 
-- **Firmware Architecture**: An in-depth look at the code structure, modules, and data flow.
-- **Toolchain Setup**: Instructions for setting up your development environment.
-- **Testing and Debugging**: Guidance on how to test and debug the firmware.
-- **Pin Mapping**: A complete list of GPIO pin assignments.
-- **Future Work**: A list of planned improvements and features.
+- [**Firmware Architecture**](docs/FIRMWARE_ARCHITECTURE.md): An in-depth look at the code structure, modules, and data flow.
+- [**Toolchain Setup**](docs/TOOLCHAIN_SETUP.md): Instructions for setting up your development environment.
+- [**Testing and Debugging**](docs/DEBUGGING.md): Guidance on how to test and debug the firmware.
+- [**Pin Mapping**](docs/PIN_MAPPING.md): A complete list of GPIO pin assignments.
+- [**Future Work**](docs/FUTURE_WORK.md): A list of planned improvements and features.
+
+## FAQ
