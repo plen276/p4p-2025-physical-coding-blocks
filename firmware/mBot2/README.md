@@ -66,7 +66,7 @@ The following codes are currently mapped:
 <summary>Do I have any idea how most of the code works?</summary>
 
 - I didn't write most of this code and the API for the mBot is horribly documented so... goodluck :slightly_smiling_face:
-- FYI, I put in the one piece of documentation I found into the [docs](/docs/mBot2_API_cyberpi.pdf) folder
+- FYI, I put in the one piece of documentation I found for the mBot2 API into the [docs](/docs/mBot2_API_cyberpi.pdf) folder
 
 </details>
 
