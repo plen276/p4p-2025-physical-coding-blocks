@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+
 # Physical Coding Blocks - Web Server
 
 A central connection server that facilitates communication between Pico devices and robots in the TUI (Tangible User Interface) system. Built with [Next.js 15](https://nextjs.org/) and TypeScript, it manages device registration, command routing, and real-time status updates. The server includes a web interface for monitoring and managing device connections, assignments, and command queues.
@@ -454,7 +456,7 @@ Common HTTP status codes:
 
 ### Notes
 
-- All POST requests require JSON content type
+- All `POST` requests require `JSON` content type
 - Commands are queued in the database until marked as read
 - The system maintains active assignments between Picos and Robots
 - Live status updates use a separate in-memory storage system
@@ -463,16 +465,27 @@ Common HTTP status codes:
 ## FAQ
 
 <details>
-<summary>Are the search bars and filters meant to work?</summary>
-<ul>
-  <li>
-  Yeah, but I was too lazy to spend too much time on linking the search feature for most of the pages
-  </li>
-</ul>
+
+  <summary>Are the search bars and filters meant to work?</summary>
+
+  <ul>
+    <li>
+      Yeah, but I was too lazy to spend too much time on linking the search feature for most of the pages
+    </li>
+  </ul>
+
 </details>
 
-<details><summary>Does the notifications type do anything?</summary>
+<details>
 
-<ul><li>Nope I was too lazy to implement that too :) so you can have a look at `notification-controller.tsx` as a start</li></ul></details>
+  <summary>Does the notifications type do anything?</summary>
+
+  <ul>
+    <li>
+      Nope I was too lazy to implement that too :upside_down_face: so you can have a look at `notification-controller.tsx` as a start
+    </li>
+  </ul>
+
+</details>
 
 I would probably integrate Husky if more than one person works on this repo, just thought it was redundant since I was the only one
