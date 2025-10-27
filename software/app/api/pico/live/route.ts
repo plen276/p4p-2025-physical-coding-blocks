@@ -1,15 +1,14 @@
 import { getLiveCommands, setLiveCommands } from "@/lib/live-commands"
 import { NextRequest, NextResponse } from "next/server"
 
-// TODO: Turns out I forgot to cast the json body so I'll leave this here
-// interface PicoLiveRequest {
-//   macAddress: string
-//   commands: string
-// }
+interface PicoLiveRequest {
+  macAddress: string
+  commands: string[]
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json() // as PicoLiveRequest
+    const body = (await request.json()) as PicoLiveRequest
     const { macAddress, commands } = body
 
     if (!macAddress || !commands) {
